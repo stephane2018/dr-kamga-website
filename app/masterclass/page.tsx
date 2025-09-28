@@ -291,17 +291,216 @@ export default function MasterclassPage() {
         </div>
       </section>
 
+      {/* Vidéos Section */}
+      <section className="py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-balance">Vidéos Complémentaires</h2>
+            <p className="text-xl text-muted-foreground">
+              Découvrez nos vidéos pédagogiques pour approfondir vos connaissances
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <Card className="group hover:shadow-lg transition-shadow border-0">
+              <div className="aspect-video bg-gradient-to-br from-primary/20 to-primary/5 rounded-t-lg flex items-center justify-center">
+                <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center group-hover:bg-primary/30 transition-colors">
+                  <Video className="h-8 w-8 text-primary ml-1" />
+                </div>
+              </div>
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <Badge variant="secondary">Capsule</Badge>
+                  <div className="flex items-center space-x-1 text-sm text-muted-foreground">
+                    <Calendar className="h-4 w-4" />
+                    <span>8 min</span>
+                  </div>
+                </div>
+                <CardTitle className="text-lg">Les 3 règles pour produire selon les normes internationales</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Découvrez les standards essentiels pour préparer vos produits à l'exportation.
+                </p>
+                <Button size="sm" className="w-full">
+                  Voir la vidéo
+                </Button>
+              </CardContent>
+            </Card>
+
+            <Card className="group hover:shadow-lg transition-shadow border-0">
+              <div className="aspect-video bg-gradient-to-br from-secondary/20 to-secondary/5 rounded-t-lg flex items-center justify-center">
+                <div className="w-16 h-16 bg-secondary/20 rounded-full flex items-center justify-center group-hover:bg-secondary/30 transition-colors">
+                  <Video className="h-8 w-8 text-secondary ml-1" />
+                </div>
+              </div>
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <Badge variant="outline">Cours Long</Badge>
+                  <div className="flex items-center space-x-1 text-sm text-muted-foreground">
+                    <Calendar className="h-4 w-4" />
+                    <span>45 min</span>
+                  </div>
+                </div>
+                <CardTitle className="text-lg">Comment transformer son produit et allonger sa durée de vie</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Techniques de transformation pour maximiser la valeur ajoutée de vos produits.
+                </p>
+                <Button size="sm" className="w-full">
+                  Voir la vidéo
+                </Button>
+              </CardContent>
+            </Card>
+
+            <Card className="group hover:shadow-lg transition-shadow border-0">
+              <div className="aspect-video bg-gradient-to-br from-accent/20 to-accent/5 rounded-t-lg flex items-center justify-center">
+                <div className="w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center group-hover:bg-accent/30 transition-colors">
+                  <Video className="h-8 w-8 text-accent ml-1" />
+                </div>
+              </div>
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <Badge variant="secondary">Capsule</Badge>
+                  <div className="flex items-center space-x-1 text-sm text-muted-foreground">
+                    <Calendar className="h-4 w-4" />
+                    <span>12 min</span>
+                  </div>
+                </div>
+                <CardTitle className="text-lg">Les étapes clés pour réussir son export</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Roadmap complète pour structurer votre démarche d'exportation.
+                </p>
+                <Button size="sm" className="w-full">
+                  Voir la vidéo
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Inscription Section */}
+      <section className="py-16 bg-muted/50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-balance">Prochaines Sessions</h2>
+            <p className="text-xl text-muted-foreground">Choisissez votre masterclass et réservez votre place</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <Card className="border-0 shadow-lg">
+              <CardHeader>
+                <div className="flex items-center justify-between mb-4">
+                  <Badge className="bg-primary text-primary-foreground">EN LIGNE</Badge>
+                  <div className="text-sm text-muted-foreground">Places limitées</div>
+                </div>
+                <CardTitle className="text-xl">Masterclass Production - Axe 1</CardTitle>
+                <CardDescription>Produire pour l'export dès le premier jour</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3 mb-6">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-muted-foreground">Date:</span>
+                    <span className="font-medium">15 Décembre 2024</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-muted-foreground">Horaire:</span>
+                    <span className="font-medium">14h-17h30 (GMT+1)</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-muted-foreground">Prix:</span>
+                    <span className="font-medium text-lg">197€</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-muted-foreground">Places restantes:</span>
+                    <span className="font-medium text-primary">8/20</span>
+                  </div>
+                </div>
+                <Button className="w-full" asChild>
+                  <Link href="/contact?masterclass=production">S'inscrire maintenant</Link>
+                </Button>
+              </CardContent>
+            </Card>
+
+            <Card className="border-0 shadow-lg">
+              <CardHeader>
+                <div className="flex items-center justify-between mb-4">
+                  <Badge className="bg-secondary text-secondary-foreground">PRÉSENTIEL</Badge>
+                  <div className="text-sm text-muted-foreground">Paris</div>
+                </div>
+                <CardTitle className="text-xl">Masterclass Transformation - Axe 2</CardTitle>
+                <CardDescription>Les clés d'une transformation rentable</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3 mb-6">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-muted-foreground">Date:</span>
+                    <span className="font-medium">22 Décembre 2024</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-muted-foreground">Horaire:</span>
+                    <span className="font-medium">9h-13h</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-muted-foreground">Prix:</span>
+                    <span className="font-medium text-lg">297€</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-muted-foreground">Places restantes:</span>
+                    <span className="font-medium text-primary">5/15</span>
+                  </div>
+                </div>
+                <Button className="w-full" asChild>
+                  <Link href="/contact?masterclass=transformation">S'inscrire maintenant</Link>
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="mt-8 p-6 bg-white rounded-xl border border-primary/10">
+            <h3 className="text-lg font-semibold mb-4 text-center">Modalités d'inscription</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
+              <div className="text-center">
+                <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-2">
+                  <span className="text-primary font-bold">1</span>
+                </div>
+                <p className="font-medium">Inscription</p>
+                <p className="text-muted-foreground">Cliquez sur "S'inscrire"</p>
+              </div>
+              <div className="text-center">
+                <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-2">
+                  <span className="text-primary font-bold">2</span>
+                </div>
+                <p className="font-medium">Paiement</p>
+                <p className="text-muted-foreground">Paiement sécurisé par carte</p>
+              </div>
+              <div className="text-center">
+                <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-2">
+                  <span className="text-primary font-bold">3</span>
+                </div>
+                <p className="font-medium">Confirmation</p>
+                <p className="text-muted-foreground">Lien de connexion par email</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="py-16 bg-gradient-to-r from-primary to-secondary">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-4 text-balance">
-            Rejoignez la Prochaine Masterclass
+            Questions sur les Masterclass ?
           </h2>
           <p className="text-xl text-primary-foreground/90 mb-8 text-pretty">
-            Places limitées pour garantir la qualité des échanges et l'attention personnalisée.
+            Notre équipe est là pour vous aider à choisir la masterclass qui vous convient.
           </p>
           <Button size="lg" variant="secondary" asChild>
-            <Link href="/contact">Réserver ma place à la prochaine masterclass</Link>
+            <Link href="/contact">Nous contacter</Link>
           </Button>
         </div>
       </section>

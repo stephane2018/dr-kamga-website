@@ -267,18 +267,169 @@ export default function CoachingPage() {
         </div>
       </section>
 
+      {/* Réservation Section */}
+      <section className="py-16">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-balance">Réserver Votre Appel Diagnostic</h2>
+            <p className="text-xl text-muted-foreground">
+              Choisissez le créneau qui vous convient pour un appel diagnostic gratuit de 30 minutes
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <Card className="border-0 shadow-lg">
+              <CardHeader>
+                <div className="flex items-center justify-between mb-4">
+                  <Badge className="bg-green-100 text-green-800">GRATUIT</Badge>
+                  <div className="text-sm text-muted-foreground">30 minutes</div>
+                </div>
+                <CardTitle className="text-xl">Appel Diagnostic</CardTitle>
+                <CardDescription>Évaluation gratuite de votre potentiel export</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3 mb-6">
+                  <div className="flex items-center space-x-3">
+                    <CheckCircle className="h-4 w-4 text-green-600" />
+                    <span className="text-sm">Analyse de votre situation actuelle</span>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <CheckCircle className="h-4 w-4 text-green-600" />
+                    <span className="text-sm">Évaluation de votre potentiel export</span>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <CheckCircle className="h-4 w-4 text-green-600" />
+                    <span className="text-sm">Conseils personnalisés</span>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <CheckCircle className="h-4 w-4 text-green-600" />
+                    <span className="text-sm">Plan d'action initial</span>
+                  </div>
+                </div>
+                <div className="space-y-3 mb-6">
+                  <p className="text-sm font-medium">Créneaux disponibles cette semaine:</p>
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between p-3 border rounded-lg hover:bg-muted/50 cursor-pointer">
+                      <div>
+                        <div className="font-medium">Mardi 10 Décembre</div>
+                        <div className="text-sm text-muted-foreground">14h00 - 14h30</div>
+                      </div>
+                      <Button size="sm" variant="outline">Choisir</Button>
+                    </div>
+                    <div className="flex items-center justify-between p-3 border rounded-lg hover:bg-muted/50 cursor-pointer">
+                      <div>
+                        <div className="font-medium">Jeudi 12 Décembre</div>
+                        <div className="text-sm text-muted-foreground">10h00 - 10h30</div>
+                      </div>
+                      <Button size="sm" variant="outline">Choisir</Button>
+                    </div>
+                    <div className="flex items-center justify-between p-3 border rounded-lg hover:bg-muted/50 cursor-pointer">
+                      <div>
+                        <div className="font-medium">Vendredi 13 Décembre</div>
+                        <div className="text-sm text-muted-foreground">16h00 - 16h30</div>
+                      </div>
+                      <Button size="sm" variant="outline">Choisir</Button>
+                    </div>
+                  </div>
+                </div>
+                <Button className="w-full" asChild>
+                  <Link href="/contact?service=coaching-diagnostic">Voir plus de créneaux</Link>
+                </Button>
+              </CardContent>
+            </Card>
+
+            <Card className="border-0 shadow-lg border-primary/20">
+              <CardHeader>
+                <div className="flex items-center justify-between mb-4">
+                  <Badge className="bg-primary text-primary-foreground">PREMIUM</Badge>
+                  <div className="text-sm text-muted-foreground">Programme complet</div>
+                </div>
+                <CardTitle className="text-xl">Coaching Complet</CardTitle>
+                <CardDescription>Accompagnement personnalisé de 3 à 6 mois</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3 mb-6">
+                  <div className="flex items-center space-x-3">
+                    <CheckCircle className="h-4 w-4 text-primary" />
+                    <span className="text-sm">Diagnostic approfondi (2h)</span>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <CheckCircle className="h-4 w-4 text-primary" />
+                    <span className="text-sm">Stratégie sur mesure</span>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <CheckCircle className="h-4 w-4 text-primary" />
+                    <span className="text-sm">Appels mensuels (1h)</span>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <CheckCircle className="h-4 w-4 text-primary" />
+                    <span className="text-sm">Support email illimité</span>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <CheckCircle className="h-4 w-4 text-primary" />
+                    <span className="text-sm">Accès aux ressources exclusives</span>
+                  </div>
+                </div>
+                <div className="bg-primary/5 rounded-lg p-4 mb-6">
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-primary mb-1">À partir de 2 500€</div>
+                    <div className="text-sm text-muted-foreground">Programme de 3 mois</div>
+                  </div>
+                </div>
+                <Button className="w-full" asChild>
+                  <Link href="/contact?service=coaching-premium">Demander un devis personnalisé</Link>
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="mt-12 bg-gradient-to-r from-primary/5 to-secondary/5 rounded-xl p-6 border border-primary/10">
+            <h3 className="text-lg font-semibold mb-4 text-center">Comment ça marche ?</h3>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-sm">
+              <div className="text-center">
+                <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-2">
+                  <span className="text-primary font-bold">1</span>
+                </div>
+                <p className="font-medium">Réservation</p>
+                <p className="text-muted-foreground">Choisissez votre créneau</p>
+              </div>
+              <div className="text-center">
+                <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-2">
+                  <span className="text-primary font-bold">2</span>
+                </div>
+                <p className="font-medium">Préparation</p>
+                <p className="text-muted-foreground">Questionnaire pré-appel</p>
+              </div>
+              <div className="text-center">
+                <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-2">
+                  <span className="text-primary font-bold">3</span>
+                </div>
+                <p className="font-medium">Appel</p>
+                <p className="text-muted-foreground">Diagnostic avec Dr. Kanga</p>
+              </div>
+              <div className="text-center">
+                <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-2">
+                  <span className="text-primary font-bold">4</span>
+                </div>
+                <p className="font-medium">Suivi</p>
+                <p className="text-muted-foreground">Plan d'action personnalisé</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="py-16 bg-gradient-to-r from-primary to-secondary">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-4 text-balance">
-            Prêt à Accélérer Votre Développement ?
+            Une Question ? Besoin d'Aide ?
           </h2>
           <p className="text-xl text-primary-foreground/90 mb-8 text-pretty">
-            Réservez votre appel diagnostic gratuit de 30 minutes avec le Dr. Kanga pour évaluer votre potentiel et
-            définir votre stratégie.
+            Notre équipe est là pour vous aider à choisir la formule d'accompagnement qui vous convient le mieux.
           </p>
           <Button size="lg" variant="secondary" asChild>
-            <Link href="/contact">Prendre rendez-vous pour un appel diagnostic</Link>
+            <Link href="/contact">Nous contacter</Link>
           </Button>
         </div>
       </section>

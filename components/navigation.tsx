@@ -4,9 +4,17 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Menu, X } from "lucide-react"
 import { useState } from "react"
+import { usePathname } from "next/navigation"
+import { cn } from "@/lib/utils"
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
+  const pathname = usePathname()
+
+  const isActive = (path: string) => {
+    if (path === "/") return pathname === "/"
+    return pathname.startsWith(path)
+  }
 
   return (
     <nav className="bg-primary sticky top-0 z-50 shadow-sm">
@@ -21,29 +29,75 @@ export function Navigation() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            <Link href="/" className="text-primary-foreground/90 hover:text-primary-foreground transition-colors">
+            <Link
+              href="/"
+              className={cn(
+                "relative px-3 py-2 rounded-lg transition-all duration-200",
+                isActive("/")
+                  ? "text-primary-foreground bg-primary-foreground/10 font-medium"
+                  : "text-primary-foreground/80 hover:text-primary-foreground hover:bg-primary-foreground/5"
+              )}
+            >
               Accueil
+              {isActive("/") && (
+                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-secondary rounded-full"></div>
+              )}
             </Link>
-            <Link href="/videos" className="text-primary-foreground/90 hover:text-primary-foreground transition-colors">
-              Vidéos
+            <Link
+              href="/a-propos"
+              className={cn(
+                "relative px-3 py-2 rounded-lg transition-all duration-200",
+                isActive("/a-propos")
+                  ? "text-primary-foreground bg-primary-foreground/10 font-medium"
+                  : "text-primary-foreground/80 hover:text-primary-foreground hover:bg-primary-foreground/5"
+              )}
+            >
+              À Propos
+              {isActive("/a-propos") && (
+                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-secondary rounded-full"></div>
+              )}
             </Link>
             <Link
               href="/masterclass"
-              className="text-primary-foreground/90 hover:text-primary-foreground transition-colors"
+              className={cn(
+                "relative px-3 py-2 rounded-lg transition-all duration-200",
+                isActive("/masterclass")
+                  ? "text-primary-foreground bg-primary-foreground/10 font-medium"
+                  : "text-primary-foreground/80 hover:text-primary-foreground hover:bg-primary-foreground/5"
+              )}
             >
               Masterclass
+              {isActive("/masterclass") && (
+                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-secondary rounded-full"></div>
+              )}
             </Link>
             <Link
               href="/seminaires"
-              className="text-primary-foreground/90 hover:text-primary-foreground transition-colors"
+              className={cn(
+                "relative px-3 py-2 rounded-lg transition-all duration-200",
+                isActive("/seminaires")
+                  ? "text-primary-foreground bg-primary-foreground/10 font-medium"
+                  : "text-primary-foreground/80 hover:text-primary-foreground hover:bg-primary-foreground/5"
+              )}
             >
               Séminaires
+              {isActive("/seminaires") && (
+                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-secondary rounded-full"></div>
+              )}
             </Link>
             <Link
               href="/coaching"
-              className="text-primary-foreground/90 hover:text-primary-foreground transition-colors"
+              className={cn(
+                "relative px-3 py-2 rounded-lg transition-all duration-200",
+                isActive("/coaching")
+                  ? "text-primary-foreground bg-primary-foreground/10 font-medium"
+                  : "text-primary-foreground/80 hover:text-primary-foreground hover:bg-primary-foreground/5"
+              )}
             >
               Coaching Privé
+              {isActive("/coaching") && (
+                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-secondary rounded-full"></div>
+              )}
             </Link>
             <Button variant="secondary" asChild>
               <Link href="/contact">Nous Contacter</Link>
@@ -75,11 +129,11 @@ export function Navigation() {
                 Accueil
               </Link>
               <Link
-                href="/videos"
+                href="/a-propos"
                 className="block px-3 py-2 text-primary-foreground hover:text-primary transition-colors"
                 onClick={() => setIsOpen(false)}
               >
-                Vidéos
+                À Propos
               </Link>
               <Link
                 href="/masterclass"
