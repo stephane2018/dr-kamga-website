@@ -181,11 +181,11 @@ export function HeroSection() {
               Programme Signature
             </Badge>
             <h1 className="text-4xl md:text-6xl font-bold text-balance mb-6 text-primary-foreground">
-              De la ferme aux <span className="text-secondary">Marchés Mondiaux</span>
+              De la ferme aux Marchés Mondiaux
             </h1>
             <p className="text-xl text-primary-foreground/90 mb-8 text-pretty">
               Transformez votre exploitation agricole locale en entreprise exportatrice grâce à la méthode éprouvée de
-              Cabinetdab.
+              CabinetDab.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button size="lg" variant="secondary" asChild>
