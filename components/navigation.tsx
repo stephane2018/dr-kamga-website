@@ -24,7 +24,7 @@ export function Navigation() {
             <div className="w-8 h-8 bg-primary-foreground rounded-full flex items-center justify-center">
               <span className="text-primary font-bold text-sm">CD</span>
             </div>
-            <span className="font-bold text-lg text-primary-foreground">Cabinetdab</span>
+            <span className="font-bold text-lg text-primary-foreground">CabinetDab</span>
           </Link>
 
           {/* Desktop Navigation */}

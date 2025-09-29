@@ -54,7 +54,7 @@ export function Footer() {
               <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
                 <span className="text-primary-foreground font-bold text-sm">DK</span>
               </div>
-              <span className="font-bold text-lg text-foreground">Cabinetdab</span>
+              <span className="font-bold text-lg text-foreground">CabinetDab</span>
             </div>
             <p className="text-muted-foreground mb-4 max-w-md">
               Transformez votre exploitation agricole locale en entreprise exportatrice grâce à la méthode éprouvée du
@@ -130,7 +130,7 @@ export function Footer() {
         </div>
 
         <div className="border-t border-border mt-8 pt-8 text-center text-muted-foreground">
-          <p>&copy; 2024 Cabinetdab. Tous droits réservés.</p>
+          <p>&copy; 2024 CabinetDab. Tous droits réservés.</p>
         </div>
       </div>
     </footer>

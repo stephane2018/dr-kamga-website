@@ -15,7 +15,7 @@ interface SEOProps {
 }
 
 export function generateSEOMetadata({
-  title = "Cabinetdab - De la ferme aux Marchés Mondiaux",
+  title = "CabinetDab - De la ferme aux Marchés Mondiaux",
   description = "Programme de formation agricole pour transformer votre exploitation locale en entreprise exportatrice. Masterclass, séminaires et coaching avec le Dr. Kanga.",
   keywords = [],
   image = "/og-image.jpg",

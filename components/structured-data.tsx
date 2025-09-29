@@ -16,21 +16,21 @@ export function StructuredData({ type = 'website', data }: StructuredDataProps) 
         return {
           ...baseData,
           "@type": "WebSite",
-          name: "Cabinetdab",
+          name: "CabinetDab",
           alternateName: "Cabinet DAB",
-          url: "https://www.cabinetdab.com",
+          url: "https://www.cabinetDab.com",
           description: "Programme de formation agricole pour transformer votre exploitation locale en entreprise exportatrice",
           publisher: {
             "@type": "Organization",
-            name: "Cabinetdab",
+            name: "CabinetDab",
             logo: {
               "@type": "ImageObject",
-              url: "https://www.cabinetdab.com/logo.png"
+              url: "https://www.cabinetDab.com/logo.png"
             }
           },
           potentialAction: {
             "@type": "SearchAction",
-            target: "https://www.cabinetdab.com/search?q={search_term_string}",
+            target: "https://www.cabinetDab.com/search?q={search_term_string}",
             "query-input": "required name=search_term_string"
           }
         }
@@ -39,10 +39,10 @@ export function StructuredData({ type = 'website', data }: StructuredDataProps) 
         return {
           ...baseData,
           "@type": "Organization",
-          name: "Cabinetdab",
+          name: "CabinetDab",
           alternateName: "Cabinet DAB",
-          url: "https://www.cabinetdab.com",
-          logo: "https://www.cabinetdab.com/logo.png",
+          url: "https://www.cabinetDab.com",
+          logo: "https://www.cabinetDab.com/logo.png",
           contactPoint: {
             "@type": "ContactPoint",
             telephone: "+33-1-23-45-67-89",
@@ -50,9 +50,9 @@ export function StructuredData({ type = 'website', data }: StructuredDataProps) 
             availableLanguage: "French"
           },
           sameAs: [
-            "https://www.facebook.com/cabinetdab",
-            "https://www.linkedin.com/company/cabinetdab",
-            "https://www.twitter.com/cabinetdab"
+            "https://www.facebook.com/cabinetDab",
+            "https://www.linkedin.com/company/cabinetDab",
+            "https://www.twitter.com/cabinetDab"
           ],
           founder: {
             "@type": "Person",
@@ -80,7 +80,7 @@ export function StructuredData({ type = 'website', data }: StructuredDataProps) 
           jobTitle: "Expert en Agriculture et Exportation",
           affiliation: {
             "@type": "Organization",
-            name: "Cabinetdab"
+            name: "CabinetDab"
           },
           knowsAbout: [
             "Agriculture",

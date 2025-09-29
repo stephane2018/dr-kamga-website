@@ -9,26 +9,26 @@ import "./globals.css"
 
 export const metadata: Metadata = {
   title: {
-    default: "Cabinetdab - De la ferme aux Marchés Mondiaux",
-    template: "%s | Cabinetdab"
+    default: "CabinetDab - De la ferme aux Marchés Mondiaux",
+    template: "%s | CabinetDab"
   },
   description:
-    "Programme de formation agricole de Cabinetdab pour transformer votre exploitation locale en entreprise exportatrice. Masterclass, séminaires et coaching avec le Dr. Kanga.",
+    "Programme de formation agricole de CabinetDab pour transformer votre exploitation locale en entreprise exportatrice. Masterclass, séminaires et coaching avec le Dr. Kanga.",
   keywords: [
     "formation agricole",
     "export agricole",
     "transformation locale",
     "assurance agricole",
     "Dr Kanga",
-    "Cabinetdab",
+    "CabinetDab",
     "agriculture internationale",
     "coaching agricole",
     "séminaires agriculture",
     "masterclass agriculture"
   ],
   authors: [{ name: "Dr. Kanga", url: "https://www.cabinetdab.com/a-propos" }],
-  creator: "Cabinetdab",
-  publisher: "Cabinetdab",
+  creator: "CabinetDab",
+  publisher: "CabinetDab",
   formatDetection: {
     email: false,
     address: false,
@@ -43,10 +43,10 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Cabinetdab - De la ferme aux Marchés Mondiaux",
+    title: "CabinetDab - De la ferme aux Marchés Mondiaux",
     description: "Programme de formation agricole pour transformer votre exploitation locale en entreprise exportatrice. Masterclass, séminaires et coaching avec le Dr. Kanga.",
     url: 'https://www.cabinetdab.com',
-    siteName: 'Cabinetdab',
+    siteName: 'CabinetDab',
     locale: 'fr_FR',
     type: 'website',
     images: [
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Cabinetdab - Formation agricole pour l\'exportation',
+        alt: 'CabinetDab - Formation agricole pour l\'exportation',
       },
       {
         url: '/og-image-square.jpg',
@@ -66,7 +66,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Cabinetdab - De la ferme aux Marchés Mondiaux",
+    title: "CabinetDab - De la ferme aux Marchés Mondiaux",
     description: "Programme de formation agricole pour transformer votre exploitation locale en entreprise exportatrice.",
     images: ['/twitter-image.jpg'],
     creator: '@cabinetdab',
