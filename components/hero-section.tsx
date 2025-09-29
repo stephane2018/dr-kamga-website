@@ -11,7 +11,8 @@ import { useState, useEffect } from "react"
 const backgroundImages = [
   { url: 'https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=1920&q=80', animationClass: 'animate-fadeBackground-1' },
   { url: 'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=1920&q=80', animationClass: 'animate-fadeBackground-2' },
-  { url: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=1920&q=80', animationClass: 'animate-fadeBackground-3' }
+  { url: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=1920&q=80', animationClass: 'animate-fadeBackground-3' },
+  { url: 'https://www.shutterstock.com/shutterstock/photos/1797691207/display_1500/stock-photo-intensive-agriculture-in-africa-chicken-farming-1797691207.jpg', animationClass: 'animate-fadeBackground-3' },
 ]
 
 
