@@ -164,23 +164,7 @@
   }
 }
 
-/* Custom animation utilities for fading background */
-.animate-fadeBackground-1 {
-  animation: fadeInOut 15s infinite ease-in-out;
-  opacity: 1;
-}
 
-.animate-fadeBackground-2 {
-  animation: fadeInOut 15s infinite ease-in-out;
-  animation-delay: 5s;
-  opacity: 0;
-}
-
-.animate-fadeBackground-3 {
-  animation: fadeInOut 15s infinite ease-in-out;
-  animation-delay: 10s;
-  opacity: 0;
-}
 
 /* Image hover effects */
 .image-hover-effect {
@@ -190,4 +174,66 @@
 .image-hover-effect:hover {
   transform: scale(1.05) rotate(0deg);
   z-index: 10;
+}
+
+
+
+@keyframes fadeBackground-2 {
+  0%, 33.33% { opacity: 0; }
+  33.34%, 66.66% { opacity: 1; }
+  66.67%, 100% { opacity: 0; }
+}
+
+@keyframes fadeBackground-3 {
+  0%, 66.66% { opacity: 0; }
+  66.67%, 100% { opacity: 1; }
+}
+
+.animate-fadeBackground-1 {
+  animation: fadeBackground-1 15s infinite;
+}
+
+.animate-fadeBackground-2 {
+  animation: fadeBackground-2 15s infinite;
+}
+
+.animate-fadeBackground-3 {
+  animation: fadeBackground-3 15s infinite;
+}
+
+.image-hover-effect {
+  transition: transform 0.3s ease;
+}
+
+.image-hover-effect:hover {
+  transform: translateY(-8px);
+}
+
+/* Progress bar animation for background slider */
+@keyframes progressReset {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
+
+/* Enhanced slider animations */
+@keyframes slideInFade {
+  0% {
+    opacity: 0;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideOutFade {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
 }
