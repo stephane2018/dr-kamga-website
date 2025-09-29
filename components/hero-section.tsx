@@ -14,47 +14,7 @@ const backgroundImages = [
   { url: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=1920&q=80', animationClass: 'animate-fadeBackground-3' }
 ]
 
-const imageGalleryData = [
-  {
-    src: "https://media.istockphoto.com/id/520010076/photo/vegetable-farmer.jpg?s=1024x1024&w=is&k=20&c=m59VaBmaT2JGAZUuV3_i6o55CwEUQ1-DTMKnYnJOWxg=",
-    alt: "Agriculteurs travaillant dans les champs",
-    icon: Wheat,
-    iconColor: "text-secondary-foreground",
-    iconBgColor: "bg-secondary",
-    gradientFrom: "from-primary-foreground",
-    gradientTo: "to-secondary/20",
-    backdropFrom: "from-secondary/30",
-    backdropTo: "to-accent/30",
-    rotation: "rotate-1",
-    iconPosition: "top-left" as const
-  },
-  {
-    src: "https://media.gettyimages.com/id/1190135202/video/he-has-interests-in-investing-in-her-farm.jpg?s=640x640&k=20&c=rwEd4oyzMptVLSJNx8FEazF5LjmGpZZbq1fsJRbZDd8=",
-    alt: "Expert agricole consultant les agriculteurs",
-    icon: Tractor,
-    iconColor: "text-accent-foreground",
-    iconBgColor: "bg-accent",
-    gradientFrom: "from-primary-foreground",
-    gradientTo: "to-accent/20",
-    backdropFrom: "from-accent/30",
-    backdropTo: "to-primary/30",
-    rotation: "-rotate-1",
-    iconPosition: "top-right" as const
-  },
-  {
-    src: "https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=800&q=80",
-    alt: "Personnel d'exportation préparant les produits pour les marchés internationaux",
-    icon: Leaf,
-    iconColor: "text-primary-foreground",
-    iconBgColor: "bg-primary/80",
-    gradientFrom: "from-primary-foreground",
-    gradientTo: "to-primary/20",
-    backdropFrom: "from-primary/30",
-    backdropTo: "to-secondary/30",
-    rotation: "rotate-2",
-    iconPosition: "bottom-left" as const
-  }
-]
+
 
 interface ImageCardProps {
   src: string
@@ -185,7 +145,7 @@ export function HeroSection() {
             </h1>
             <p className="text-xl text-primary-foreground/90 mb-8 text-pretty">
               Transformez votre exploitation agricole locale en entreprise exportatrice grâce à la méthode éprouvée de
-              CabinetDab.
+              Cabinet DAB.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button size="lg" variant="secondary" asChild>

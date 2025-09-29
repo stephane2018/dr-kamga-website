@@ -16,13 +16,13 @@ export function StructuredData({ type = 'website', data }: StructuredDataProps) 
         return {
           ...baseData,
           "@type": "WebSite",
-          name: "CabinetDab",
+          name: "Cabinet DAB",
           alternateName: "Cabinet DAB",
           url: "https://www.cabinetDab.com",
           description: "Programme de formation agricole pour transformer votre exploitation locale en entreprise exportatrice",
           publisher: {
             "@type": "Organization",
-            name: "CabinetDab",
+            name: "Cabinet DAB",
             logo: {
               "@type": "ImageObject",
               url: "https://www.cabinetDab.com/logo.png"
