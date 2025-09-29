@@ -205,35 +205,6 @@ export function HeroSection() {
             </div>
           </div>
 
-          {/* Right Image Gallery - Asymmetric Layout */}
-          <div className="relative flex items-center justify-center min-h-[600px]">
-            <div className="grid grid-cols-5 grid-rows-3 gap-3 w-full max-w-2xl h-[550px]">
-              {/* Large Image - Left Side (Spans 3 columns and full height) */}
-              
-              {/* Top Right Image (Spans 2 columns and 2 rows) */}
-              <ImageCard
-                src={imageGalleryData[1].src}
-                alt={imageGalleryData[1].alt}
-                iconPosition={imageGalleryData[1].iconPosition}
-                className="col-span-4 row-span-2"
-              />
-              
-              {/* Bottom Right Image (Spans 2 columns and 1 row) */}
-              <ImageCard
-                src={imageGalleryData[0].src}
-                alt={imageGalleryData[0].alt}
-                iconPosition={imageGalleryData[0].iconPosition}
-                  className="col-span-2  row-span-1"
-              />
-              
-              <ImageCard
-                src={imageGalleryData[2].src}
-                alt={imageGalleryData[2].alt}
-                iconPosition={imageGalleryData[2].iconPosition}
-                className="col-span-2  row-span-1"
-              />
-            </div>
-          </div>
         </div>
       </div>
     </section>
