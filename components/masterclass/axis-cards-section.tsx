@@ -61,7 +61,7 @@ const axisCardsData: AxisCardData[] = [
   {
     icon: Shield,
     iconColor: "primary",
-    title: "Module Assurance",
+    title: "Axe 4 - Assurance",
     description: "Sécuriser vos produits pour inspirer confiance",
     content: "Protégez votre activité et rassurez vos partenaires avec les bonnes assurances.",
     features: [
@@ -76,7 +76,7 @@ const axisCardsData: AxisCardData[] = [
   {
     icon: CookingPot,
     iconColor: "secondary",
-    title: "Module Gestion de la production",
+    title: "Axe 5 - Gestion de la production",
     description: "Préparez votre dossier de production pour inspirer confiance",
     content: "Préparez votre dossier de production pour inspirer confiance.",
     features: [
@@ -91,7 +91,7 @@ const axisCardsData: AxisCardData[] = [
   {
     icon: DollarSign,
     iconColor: "secondary",
-    title: "Module Financement",
+    title: "Axe 6 - Financement",
     description: "Accéder à des financements adaptés à votre projet agricole et à votre niveau de développement",
     content: "Accéder à des financements adaptés à votre projet agricole et à votre niveau de développement.",
     features: [
