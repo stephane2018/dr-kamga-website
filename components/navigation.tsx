@@ -102,9 +102,9 @@ export function Navigation() {
             <Button variant="secondary" asChild>
               <Link href="/contact">Nous Contacter</Link>
             </Button>
-            <Button variant="outline" className="text-primary border-white hover:bg-white/10" asChild>
+            {/* <Button variant="outline" className="text-primary border-white hover:bg-white/10" asChild>
               <Link href="/admin/login">Se connecter</Link>
-            </Button>
+            </Button> */}
           </div>
 
           {/* Mobile menu button */}
