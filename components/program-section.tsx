@@ -1,4 +1,4 @@
-import { Sprout, Factory, Globe, Shield } from "lucide-react"
+import { Sprout, Factory, Globe, Shield, CookingPot, DollarSign } from "lucide-react"
 
 export function ProgramSection() {
   return (
@@ -13,7 +13,7 @@ export function ProgramSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Axe 1 */}
           <div className="group bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-2 relative">
             <div className="absolute -top-3 -left-3 w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white font-bold text-sm shadow-lg">
@@ -60,7 +60,7 @@ export function ProgramSection() {
           {/* Module Transversal */}
           <div className="group bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-2 relative">
             <div className="absolute -top-3 -left-3 w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white font-bold text-sm shadow-lg">
-              +
+              4
             </div>
             <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors duration-300">
               <Shield className="h-8 w-8 text-primary" />
@@ -68,6 +68,30 @@ export function ProgramSection() {
             <h3 className="text-xl font-bold text-primary mb-3">Assurances agricoles</h3>
             <p className="text-gray-600 text-sm leading-relaxed">
               Garantissez votre investissement et protégez vos produits pendant la transformation et l'export.
+            </p>
+          </div>
+          <div className="group bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-2 relative">
+            <div className="absolute -top-3 -left-3 w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white font-bold text-sm shadow-lg">
+              5
+            </div>
+            <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors duration-300">
+              <CookingPot className="h-8 w-8 text-primary" />
+            </div>
+            <h3 className="text-xl font-bold text-primary mb-3">Gestion de la production </h3>
+            <p className="text-gray-600 text-sm leading-relaxed">
+              Maîtrisez les enjeux de la transformation et structurez votre unité pour devenir compétitif et rentable.
+            </p>
+          </div>
+          <div className="group bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-2 relative">
+            <div className="absolute -top-3 -left-3 w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white font-bold text-sm shadow-lg">
+              6
+            </div>
+            <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors duration-300">
+              <DollarSign className="h-8 w-8 text-primary" />
+            </div>
+            <h3 className="text-xl font-bold text-primary mb-3">Financement agricole</h3>
+            <p className="text-gray-600 text-sm leading-relaxed">
+              Accédez à des financements adaptés à votre projet agricole et à votre niveau de développement.
             </p>
           </div>
         </div>
