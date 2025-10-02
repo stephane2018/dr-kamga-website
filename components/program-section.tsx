@@ -22,7 +22,7 @@ export function ProgramSection() {
             <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors duration-300">
               <Sprout className="h-8 w-8 text-primary" />
             </div>
-            <h3 className="text-xl font-bold text-primary mb-3"> création de l'exploitation Agricole</h3>
+            <h3 className="text-xl font-bold text-primary mb-3"> Création de l'exploitation Agricole</h3>
             <p className="text-gray-600 text-sm leading-relaxed">
              Création d'une exploitation agricole adaptée à votre projet agricole et à votre niveau de développement.
             </p>
