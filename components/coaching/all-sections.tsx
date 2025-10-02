@@ -52,7 +52,7 @@ export function CoachingHeroSection() {
 
           {/* Description */}
           <p className="text-xl md:text-2xl text-white/90 max-w-4xl mx-auto text-center mb-12 leading-relaxed">
-            Un accompagnement personnalisé pour atteindre vos objectifs plus vite avec l'expertise directe du Dr. Kanga.
+            Un accompagnement personnalisé pour atteindre vos objectifs  avec l'expertise directe du Dr. Kanga et sont équipe.
           </p>
 
           {/* Value props grid */}

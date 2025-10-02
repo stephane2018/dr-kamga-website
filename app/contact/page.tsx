@@ -131,7 +131,7 @@ export default function ContactPage() {
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="phone" className="text-sm font-medium">Téléphone</Label>
+                      <Label htmlFor="phone" className="text-sm font-medium">Téléphone *</Label>
                       <Input
                         id="phone"
                         type="tel"
@@ -216,7 +216,7 @@ export default function ContactPage() {
             <div className="xl:col-span-1 order-1 xl:order-2">
               <div className="xl:sticky xl:top-8 space-y-4 sm:space-y-6">
                 {/* Appel Diagnostic - Featured */}
-                <Card className="border-0 shadow-2xl bg-gradient-to-br from-primary to-secondary text-white overflow-hidden relative transform hover:scale-[1.02] transition-all duration-300">
+                {/* <Card className="border-0 shadow-2xl bg-gradient-to-br from-primary to-secondary text-white overflow-hidden relative transform hover:scale-[1.02] transition-all duration-300">
                   <div className="absolute top-0 right-0 w-24 h-24 sm:w-32 sm:h-32 bg-white/10 rounded-full -translate-y-12 sm:-translate-y-16 translate-x-12 sm:translate-x-16"></div>
                   <div className="absolute bottom-0 left-0 w-16 h-16 sm:w-24 sm:h-24 bg-white/5 rounded-full translate-y-8 sm:translate-y-12 -translate-x-8 sm:-translate-x-12"></div>
                   <div className="absolute top-4 left-4 bg-white/20 rounded-full px-3 py-1">
@@ -253,7 +253,7 @@ export default function ContactPage() {
                       <span>Réserver mon appel gratuit</span>
                     </Button>
                   </CardContent>
-                </Card>
+                </Card> */}
 
                 {/* Quick Contact Cards - Compact */}
                 <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-6">
@@ -297,13 +297,13 @@ export default function ContactPage() {
                 {/* Horaires et Infos - Combined */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-1 gap-3 sm:gap-4">
                   <Card className="border-0 shadow-lg">
-                    <CardHeader className="pb-3 sm:pb-4 p-4 sm:p-6">
+                    <CardHeader >
                       <CardTitle className="flex items-center space-x-2 text-base sm:text-lg">
                         <Clock className="h-4 w-4 sm:h-5 sm:w-5 text-primary flex-shrink-0" />
                         <span>Horaires d'ouverture</span>
                       </CardTitle>
                     </CardHeader>
-                    <CardContent className="p-4 sm:p-6 pt-0">
+                    <CardContent className="p-2 sm:p-6 ">
                       <div className="space-y-2 sm:space-y-3">
                         <div className="flex justify-between items-center py-1.5 sm:py-2 border-b border-gray-100">
                           <span className="font-medium text-sm sm:text-base">Lundi - Vendredi</span>
@@ -316,35 +316,6 @@ export default function ContactPage() {
                         <div className="flex justify-between items-center py-1.5 sm:py-2">
                           <span className="font-medium text-sm sm:text-base">Dimanche</span>
                           <span className="text-gray-400 text-sm sm:text-base">Fermé</span>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  <Card className="border-0 shadow-lg bg-gradient-to-br from-accent/5 to-accent/10">
-                    <CardHeader className="pb-3 sm:pb-4 p-4 sm:p-6">
-                      <CardTitle className="flex items-center space-x-2 text-base sm:text-lg">
-                        <Sparkles className="h-4 w-4 sm:h-5 sm:w-5 text-accent flex-shrink-0" />
-                        <span>Pourquoi nous choisir</span>
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="p-4 sm:p-6 pt-0">
-                      <div className="space-y-2 sm:space-y-3">
-                        <div className="flex items-center space-x-3">
-                          <div className="w-2 h-2 bg-accent rounded-full flex-shrink-0"></div>
-                          <span className="text-xs sm:text-sm">40+ années d'expérience terrain</span>
-                        </div>
-                        <div className="flex items-center space-x-3">
-                          <div className="w-2 h-2 bg-primary rounded-full flex-shrink-0"></div>
-                          <span className="text-xs sm:text-sm">Expert reconnu FAO, PAM, FIDA</span>
-                        </div>
-                        <div className="flex items-center space-x-3">
-                          <div className="w-2 h-2 bg-secondary rounded-full flex-shrink-0"></div>
-                          <span className="text-xs sm:text-sm">Méthode "De la ferme aux marchés"</span>
-                        </div>
-                        <div className="flex items-center space-x-3">
-                          <div className="w-2 h-2 bg-accent rounded-full flex-shrink-0"></div>
-                          <span className="text-xs sm:text-sm">Accompagnement personnalisé</span>
                         </div>
                       </div>
                     </CardContent>
