@@ -527,7 +527,6 @@ export function BookingSection() {
               </div>
               <div className="bg-primary/5 rounded-lg p-4 mb-6">
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-primary mb-1">À partir de 2 500€</div>
                   <div className="text-sm text-muted-foreground">Programme de 3 mois</div>
                 </div>
               </div>
