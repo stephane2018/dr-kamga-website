@@ -71,7 +71,7 @@ export function Navigation() {
                 <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-secondary rounded-full"></div>
               )}
             </Link>
-            <Link
+            {/* <Link
               href="/seminaires"
               className={cn(
                 "relative px-3 py-2 rounded-lg transition-all duration-200",
@@ -84,7 +84,7 @@ export function Navigation() {
               {isActive("/seminaires") && (
                 <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-secondary rounded-full"></div>
               )}
-            </Link>
+            </Link> */}
             <Link
               href="/coaching"
               className={cn(
@@ -145,13 +145,13 @@ export function Navigation() {
               >
                 Masterclass
               </Link>
-              <Link
+              {/* <Link
                 href="/seminaires"
                 className="block px-3 py-2 text-primary-foreground hover:text-primary transition-colors"
                 onClick={() => setIsOpen(false)}
               >
                 Séminaires
-              </Link>
+              </Link> */}
               <Link
                 href="/coaching"
                 className="block px-3 py-2 text-primary-foreground hover:text-primary transition-colors"
