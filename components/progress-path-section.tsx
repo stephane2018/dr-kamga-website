@@ -11,7 +11,8 @@ export function ProgressPathSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <SectionHeader
           title="Votre Chemin de Progression"
-          description="Attaquer les marchés mondiaux sereinement... Comme des milliers d'exportateurs de produits locaux, nous vous aidons à organiser toute votre chaine de valeur pour devenir éligible au commerce international en boostant ainsi votre chiffre d'affaires."
+          description="Attaquer les marchés mondiaux sereinement...Comme des milliers d'exportateurs de produits locaux, 
+nous vous aidons à organiser toute votre chaine de valeur pour accéder aux marchés mondiaux  en boostant ainsi votre chiffre d'affaires."
           ctaText="Découvrez comment"
           ctaLink="/masterclass"
         />
