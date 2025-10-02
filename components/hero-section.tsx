@@ -145,7 +145,7 @@ export function HeroSection() {
               De la ferme aux Marchés Mondiaux
             </h1>
             <p className="text-xl text-primary-foreground/90 mb-8 text-pretty">
-              Transformez votre exploitation agricole locale en entreprise exportatrice grâce à la méthode éprouvée de
+              Transformez votre exploitation agricole locale en entreprise exportatrice grâce à la méthode éprouvée du
               Cabinet DAB.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
