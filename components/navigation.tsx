@@ -125,7 +125,7 @@ export function Navigation() {
         {/* Mobile Navigation */}
         {isOpen && (
           <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-primary border-t border-primary-foreground/20">
+            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-primary/20">
               <Link
                 href="/"
                 className="block px-3 py-2 text-primary hover:text-primary/80 transition-colors"
