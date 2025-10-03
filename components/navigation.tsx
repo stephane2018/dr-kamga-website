@@ -18,7 +18,7 @@ export function Navigation() {
   }
 
   return (
-    <nav className="bg-primary sticky top-0 z-50 shadow-sm">
+    <nav className="bg-white sticky top-0 z-50 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <Link href="/" className="flex items-center space-x-2">
@@ -36,8 +36,8 @@ export function Navigation() {
               className={cn(
                 "relative px-3 py-2 rounded-lg transition-all duration-200",
                 isActive("/")
-                  ? "text-primary-foreground bg-primary-foreground/10 font-medium"
-                  : "text-primary-foreground/80 hover:text-primary-foreground hover:bg-primary-foreground/5"
+                  ? "text-primary bg-primary/10 font-medium"
+                  : "text-primary/80 hover:text-primary hover:bg-primary/5"
               )}
             >
               Accueil
@@ -50,8 +50,8 @@ export function Navigation() {
               className={cn(
                 "relative px-3 py-2 rounded-lg transition-all duration-200",
                 isActive("/a-propos")
-                  ? "text-primary-foreground bg-primary-foreground/10 font-medium"
-                  : "text-primary-foreground/80 hover:text-primary-foreground hover:bg-primary-foreground/5"
+                  ? "text-primary bg-primary/10 font-medium"
+                  : "text-primary/80 hover:text-primary hover:bg-primary/5"
               )}
             >
               À Propos
@@ -64,8 +64,8 @@ export function Navigation() {
               className={cn(
                 "relative px-3 py-2 rounded-lg transition-all duration-200",
                 isActive("/masterclass")
-                  ? "text-primary-foreground bg-primary-foreground/10 font-medium"
-                  : "text-primary-foreground/80 hover:text-primary-foreground hover:bg-primary-foreground/5"
+                  ? "text-primary bg-primary/10 font-medium"
+                  : "text-primary/80 hover:text-primary hover:bg-primary/5"
               )}
             >
               Masterclass
@@ -92,8 +92,8 @@ export function Navigation() {
               className={cn(
                 "relative px-3 py-2 rounded-lg transition-all duration-200",
                 isActive("/coaching")
-                  ? "text-primary-foreground bg-primary-foreground/10 font-medium"
-                  : "text-primary-foreground/80 hover:text-primary-foreground hover:bg-primary-foreground/5"
+                  ? "text-primary bg-primary/10 font-medium"
+                  : "text-primary/80 hover:text-primary hover:bg-primary/5"
               )}
             >
               Coaching Privé
@@ -115,7 +115,7 @@ export function Navigation() {
               variant="ghost"
               size="sm"
               onClick={() => setIsOpen(!isOpen)}
-              className="text-primary-foreground hover:bg-primary-foreground/10"
+              className="text-primary hover:bg-primary/10"
             >
               {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </Button>
@@ -128,35 +128,35 @@ export function Navigation() {
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-primary border-t border-primary-foreground/20">
               <Link
                 href="/"
-                className="block px-3 py-2 text-primary-foreground hover:text-primary transition-colors"
+                className="block px-3 py-2 text-primary hover:text-primary/80 transition-colors"
                 onClick={() => setIsOpen(false)}
               >
                 Accueil
               </Link>
               <Link
                 href="/a-propos"
-                className="block px-3 py-2 text-primary-foreground hover:text-primary transition-colors"
+                className="block px-3 py-2 text-primary hover:text-primary/80 transition-colors"
                 onClick={() => setIsOpen(false)}
               >
                 À Propos
               </Link>
               <Link
                 href="/masterclass"
-                className="block px-3 py-2 text-primary-foreground hover:text-primary transition-colors"
+                className="block px-3 py-2 text-primary hover:text-primary/80 transition-colors"
                 onClick={() => setIsOpen(false)}
               >
                 Masterclass
               </Link>
               {/* <Link
                 href="/seminaires"
-                className="block px-3 py-2 text-primary-foreground hover:text-primary transition-colors"
+                className="block px-3 py-2 text-primary hover:text-primary/80 transition-colors"
                 onClick={() => setIsOpen(false)}
               >
                 Séminaires
               </Link> */}
               <Link
                 href="/coaching"
-                className="block px-3 py-2 text-primary-foreground hover:text-primary transition-colors"
+                className="block px-3 py-2 text-primary hover:text-primary/80 transition-colors"
                 onClick={() => setIsOpen(false)}
               >
                 Coaching Privé
