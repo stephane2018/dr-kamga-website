@@ -6,6 +6,7 @@ import { Menu, X } from "lucide-react"
 import { useState } from "react"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
+import Image from "next/image"
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
@@ -21,10 +22,11 @@ export function Navigation() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <Link href="/" className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-primary-foreground rounded-full flex items-center justify-center">
+            {/* <div className="w-8 h-8 bg-primary-foreground rounded-full flex items-center justify-center">
               <span className="text-primary font-bold text-sm">CD</span>
             </div>
-            <span className="font-bold text-lg text-primary-foreground">Cabinet DAB</span>
+            <span className="font-bold text-lg text-primary-foreground">Cabinet DAB</span> */}
+            <Image src="/logo.png" alt="Logo" width={80} height={80} />
           </Link>
 
           {/* Desktop Navigation */}
