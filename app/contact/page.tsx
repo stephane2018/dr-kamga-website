@@ -68,7 +68,7 @@ export default function ContactPage() {
       {/* Contact Section */}
       <section className="py-10 sm:py-16 lg:py-20 bg-gradient-to-b from-white to-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
+          <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 lg:gap-8">
             <div className="xl:col-span-2 order-2 xl:order-1">
             {/* Formulaire de Contact */}
             <Card className="border-0 shadow-xl bg-gradient-to-br from-white to-primary/2">
@@ -303,7 +303,7 @@ export default function ContactPage() {
                         <span>Horaires d'ouverture</span>
                       </CardTitle>
                     </CardHeader>
-                    <CardContent className="p-2 sm:p-6 ">
+                    <CardContent className="p-4 sm:p-6">
                       <div className="space-y-2 sm:space-y-3">
                         <div className="flex justify-between items-center py-1.5 sm:py-2 border-b border-gray-100">
                           <span className="font-medium text-sm sm:text-base">Lundi - Vendredi</span>
