@@ -22,12 +22,11 @@ export function Navigation() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <Link href="/" className="flex ">
-            <div className="w-13 h-12 bg-primary-foreground rounded-full flex items-center justify-center">
-              <Image src="/logo-1.png" alt="Logo" width={70} height={70} />
+            <div className="w-14   h-14 bg-primary-foreground rounded-full flex items-center justify-center">
+              <Image src="/new-logo.png" alt="Logo" width={80} height={80} className="w-full h-full rounded-full" />
             </div>
-            <div className="flex flex-col mt-1.5 -ml-2">  
+            <div className="flex flex-col ml-2 mt-4">  
               <span className="font-semibold text-lg text-primary">Cabinet DAB</span>
-              <span className="font-semibold text-[8px] -mt-1.5 text-primary">cabinet agricoles </span>
             </div>
            
           </Link>
