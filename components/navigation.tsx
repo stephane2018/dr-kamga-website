@@ -21,12 +21,15 @@ export function Navigation() {
     <nav className="bg-white sticky top-0 z-50 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          <Link href="/" className="flex items-center space-x-2">
-            {/* <div className="w-8 h-8 bg-primary-foreground rounded-full flex items-center justify-center">
-              <span className="text-primary font-bold text-sm">CD</span>
+          <Link href="/" className="flex ">
+            <div className="w-13 h-12 bg-primary-foreground rounded-full flex items-center justify-center">
+              <Image src="/logo-1.png" alt="Logo" width={70} height={70} />
             </div>
-            <span className="font-bold text-lg text-primary-foreground">Cabinet DAB</span> */}
-            <Image src="/logo.png" alt="Logo" width={80} height={80} />
+            <div className="flex flex-col mt-1.5 -ml-2">  
+              <span className="font-semibold text-lg text-primary">Cabinet DAB</span>
+              <span className="font-semibold text-[8px] -mt-1.5 text-primary">cabinet agricoles </span>
+            </div>
+           
           </Link>
 
           {/* Desktop Navigation */}

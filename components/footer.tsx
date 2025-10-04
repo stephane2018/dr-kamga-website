@@ -52,11 +52,10 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center space-x-2 mb-4">
-              {/* <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-sm">DK</span>
-              </div>
-              <span className="font-bold text-lg text-foreground">Cabinet DAB</span> */}
-              <Image src="/logo.png" alt="Logo" width={80} height={80} />
+              {/* <div className="w-13 h-12 bg-primary-foreground rounded-full flex items-center justify-center"> */}
+                <Image src="/logo-bg-remove.png" alt="Logo" width={150} height={150} />
+              {/* </div> */}
+              {/* <span className="font-semibold text-lg text-primary">Cabinet DAB</span> */}
             </div>
             <p className="text-muted-foreground mb-4 max-w-md">
               Transformez votre exploitation agricole locale en entreprise exportatrice grâce à la méthode éprouvée du
