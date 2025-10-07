@@ -1,3 +1,6 @@
+"use client"
+
+import { useState } from "react"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
@@ -6,9 +9,66 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Mail, Phone, MapPin, Calendar, MessageSquare, Clock, CheckCircle, ArrowRight, Sparkles } from "lucide-react"
+import { Mail, Phone, MapPin, Calendar, MessageSquare, Clock, CheckCircle, ArrowRight, Sparkles, Loader2 } from "lucide-react"
 
 export default function ContactPage() {
+  const [isLoading, setIsLoading] = useState(false)
+  const [selectedInterest, setSelectedInterest] = useState("")
+  const [formStatus, setFormStatus] = useState<{
+    type: "success" | "error" | null
+    message: string
+  }>({ type: null, message: "" })
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setIsLoading(true)
+    setFormStatus({ type: null, message: "" })
+
+    const formData = new FormData(e.currentTarget)
+    const data = {
+      firstName: formData.get("firstName"),
+      lastName: formData.get("lastName"),
+      email: formData.get("email"),
+      phone: formData.get("phone"),
+      interest: selectedInterest,
+      situation: formData.get("situation"),
+      message: formData.get("message"),
+    }
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+
+      const result = await response.json()
+
+      if (result.success) {
+        setFormStatus({
+          type: "success",
+          message: result.message || "Votre message a été envoyé avec succès !",
+        })
+        // Réinitialiser le formulaire
+        e.currentTarget.reset()
+        setSelectedInterest("")
+      } else {
+        setFormStatus({
+          type: "error",
+          message: result.error || "Une erreur est survenue lors de l'envoi du message.",
+        })
+      }
+    } catch (error) {
+      setFormStatus({
+        type: "error",
+        message: "Une erreur est survenue. Veuillez réessayer plus tard.",
+      })
+    } finally {
+      setIsLoading(false)
+    }
+  }
   return (
     <div className="min-h-screen">
       <Navigation />
@@ -97,14 +157,34 @@ export default function ContactPage() {
                 </div>
               </CardHeader>
               <CardContent className="px-4 sm:px-6">
-                <form className="space-y-4 sm:space-y-6">
+                {formStatus.type && (
+                  <div
+                    className={`mb-6 p-4 rounded-lg border ${
+                      formStatus.type === "success"
+                        ? "bg-green-50 border-green-200 text-green-800"
+                        : "bg-red-50 border-red-200 text-red-800"
+                    }`}
+                  >
+                    <div className="flex items-center space-x-2">
+                      {formStatus.type === "success" ? (
+                        <CheckCircle className="h-5 w-5 flex-shrink-0" />
+                      ) : (
+                        <MessageSquare className="h-5 w-5 flex-shrink-0" />
+                      )}
+                      <p className="text-sm font-medium">{formStatus.message}</p>
+                    </div>
+                  </div>
+                )}
+                <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label htmlFor="firstName" className="text-sm font-medium">Prénom *</Label>
                       <Input
                         id="firstName"
+                        name="firstName"
                         placeholder="Votre prénom"
                         required
+                        disabled={isLoading}
                         className="h-11 border-gray-200 focus:border-primary focus:ring-primary/20 transition-all duration-200"
                       />
                     </div>
@@ -112,8 +192,10 @@ export default function ContactPage() {
                       <Label htmlFor="lastName" className="text-sm font-medium">Nom *</Label>
                       <Input
                         id="lastName"
+                        name="lastName"
                         placeholder="Votre nom"
                         required
+                        disabled={isLoading}
                         className="h-11 border-gray-200 focus:border-primary focus:ring-primary/20 transition-all duration-200"
                       />
                     </div>
@@ -124,9 +206,11 @@ export default function ContactPage() {
                       <Label htmlFor="email" className="text-sm font-medium">Email *</Label>
                       <Input
                         id="email"
+                        name="email"
                         type="email"
                         placeholder="votre@email.com"
                         required
+                        disabled={isLoading}
                         className="h-11 border-gray-200 focus:border-primary focus:ring-primary/20 transition-all duration-200"
                       />
                     </div>
@@ -134,8 +218,11 @@ export default function ContactPage() {
                       <Label htmlFor="phone" className="text-sm font-medium">Téléphone *</Label>
                       <Input
                         id="phone"
+                        name="phone"
                         type="tel"
                         placeholder="+33 1 23 45 67 89"
+                        required
+                        disabled={isLoading}
                         className="h-11 border-gray-200 focus:border-primary focus:ring-primary/20 transition-all duration-200"
                       />
                     </div>
@@ -143,7 +230,7 @@ export default function ContactPage() {
 
                   <div className="space-y-2">
                     <Label htmlFor="interest" className="text-sm font-medium">Vous êtes intéressé par *</Label>
-                    <Select>
+                    <Select value={selectedInterest} onValueChange={setSelectedInterest} disabled={isLoading} required>
                       <SelectTrigger className="h-11 border-gray-200 focus:border-primary focus:ring-primary/20 transition-all duration-200">
                         <SelectValue placeholder="Sélectionnez une option" />
                       </SelectTrigger>
@@ -183,8 +270,10 @@ export default function ContactPage() {
                     <Label htmlFor="situation" className="text-sm font-medium">Décrivez votre situation actuelle</Label>
                     <Textarea
                       id="situation"
+                      name="situation"
                       placeholder="Parlez-nous de votre exploitation, vos produits, vos objectifs d'exportation..."
                       rows={3}
+                      disabled={isLoading}
                       className="min-h-[80px] border-gray-200 focus:border-primary focus:ring-primary/20 transition-all duration-200 resize-none"
                     />
                   </div>
@@ -193,16 +282,32 @@ export default function ContactPage() {
                     <Label htmlFor="message" className="text-sm font-medium">Message *</Label>
                     <Textarea
                       id="message"
+                      name="message"
                       placeholder="Comment pouvons-nous vous aider à atteindre vos objectifs d'exportation ?"
                       rows={4}
                       required
+                      disabled={isLoading}
                       className="min-h-[100px] border-gray-200 focus:border-primary focus:ring-primary/20 transition-all duration-200 resize-none"
                     />
                   </div>
 
-                  <Button type="submit" size="lg" className="w-full h-12 bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-white font-semibold transition-all duration-200 transform hover:scale-[1.02] text-base">
-                    <ArrowRight className="h-4 w-4 mr-2 flex-shrink-0" />
-                    <span>Envoyer le message</span>
+                  <Button
+                    type="submit"
+                    size="lg"
+                    disabled={isLoading}
+                    className="w-full h-12 bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-white font-semibold transition-all duration-200 transform hover:scale-[1.02] text-base disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isLoading ? (
+                      <>
+                        <Loader2 className="h-4 w-4 mr-2 flex-shrink-0 animate-spin" />
+                        <span>Envoi en cours...</span>
+                      </>
+                    ) : (
+                      <>
+                        <ArrowRight className="h-4 w-4 mr-2 flex-shrink-0" />
+                        <span>Envoyer le message</span>
+                      </>
+                    )}
                   </Button>
 
                   <p className="text-xs text-gray-500 text-center mt-3 sm:mt-4 leading-relaxed">
@@ -215,45 +320,7 @@ export default function ContactPage() {
             </div>
             <div className="xl:col-span-1 order-1 xl:order-2">
               <div className="xl:sticky xl:top-8 space-y-4 sm:space-y-6">
-                {/* Appel Diagnostic - Featured */}
-                {/* <Card className="border-0 shadow-2xl bg-gradient-to-br from-primary to-secondary text-white overflow-hidden relative transform hover:scale-[1.02] transition-all duration-300">
-                  <div className="absolute top-0 right-0 w-24 h-24 sm:w-32 sm:h-32 bg-white/10 rounded-full -translate-y-12 sm:-translate-y-16 translate-x-12 sm:translate-x-16"></div>
-                  <div className="absolute bottom-0 left-0 w-16 h-16 sm:w-24 sm:h-24 bg-white/5 rounded-full translate-y-8 sm:translate-y-12 -translate-x-8 sm:-translate-x-12"></div>
-                  <div className="absolute top-4 left-4 bg-white/20 rounded-full px-3 py-1">
-                    <span className="text-xs font-bold text-white">GRATUIT</span>
-                  </div>
-                  <CardHeader className="relative p-4 sm:p-6 pb-3">
-                    <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-3 mb-2">
-                      <div className="w-12 h-12 sm:w-14 sm:h-14 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
-                        <Calendar className="h-6 w-6 sm:h-7 sm:w-7 text-white" />
-                      </div>
-                      <div className="flex-1">
-                        <CardTitle className="text-lg sm:text-xl text-white mb-1">Appel Diagnostic Gratuit</CardTitle>
-                        <CardDescription className="text-white/90 text-sm">30 minutes avec Dr. Kanga Kouamé</CardDescription>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="relative p-4 sm:p-6 pt-0">
-                    <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-6">
-                      <div className="flex items-start space-x-3 text-white/90">
-                        <CheckCircle className="h-4 w-4 text-white flex-shrink-0 mt-0.5" />
-                        <span className="text-xs sm:text-sm leading-relaxed">Analyse de votre situation actuelle</span>
-                      </div>
-                      <div className="flex items-start space-x-3 text-white/90">
-                        <CheckCircle className="h-4 w-4 text-white flex-shrink-0 mt-0.5" />
-                        <span className="text-xs sm:text-sm leading-relaxed">Évaluation de votre potentiel d'exportation</span>
-                      </div>
-                      <div className="flex items-start space-x-3 text-white/90">
-                        <CheckCircle className="h-4 w-4 text-white flex-shrink-0 mt-0.5" />
-                        <span className="text-xs sm:text-sm leading-relaxed">Recommandations personnalisées</span>
-                      </div>
-                    </div>
-                    <Button size="lg" className="w-full h-11 sm:h-12 bg-white text-primary hover:bg-white/90 font-bold text-sm sm:text-base shadow-lg">
-                      <Calendar className="h-4 w-4 mr-2 flex-shrink-0" />
-                      <span>Réserver mon appel gratuit</span>
-                    </Button>
-                  </CardContent>
-                </Card> */}
+                
 
                 {/* Quick Contact Cards - Compact */}
                 <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-6">

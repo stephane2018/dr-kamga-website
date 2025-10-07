@@ -50,7 +50,7 @@ export function Navigation() {
             <Link
               href="/a-propos"
               className={cn(
-                "relative px-3 py-2 rounded-lg transition-all duration-200",
+                "relative  py-2 rounded-lg transition-all duration-200",
                 isActive("/a-propos")
                   ? "text-primary bg-primary/10 font-medium"
                   : "text-primary/80 hover:text-primary hover:bg-primary/5"
@@ -64,7 +64,7 @@ export function Navigation() {
             <Link
               href="/masterclass"
               className={cn(
-                "relative px-3 py-2 rounded-lg transition-all duration-200",
+                "relative  py-2 rounded-lg transition-all duration-200",
                 isActive("/masterclass")
                   ? "text-primary bg-primary/10 font-medium"
                   : "text-primary/80 hover:text-primary hover:bg-primary/5"
@@ -92,7 +92,7 @@ export function Navigation() {
             <Link
               href="/coaching"
               className={cn(
-                "relative px-3 py-2 rounded-lg transition-all duration-200",
+                "relative  py-2 rounded-lg transition-all duration-200",
                 isActive("/coaching")
                   ? "text-primary bg-primary/10 font-medium"
                   : "text-primary/80 hover:text-primary hover:bg-primary/5"
@@ -106,12 +106,12 @@ export function Navigation() {
             <Button variant="secondary" asChild>
               <Link href="/contact">Nous Contacter</Link>
             </Button>
-            {/* <Button variant="outline" className="text-primary border-white hover:bg-white/10" asChild>
+            <Button variant="outline" className="text-primary border-white hover:bg-white/10" asChild>
               <Link href="/admin/login">Se connecter</Link>
-            </Button> */}
+            </Button>
           </div>
 
-          {/* Mobile menu button */}
+       
           <div className="md:hidden">
             <Button
               variant="ghost"
