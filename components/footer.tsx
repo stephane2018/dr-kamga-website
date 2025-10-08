@@ -107,7 +107,7 @@ export function Footer() {
             <h3 className="font-semibold text-foreground mb-4">Ressources</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/about" className="text-muted-foreground hover:text-primary transition-colors">
+                <Link href="/a-propos" className="text-muted-foreground hover:text-primary transition-colors">
                   À Propos
                 </Link>
               </li>
@@ -116,16 +116,7 @@ export function Footer() {
                   Contact
                 </Link>
               </li>
-              <li>
-                <Link href="/blog" className="text-muted-foreground hover:text-primary transition-colors">
-                  Blog
-                </Link>
-              </li>
-              <li>
-                <Link href="/faq" className="text-muted-foreground hover:text-primary transition-colors">
-                  FAQ
-                </Link>
-              </li>
+             
             </ul>
           </div>
         </div>
