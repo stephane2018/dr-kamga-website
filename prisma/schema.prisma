@@ -1,0 +1,253 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================
+// AUTHENTICATION & ADMIN MANAGEMENT
+// ============================================
+
+model Admin {
+  id            String    @id @default(cuid())
+  username      String    @unique
+  email         String?   @unique
+  password      String    // Hashed with bcrypt
+  role          AdminRole @default(SUB_ADMIN)
+  isActive      Boolean   @default(true)
+
+  // Metadata
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  lastLoginAt   DateTime?
+
+  // Relations
+  createdBy     String?
+  creator       Admin?    @relation("AdminCreator", fields: [createdBy], references: [id])
+  subAdmins     Admin[]   @relation("AdminCreator")
+
+  masterclasses Masterclass[]
+  seminars      Seminar[]
+  sessions      Session[]
+
+  @@index([username])
+  @@index([email])
+}
+
+enum AdminRole {
+  SUPER_ADMIN
+  SUB_ADMIN
+}
+
+// ============================================
+// MASTERCLASS MANAGEMENT
+// ============================================
+
+model Masterclass {
+  id              String   @id @default(cuid())
+  icon            String   // Emoji
+  title           String
+  description     String   @db.Text
+  features        String[] // Array of features
+  cta             String   // Call to action text
+  backgroundColor String   // Tailwind gradient classes
+
+  // Display settings
+  isActive        Boolean  @default(true)
+  displayOrder    Int      @default(0)
+
+  // Video section
+  showVideosOnHome Boolean @default(false)
+  videos          MasterclassVideo[]
+
+  // Metadata
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  createdById     String?
+  createdBy       Admin?   @relation(fields: [createdById], references: [id])
+
+  @@index([displayOrder])
+  @@index([isActive])
+}
+
+model MasterclassVideo {
+  id            String      @id @default(cuid())
+  title         String
+  description   String?     @db.Text
+  videoUrl      String      // YouTube URL
+  thumbnailUrl  String?
+  duration      String?     // e.g., "8 min", "45 min"
+  category      String?     // e.g., "Capsule", "Cours Long"
+  displayOrder  Int         @default(0)
+  isActive      Boolean     @default(true)
+  showOnHome    Boolean     @default(false) // Afficher sur la page d'accueil
+
+  // Relations
+  masterclassId String
+  masterclass   Masterclass @relation(fields: [masterclassId], references: [id], onDelete: Cascade)
+
+  // Metadata
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@index([masterclassId])
+  @@index([displayOrder])
+  @@index([showOnHome])
+}
+
+// ============================================
+// SEMINAR MANAGEMENT
+// ============================================
+
+model Seminar {
+  id           String        @id @default(cuid())
+  slug         String        @unique
+  duration     String        // e.g., "2 jours"
+  participants String        // e.g., "12-15 participants"
+  title        String
+  subtitle     String
+  description  String        @db.Text
+  image        String?
+  videoUrl     String?
+  nextSession  String?       // Text field for display
+  location     String
+
+  // Program
+  program      SeminarProgram[]
+
+  // Sessions programmées
+  sessions     Session[]
+
+  // Display settings
+  isActive     Boolean       @default(true)
+  displayOrder Int           @default(0)
+
+  // Metadata
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  createdById  String?
+  createdBy    Admin?        @relation(fields: [createdById], references: [id])
+
+  @@index([slug])
+  @@index([isActive])
+  @@index([displayOrder])
+}
+
+model SeminarProgram {
+  id        String   @id @default(cuid())
+  day       String   // e.g., "J1", "J2"
+  title     String
+  items     String[] // Array of program items
+  order     Int      @default(0)
+
+  // Relations
+  seminarId String
+  seminar   Seminar  @relation(fields: [seminarId], references: [id], onDelete: Cascade)
+
+  // Metadata
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([seminarId])
+  @@index([order])
+}
+
+// ============================================
+// SESSION SCHEDULING
+// ============================================
+
+model Session {
+  id              String        @id @default(cuid())
+
+  // Session details
+  startDate       DateTime
+  endDate         DateTime
+  location        String
+  maxParticipants Int
+  currentParticipants Int       @default(0)
+  price           Float?
+  currency        String        @default("EUR")
+
+  // Status
+  status          SessionStatus @default(SCHEDULED)
+  isPublished     Boolean       @default(false)
+
+  // Relations
+  seminarId       String
+  seminar         Seminar       @relation(fields: [seminarId], references: [id], onDelete: Cascade)
+
+  // Registrations
+  registrations   Registration[]
+
+  // Metadata
+  notes           String?       @db.Text
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  createdById     String?
+  createdBy       Admin?        @relation(fields: [createdById], references: [id])
+
+  @@index([seminarId])
+  @@index([startDate])
+  @@index([status])
+  @@index([isPublished])
+}
+
+enum SessionStatus {
+  SCHEDULED
+  CONFIRMED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+// ============================================
+// PARTICIPANT REGISTRATION
+// ============================================
+
+model Registration {
+  id              String            @id @default(cuid())
+
+  // Participant info
+  firstName       String
+  lastName        String
+  email           String
+  phone           String?
+  company         String?
+
+  // Registration details
+  status          RegistrationStatus @default(PENDING)
+  paymentStatus   PaymentStatus      @default(PENDING)
+  paymentAmount   Float?
+
+  // Relations
+  sessionId       String
+  session         Session           @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  // Metadata
+  notes           String?           @db.Text
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  @@index([sessionId])
+  @@index([email])
+  @@index([status])
+}
+
+enum RegistrationStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  ATTENDED
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  REFUNDED
+}

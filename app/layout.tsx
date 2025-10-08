@@ -7,6 +7,7 @@ import { Suspense } from "react"
 import { StructuredData } from "@/components/structured-data"
 import { NewsletterModal } from "@/components/newsletter-modal"
 import { CookieConsent } from "@/components/cookie-consent"
+import { SessionProvider } from "@/components/providers/session-provider"
 import "./globals.css"
 
 export const metadata: Metadata = {
@@ -106,10 +107,12 @@ export default function RootLayout({
         <StructuredData type="course" />
       </head>
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
-        <Suspense fallback={null}>{children}</Suspense>
-        <NewsletterModal />
-        <CookieConsent />
-        <Analytics />
+        <SessionProvider>
+          <Suspense fallback={null}>{children}</Suspense>
+          <NewsletterModal />
+          <CookieConsent />
+          <Analytics />
+        </SessionProvider>
       </body>
     </html>
   )
