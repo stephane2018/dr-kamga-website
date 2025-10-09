@@ -1,0 +1,265 @@
+name: DR Kanga SASS CI/CD Pipeline
+
+on:
+  push:
+    branches: [master, staging]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+env:
+  # Node version
+  NODE_VERSION: "23"
+
+  # Production variables
+  PROD_PATH: "/var/www/cabinetdab.com/prod"
+  PROD_ARTIFACT_NAME: cabinetdab-prod-build
+
+  # Staging variables
+  STAGING_PATH: "/var/www/cabinetdab.com/staging"
+  STAGING_ARTIFACT_NAME: cabinetdab-staging-build
+
+  # API variables
+  DATABASE_URL: "postgresql://root:sipartech@localhost:5432/DRKANGO"
+  PROD_API_URL: https://api-connect.quastrom.com
+
+  # Staging API variables
+  STAGING_API_URL: https://api-connect-test.quastrom.com
+  STAGING_DATABASE_URL: "postgresql://root:sipartech@localhost:5432/DRKANGO"
+
+
+  PROD_PORT: 8090
+  STAGING_PORT: 8091
+
+  # Standardized SSH variables
+  SSH_HOST: ${{ secrets.SSH_HOST }}
+  SSH_USER: ${{ secrets.SSH_USER }}
+  SSH_KEY: ${{ secrets.SSH_KEY }}
+  SSH_PORT: ${{ secrets.SSH_PORT || 22 }}
+
+jobs:
+  # Code Quality and Security Checks
+  quality-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+
+      - name: Install dependencies
+        run: make install
+
+      - name: Run quality checks
+        run: make quality-check
+
+      # - name: Security audit
+      #   run: make security-audit
+
+  # Build for Staging
+  build-staging:
+    runs-on: ubuntu-latest
+    needs: quality-checks
+    if: github.ref == 'refs/heads/staging' && github.event_name == 'push'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+
+      - name: Install dependencies
+        run: make install
+
+      - name: Build application for staging
+        run: make build-staging
+        env:
+          CI: true
+          NODE_ENV: staging
+          API_URL: ${{ env.STAGING_API_URL }}
+          STRIPE_SECRET_KEY: ${{ env.STAGING_STRIPE_SECRET_KEY }}
+
+      - name: Package build for staging
+        run: make package ARTIFACT_NAME=${{ env.STAGING_ARTIFACT_NAME }} REVISION=${{ github.sha }} ENVIRONMENT=staging
+
+      - name: Verify build artifacts
+        run: make verify-build ARTIFACT_NAME=${{ env.STAGING_ARTIFACT_NAME }}
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.STAGING_ARTIFACT_NAME }}
+          path: ${{ env.STAGING_ARTIFACT_NAME }}.tar.gz
+          retention-days: 7
+
+  # Build for Production
+  build-production:
+    runs-on: ubuntu-latest
+    needs: quality-checks
+    if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+
+      - name: Install dependencies
+        run: make install
+
+      - name: Build application for production
+        run: make build-production
+        env:
+          CI: true
+          NODE_ENV: production
+          DATABASE_URL: ${{ env.DATABASE_URL }}
+
+      - name: Package build for production
+        run: make package ARTIFACT_NAME=${{ env.PROD_ARTIFACT_NAME }} REVISION=${{ github.sha }} ENVIRONMENT=production
+
+      - name: Verify build artifacts
+        run: make verify-build ARTIFACT_NAME=${{ env.PROD_ARTIFACT_NAME }}
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.PROD_ARTIFACT_NAME }}
+          path: ${{ env.PROD_ARTIFACT_NAME }}.tar.gz
+          retention-days: 14
+
+  # Deploy to Staging (staging branch)
+  deploy-staging:
+    runs-on: ubuntu-latest
+    needs: build-staging
+    if: github.ref == 'refs/heads/staging' && github.event_name == 'push'
+    environment: staging
+    steps:
+      - name: Checkout deployment scripts
+        uses: actions/checkout@v4
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.STAGING_ARTIFACT_NAME }}
+          path: ./
+
+      - name: Setup SSH key
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ env.SSH_KEY }}
+
+      - name: Setup SSH known hosts
+        run: make setup-ssh SSH_HOST=${{ env.SSH_HOST }} SSH_PORT=${{ env.SSH_PORT }}
+
+      - name: Deploy to staging
+        run: |
+          make deploy \
+            ARTIFACT_NAME=${{ env.STAGING_ARTIFACT_NAME }} \
+            REVISION=${{ github.sha }} \
+            SERVER_PATH=${{ env.STAGING_PATH }} \
+            SSH_HOST=${{ env.SSH_HOST }} \
+            SSH_USER=${{ env.SSH_USER }} \
+            SSH_PORT=${{ env.SSH_PORT }} \
+            PORT=${{ env.STAGING_PORT }} \
+            ENVIRONMENT=staging
+
+      - name: Verify deployment
+        run: |
+          make verify-deployment \
+            SERVER_PATH=${{ env.STAGING_PATH }} \
+            SSH_HOST=${{ env.SSH_HOST }} \
+            SSH_USER=${{ env.SSH_USER }} \
+            SSH_PORT=${{ env.SSH_PORT }} \
+            REVISION=${{ github.sha }}
+
+  # Deploy to Production (master branch)
+  deploy-production:
+    runs-on: ubuntu-latest
+    needs: build-production
+    if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+    environment: production
+    steps:
+      - name: Checkout deployment scripts
+        uses: actions/checkout@v4
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.PROD_ARTIFACT_NAME }}
+          path: ./
+
+      - name: Setup SSH key
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ env.SSH_KEY }}
+
+      - name: Setup SSH known hosts
+        run: make setup-ssh SSH_HOST=${{ env.SSH_HOST }} SSH_PORT=${{ env.SSH_PORT }}
+
+      - name: Deploy to production
+        run: |
+          make deploy \
+            ARTIFACT_NAME=${{ env.PROD_ARTIFACT_NAME }} \
+            REVISION=${{ github.sha }} \
+            SERVER_PATH=${{ env.PROD_PATH }} \
+            SSH_HOST=${{ env.SSH_HOST }} \
+            SSH_USER=${{ env.SSH_USER }} \
+            SSH_PORT=${{ env.SSH_PORT }} \
+            PORT=${{ env.PROD_PORT }} \
+            ENVIRONMENT=production
+
+      - name: Verify deployment
+        run: |
+          make verify-deployment \
+            SERVER_PATH=${{ env.PROD_PATH }} \
+            SSH_HOST=${{ env.SSH_HOST }} \
+            SSH_USER=${{ env.SSH_USER }} \
+            SSH_PORT=${{ env.SSH_PORT }} \
+            REVISION=${{ github.sha }}
+
+  # Rollback job (manual trigger or automatic on failure)
+  rollback:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' || (needs.deploy-production.result == 'failure' && github.ref == 'refs/heads/master')
+    environment: production
+    needs: [deploy-production]
+    steps:
+      - name: Checkout deployment scripts
+        uses: actions/checkout@v4
+
+      - name: Setup SSH key
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ env.SSH_KEY }}
+
+      - name: Setup SSH known hosts
+        run: make setup-ssh SSH_HOST=${{ env.SSH_HOST }} SSH_PORT=${{ env.SSH_PORT }}
+
+      - name: Rollback production deployment
+        run: |
+          make rollback \
+            SERVER_PATH=${{ env.PROD_PATH }} \
+            SSH_HOST=${{ env.SSH_HOST }} \
+            SSH_USER=${{ env.SSH_USER }} \
+            SSH_PORT=${{ env.SSH_PORT }}
+
+      - name: Verify rollback deployment
+        run: |
+          make verify-deployment \
+            SERVER_PATH=${{ env.PROD_PATH }} \
+            SSH_HOST=${{ env.SSH_HOST }} \
+            SSH_USER=${{ env.SSH_USER }} \
+            SSH_PORT=${{ env.SSH_PORT }} \
+            REVISION=$(ssh -p ${{ env.SSH_PORT }} ${{ env.SSH_USER }}@${{ env.SSH_HOST }} "readlink ${{ env.PROD_PATH }}/previous" 2>/dev/null || echo "")
