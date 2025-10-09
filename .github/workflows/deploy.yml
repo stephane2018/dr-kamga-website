@@ -1,4 +1,4 @@
-name: Quastrom Trust SASS CI/CD Pipeline
+name: DR Kanga SASS CI/CD Pipeline
 
 on:
   push:
