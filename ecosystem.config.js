@@ -9,7 +9,7 @@ module.exports = {
       // To run: pm2 start ecosystem.config.js --only trust-quastrom-staging
       // Or: NODE_ENV=staging PORT=8091 pm2 start ecosystem.config.js --only trust-quastrom-staging --update-env
       {
-        name: "trust-quastrom-staging", // Unique name for this process
+        name: "cabinedab-staging", // Unique name for this process
         script: "./current/standalone/server.js",
         cwd: "/var/www/cabinetdab.com/staging", // Working directory
         instances: 1, // How many processes to run (1 for dev/staging, 'max' for production)
@@ -45,7 +45,7 @@ module.exports = {
       // To run: pm2 start ecosystem.config.js --only trust-quastrom-production
       // Or: NODE_ENV=production PORT=8090 pm2 start ecosystem.config.js --only trust-quastrom-production --update-env
       {
-        name: "trust-quastrom-production",
+        name: "cabinedab-production",
         script: "./current/standalone/server.js",
         cwd: "/var/www/cabinetdab.com/prod",
         instances: "max",
