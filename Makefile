@@ -27,7 +27,6 @@ SERVER_PATH ?= /var/www/trust.quastrom.com/dev
 SSH_HOST ?= localhost
 SSH_USER ?= deploy
 SSH_PORT ?= 22
-SSH_KEY_PATH ?= ~/.ssh/id_rsa
 ENVIRONMENT ?= development
 KEEP_RELEASES ?= 3
 PORT ?= 3000
@@ -142,11 +141,11 @@ deploy:
 
 	# Upload artifact
 	@echo "Uploading artifact..."
-	scp -i $(SSH_KEY_PATH) -P $(SSH_PORT) ./$(ARTIFACT_NAME).tar.gz $(SSH_USER)@$(SSH_HOST):$(SERVER_PATH)/releases/$(REVISION).tar.gz
+	scp -P $(SSH_PORT) ./$(ARTIFACT_NAME).tar.gz $(SSH_USER)@$(SSH_HOST):$(SERVER_PATH)/releases/$(REVISION).tar.gz
 
 	# Deploy via SSH script
 	@echo "Deploying on server..."
-	ssh -i $(SSH_KEY_PATH) -p $(SSH_PORT) $(SSH_USER)@$(SSH_HOST) 'bash -s' < scripts/deploy.sh $(SSH_USER) $(SERVER_PATH) $(REVISION) $(ENVIRONMENT) $(KEEP_RELEASES) $(PORT)
+	ssh -p $(SSH_PORT) $(SSH_USER)@$(SSH_HOST) 'bash -s' < scripts/deploy.sh $(SSH_USER) $(SERVER_PATH) $(REVISION) $(ENVIRONMENT) $(KEEP_RELEASES) $(PORT)
 
 	@echo "Deployment completed"
 
@@ -159,7 +158,7 @@ verify-deployment:
 	@test -n "$(REVISION)" || (echo "REVISION not set" && exit 1)
 
 	# Check if current symlink points to the right release
-	current_release=$$(ssh -i $(SSH_KEY_PATH) -p $(SSH_PORT) $(SSH_USER)@$(SSH_HOST) "readlink $(SERVER_PATH)/current"); \
+	current_release=$$(ssh -p $(SSH_PORT) $(SSH_USER)@$(SSH_HOST) "readlink $(SERVER_PATH)/current"); \
 	expected_path="$(SERVER_PATH)/releases/$(REVISION)"; \
 	if [ "$$current_release" != "$$expected_path" ]; then \
 		echo "Deployment verification failed: current symlink points to $$current_release, expected $$expected_path"; \
@@ -167,7 +166,7 @@ verify-deployment:
 	fi
 
 	# Check if PM2 process is running
-	ssh -i $(SSH_KEY_PATH) -p $(SSH_PORT) $(SSH_USER)@$(SSH_HOST) "cd $(SERVER_PATH) && pm2 status | grep -q online" || \
+	ssh -p $(SSH_PORT) $(SSH_USER)@$(SSH_HOST) "cd $(SERVER_PATH) && pm2 status | grep -q online" || \
 		(echo "PM2 process not running" && exit 1)
 
 	# Basic health check (if health endpoint exists)
@@ -181,7 +180,7 @@ rollback:
 	@test -n "$(SSH_USER)" || (echo "SSH_USER not set" && exit 1)
 
 	# Execute rollback script
-	ssh -i $(SSH_KEY_PATH) -p $(SSH_PORT) $(SSH_USER)@$(SSH_HOST) 'bash -s' < scripts/rollback.sh $(SSH_USER) $(SERVER_PATH)
+	ssh -p $(SSH_PORT) $(SSH_USER)@$(SSH_HOST) 'bash -s' < scripts/rollback.sh $(SSH_USER) $(SERVER_PATH)
 
 	@echo "Rollback completed"
 
