@@ -18,7 +18,7 @@ export function Navigation() {
   }
 
   return (
-    <nav className="bg-white sticky top-0 z-50 shadow-sm">
+    <nav className="bg-primary sticky top-0 z-50 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <Link href="/" className="flex ">
@@ -26,53 +26,53 @@ export function Navigation() {
               <Image src="/new-logo.png" alt="Logo" width={80} height={80} className="w-full h-full rounded-full" />
             </div>
             <div className="flex flex-col ml-2 mt-4">  
-              <span className="font-semibold text-lg text-primary">Cabinet DAB</span>
+              <span className="font-semibold text-lg text-white">Cabinet DAB</span>
             </div>
            
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center  space-x-8">
             <Link
               href="/"
               className={cn(
-                "relative px-3 py-2 rounded-lg transition-all duration-200",
+                "relative px-2 py-2 rounded-lg transition-all duration-200",
                 isActive("/")
-                  ? "text-primary bg-primary/10 font-medium"
-                  : "text-primary/80 hover:text-primary hover:bg-primary/5"
+                  ? "text-white bg-white/10 font-medium"
+                  : "text-white/80 hover:text-white hover:bg-white/5 "
               )}
             >
               Accueil
               {isActive("/") && (
-                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-secondary rounded-full"></div>
+                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-white rounded-full"></div>
               )}
             </Link>
             <Link
               href="/a-propos"
               className={cn(
-                "relative  py-2 rounded-lg transition-all duration-200",
+                "relative  px-2 py-2 rounded-lg transition-all duration-200",
                 isActive("/a-propos")
-                  ? "text-primary bg-primary/10 font-medium"
-                  : "text-primary/80 hover:text-primary hover:bg-primary/5"
+                    ? "text-white bg-white/10 font-medium"
+                  : "text-white/80 hover:text-white hover:bg-white/5"
               )}
             >
               À Propos
               {isActive("/a-propos") && (
-                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-secondary rounded-full"></div>
+                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-white rounded-full"></div>
               )}
             </Link>
             <Link
               href="/masterclass"
               className={cn(
-                "relative  py-2 rounded-lg transition-all duration-200",
+                "relative  px-2 py-2 rounded-lg transition-all duration-200",
                 isActive("/masterclass")
-                  ? "text-primary bg-primary/10 font-medium"
-                  : "text-primary/80 hover:text-primary hover:bg-primary/5"
+                   ? "text-white bg-white/10 font-medium"
+                  : "text-white/80 hover:text-white hover:bg-white/5"
               )}
             >
               Masterclass
               {isActive("/masterclass") && (
-                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-secondary rounded-full"></div>
+                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-white rounded-full"></div>
               )}
             </Link>
             {/* <Link
@@ -92,15 +92,15 @@ export function Navigation() {
             <Link
               href="/coaching"
               className={cn(
-                "relative  py-2 rounded-lg transition-all duration-200",
+                "relative  px-1 py-2 rounded-lg transition-all duration-200",
                 isActive("/coaching")
-                  ? "text-primary bg-primary/10 font-medium"
-                  : "text-primary/80 hover:text-primary hover:bg-primary/5"
+                   ? "text-white bg-white/10 font-medium"
+                  : "text-white/80 hover:text-white hover:bg-white/5"
               )}
             >
               Coaching Privé
               {isActive("/coaching") && (
-                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-secondary rounded-full"></div>
+                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-white rounded-full"></div>
               )}
             </Link>
             <Button variant="secondary" asChild>
