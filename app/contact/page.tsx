@@ -24,6 +24,8 @@ export default function ContactPage() {
     setIsLoading(true)
     setFormStatus({ type: null, message: "" })
 
+    const form = e.currentTarget; 
+
     const formData = new FormData(e.currentTarget)
     const data = {
       firstName: formData.get("firstName"),
@@ -51,8 +53,7 @@ export default function ContactPage() {
           type: "success",
           message: result.message || "Votre message a été envoyé avec succès !",
         })
-        // Réinitialiser le formulaire
-        e.currentTarget.reset()
+        form.reset()
         setSelectedInterest("")
       } else {
         setFormStatus({
@@ -61,6 +62,7 @@ export default function ContactPage() {
         })
       }
     } catch (error) {
+      console.log(error);
       setFormStatus({
         type: "error",
         message: "Une erreur est survenue. Veuillez réessayer plus tard.",

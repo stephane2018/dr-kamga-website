@@ -6,42 +6,17 @@
 
 export const emailConfig = {
   smtp: {
-    host: "smtp.example.com",          // Remplacez par votre serveur SMTP (ex: smtp.gmail.com, smtp.office365.com)
-    port: 587,                          // Port SMTP (587 pour TLS, 465 pour SSL)
-    secure: false,                      // true pour port 465, false pour les autres ports
+    host: "smtp.hostinger.com",          
+    port: 465,                          
+    secure: true,                      
     auth: {
-      user: "your-email@example.com",   // Remplacez par votre adresse email
-      pass: "your-password-here",       // Remplacez par votre mot de passe ou app password
+      user: "mailing@cabinetdab.com",  
+      pass: "MonMailing2025@",      
     },
   },
   from: {
     name: "Cabinet DAB",
-    email: "noreply@cabinetdab.com",   // Remplacez par votre email d'envoi
+    email: "mailing@cabinetdab.com",  
   },
-  to: "info@cabinetdab.com",           // Remplacez par l'email de réception
+  to: "mailing@cabinetdab.com",        
 }
-
-/**
- * EXEMPLES DE CONFIGURATION SMTP:
- *
- * Gmail:
- * - host: "smtp.gmail.com"
- * - port: 587
- * - secure: false
- * - Créez un "App Password" dans votre compte Google pour plus de sécurité
- *
- * Outlook/Office365:
- * - host: "smtp.office365.com"
- * - port: 587
- * - secure: false
- *
- * SendGrid:
- * - host: "smtp.sendgrid.net"
- * - port: 587
- * - user: "apikey"
- * - pass: "votre-api-key-sendgrid"
- *
- * Mailgun:
- * - host: "smtp.mailgun.org"
- * - port: 587
- */
