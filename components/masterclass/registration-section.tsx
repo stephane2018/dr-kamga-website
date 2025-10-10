@@ -32,10 +32,10 @@ export function RegistrationSection() {
                   <span className="text-sm text-muted-foreground">Horaire:</span>
                   <span className="font-medium">14h-17h30 (GMT+1)</span>
                 </div>
-                <div className="flex items-center justify-between">
+                {/* <div className="flex items-center justify-between">
                   <span className="text-sm text-muted-foreground">Prix:</span>
                   <span className="font-medium text-lg">197€</span>
-                </div>
+                </div> */}
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-muted-foreground">Places restantes:</span>
                   <span className="font-medium text-primary">8/20</span>
@@ -66,10 +66,10 @@ export function RegistrationSection() {
                   <span className="text-sm text-muted-foreground">Horaire:</span>
                   <span className="font-medium">9h-13h</span>
                 </div>
-                <div className="flex items-center justify-between">
+                {/* <div className="flex items-center justify-between">
                   <span className="text-sm text-muted-foreground">Prix:</span>
                   <span className="font-medium text-lg">297€</span>
-                </div>
+                </div> */}
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-muted-foreground">Places restantes:</span>
                   <span className="font-medium text-primary">5/15</span>

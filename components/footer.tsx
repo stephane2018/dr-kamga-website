@@ -90,11 +90,11 @@ export function Footer() {
                   Masterclass
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link href="/seminaires" className="text-muted-foreground hover:text-primary transition-colors">
                   Séminaires
                 </Link>
-              </li>
+              </li> */}
               <li>
                 <Link href="/coaching" className="text-muted-foreground hover:text-primary transition-colors">
                   Coaching Privé
