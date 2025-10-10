@@ -141,7 +141,7 @@ deploy:
 
 	# Upload artifact
 	@echo "Uploading artifact..."
-	scp -P $(SSH_PORT) ./$(ARTIFACT_NAME).tar.gz $(SSH_USER)@$(SSH_HOST):$(SERVER_PATH)/releases/$(REVISION).tar.gz
+	scp -p $(SSH_PORT) ./$(ARTIFACT_NAME).tar.gz $(SSH_USER)@$(SSH_HOST):$(SERVER_PATH)/releases/$(REVISION).tar.gz
 
 	# Deploy via SSH script
 	@echo "Deploying on server..."
