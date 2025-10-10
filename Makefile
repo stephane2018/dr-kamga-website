@@ -139,6 +139,10 @@ deploy:
 	@test -n "$(SSH_USER)" || (echo "SSH_USER not set" && exit 1)
 	@test -f $(ARTIFACT_NAME).tar.gz || (echo "Artifact not found: $(ARTIFACT_NAME).tar.gz" && exit 1)
 
+	# Verify SERVER_PATH exists and has correct permissions on server
+	@echo "Verifying server path and permissions..."
+	@ssh -p $(SSH_PORT) $(SSH_USER)@$(SSH_HOST) 'bash -s' < scripts/verify-server-path.sh $(SSH_USER) $(SERVER_PATH)
+
 	# Upload artifact
 	@echo "Uploading artifact..."
 	scp -P $(SSH_PORT) ./$(ARTIFACT_NAME).tar.gz $(SSH_USER)@$(SSH_HOST):$(SERVER_PATH)/releases/$(REVISION).tar.gz
