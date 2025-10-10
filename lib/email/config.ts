@@ -4,6 +4,7 @@
  * Les valeurs sont chargées depuis les variables d'environnement
  */
 
+
 export const emailConfig = {
   smtp: {
     host: process.env.SMTP_HOST || "smtp.hostinger.com",
