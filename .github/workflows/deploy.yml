@@ -95,6 +95,7 @@ jobs:
           SMTP_FROM_NAME: ${{ secrets.SMTP_FROM_NAME }}
           SMTP_FROM_EMAIL: ${{ secrets.SMTP_FROM_EMAIL }}
           SMTP_TO: ${{ secrets.SMTP_TO }}
+          NEXT_PUBLIC_SITE_URL: ${{ secrets.NEXT_PUBLIC_SITE_URL }}
 
       - name: Package build for staging
         run: make package ARTIFACT_NAME=${{ env.STAGING_ARTIFACT_NAME }} REVISION=${{ github.sha }} ENVIRONMENT=staging
@@ -141,6 +142,7 @@ jobs:
           SMTP_FROM_NAME: ${{ secrets.SMTP_FROM_NAME }}
           SMTP_FROM_EMAIL: ${{ secrets.SMTP_FROM_EMAIL }}
           SMTP_TO: ${{ secrets.SMTP_TO }}
+          NEXT_PUBLIC_SITE_URL: ${{ secrets.NEXT_PUBLIC_SITE_URL }}
 
       - name: Package build for production
         run: make package ARTIFACT_NAME=${{ env.PROD_ARTIFACT_NAME }} REVISION=${{ github.sha }} ENVIRONMENT=production

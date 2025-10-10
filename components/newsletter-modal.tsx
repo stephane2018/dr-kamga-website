@@ -28,7 +28,6 @@ export function NewsletterModal() {
 
   const handleClose = () => {
     setIsVisible(false)
-    // Set cookie to remember user has seen the modal (expires in 30 days)
     const expiryDate = new Date()
     expiryDate.setDate(expiryDate.getDate() + 30)
     document.cookie = `newsletter_modal_seen=true; expires=${expiryDate.toUTCString()}; path=/`
@@ -38,21 +37,38 @@ export function NewsletterModal() {
     e.preventDefault()
     setIsSubmitting(true)
 
-    // TODO: Replace with actual newsletter API endpoint
-    await new Promise((resolve) => setTimeout(resolve, 1000))
+    try {
+      // Appel à l'API newsletter
+      const response = await fetch("/api/newsletter", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: email.trim().toLowerCase() }),
+      })
 
-    // Set cookie to remember user has subscribed (expires in 1 year)
-    const expiryDate = new Date()
-    expiryDate.setFullYear(expiryDate.getFullYear() + 1)
-    document.cookie = `newsletter_subscribed=true; expires=${expiryDate.toUTCString()}; path=/`
+      const data = await response.json()
 
-    setIsSubmitting(false)
-    setIsSubmitted(true)
+      if (data.success) {
+        const expiryDate = new Date()
+        expiryDate.setFullYear(expiryDate.getFullYear() + 1)
+        document.cookie = `newsletter_subscribed=true; expires=${expiryDate.toUTCString()}; path=/`
 
-    // Close modal after 2 seconds
-    setTimeout(() => {
-      setIsVisible(false)
-    }, 2000)
+        setIsSubmitted(true)
+
+        setTimeout(() => {
+          setIsVisible(false)
+        }, 3000)
+      } else {
+        console.error("Erreur d'inscription:", data.error)
+        alert("Une erreur est survenue. Veuillez réessayer.")
+      }
+    } catch (error) {
+      console.error("Erreur lors de l'inscription:", error)
+      alert("Erreur de connexion. Veuillez réessayer.")
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   if (!isVisible) return null
