@@ -1,22 +1,22 @@
 /**
  * Configuration SMTP pour l'envoi d'emails
  *
- * IMPORTANT: Remplacez les valeurs suivantes par vos propres informations SMTP
+ * Les valeurs sont chargées depuis les variables d'environnement
  */
 
 export const emailConfig = {
   smtp: {
-    host: "smtp.hostinger.com",          
-    port: 465,                          
-    secure: true,                      
+    host: process.env.SMTP_HOST || "smtp.hostinger.com",
+    port: parseInt(process.env.SMTP_PORT || "465"),
+    secure: process.env.SMTP_SECURE === "true",
     auth: {
-      user: "mailing@cabinetdab.com",  
-      pass: "MonMailing2025@",      
+      user: process.env.SMTP_USER || "mailing@cabinetdab.com",
+      pass: process.env.SMTP_PASSWORD || "MonMailing2025@",
     },
   },
   from: {
-    name: "Cabinet DAB",
-    email: "mailing@cabinetdab.com",  
+    name: process.env.SMTP_FROM_NAME || "Cabinet DAB",
+    email: process.env.SMTP_FROM_EMAIL || "mailing@cabinetdab.com",
   },
-  to: "mailing@cabinetdab.com",        
+  to: process.env.SMTP_TO || "mailing@cabinetdab.com",
 }

@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge"
 import { Download, Wheat, Tractor, Leaf } from "lucide-react"
 import Link from "next/link"
 import { useState, useEffect } from "react"
+import { DownloadGuideModal } from "@/components/download-guide-modal"
 
 
 const backgroundImages = [
@@ -109,10 +110,10 @@ export function BackgroundSlider({ images }: BackgroundSliderProps) {
         ))}
       </div>
 
-      {/* Progress Bar Animation */}
+   
       <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-white/20 rounded-full overflow-hidden z-10">
         <div
-          key={currentIndex} // Force re-render for animation reset
+          key={currentIndex}
           className="h-full bg-gradient-to-r from-white to-white/80 rounded-full animate-[progressReset_5000ms_ease-out]"
         ></div>
       </div>
@@ -122,6 +123,8 @@ export function BackgroundSlider({ images }: BackgroundSliderProps) {
 
 
 export function HeroSection() {
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
   return (
     <section className="relative min-h-[700px] flex items-center overflow-hidden">
       {/* Background Image Slider */}
@@ -133,7 +136,7 @@ export function HeroSection() {
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Left Content */}
+
           <div>
             <Badge
               className="mb-6 bg-primary-foreground/20 text-primary-foreground border-primary-foreground/30"
@@ -149,11 +152,14 @@ export function HeroSection() {
               Cabinet DAB.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" variant="secondary" asChild>
-                <Link href="/methode-cabinetdab-guide.pdf" download="Methode-Cabinetdab-Guide.pdf" className="flex items-center gap-2">
-                  <Download className="h-4 w-4" />
-                  Découvrir la méthode
-                </Link>
+              <Button
+                size="lg"
+                variant="secondary"
+                onClick={() => setIsModalOpen(true)}
+                className="flex items-center gap-2"
+              >
+                <Download className="h-4 w-4" />
+                Découvrir la méthode
               </Button>
               <Button
                 size="lg"
@@ -168,6 +174,9 @@ export function HeroSection() {
 
         </div>
       </div>
+
+      {/* Modal de téléchargement */}
+      <DownloadGuideModal open={isModalOpen} onOpenChange={setIsModalOpen} />
     </section>
   )
 }
