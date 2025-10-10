@@ -7,6 +7,7 @@ import { Download, Wheat, Tractor, Leaf } from "lucide-react"
 import Link from "next/link"
 import { useState, useEffect } from "react"
 import { DownloadGuideModal } from "@/components/download-guide-modal"
+import { emailConfig } from "@/lib/email/config"
 
 
 const backgroundImages = [
@@ -64,7 +65,7 @@ interface BackgroundSliderProps {
 
 export function BackgroundSlider({ images }: BackgroundSliderProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
-
+  console.log(emailConfig)
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length)
@@ -130,7 +131,7 @@ export function HeroSection() {
       {/* Background Image Slider */}
       <BackgroundSlider images={backgroundImages} />
 
-      {/* Gradient Overlays */}
+    
       <div className="absolute inset-0 bg-gradient-to-r from-primary/95 via-primary/90 to-primary/40"></div>
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/10 to-primary/20"></div>
 
