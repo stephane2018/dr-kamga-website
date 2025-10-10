@@ -69,7 +69,7 @@ export function BackgroundSlider({ images }: BackgroundSliderProps) {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length)
-    }, 5000) // Change image every 5 seconds
+    }, 5000) 
 
     return () => clearInterval(interval)
   }, [images.length])
@@ -89,7 +89,7 @@ export function BackgroundSlider({ images }: BackgroundSliderProps) {
         ))}
       </div>
 
-      {/* Dot Indicators */}
+     
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-3 z-10">
         {images.map((_, index) => (
           <button
@@ -103,7 +103,6 @@ export function BackgroundSlider({ images }: BackgroundSliderProps) {
             aria-label={`Go to slide ${index + 1}`}
           >
             <span className="sr-only">Slide {index + 1}</span>
-            {/* Pulse animation for active dot */}
             {index === currentIndex && (
               <div className="absolute inset-0 rounded-full bg-white animate-ping opacity-30"></div>
             )}

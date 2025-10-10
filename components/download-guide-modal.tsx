@@ -29,7 +29,7 @@ export function DownloadGuideModal({ open, onOpenChange }: DownloadGuideModalPro
     setIsLoading(true)
 
     try {
-      // Validation de l'email
+    
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
       if (!emailRegex.test(email)) {
         setError("Veuillez entrer une adresse email valide")
@@ -37,7 +37,7 @@ export function DownloadGuideModal({ open, onOpenChange }: DownloadGuideModalPro
         return
       }
 
-      // Envoyer la demande à l'API
+
       const response = await fetch("/api/download-guide", {
         method: "POST",
         headers: {
@@ -49,7 +49,6 @@ export function DownloadGuideModal({ open, onOpenChange }: DownloadGuideModalPro
       const data = await response.json()
 
       if (data.success) {
-        // Déclencher le téléchargement
         const link = document.createElement("a")
         link.href = "/methode-cabinetdab-guide.pdf"
         link.download = "Methode-Cabinetdab-Guide.pdf"

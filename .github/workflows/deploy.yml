@@ -89,7 +89,7 @@ jobs:
           STRIPE_SECRET_KEY: ${{ env.STAGING_STRIPE_SECRET_KEY }}
           SMTP_HOST: ${{ secrets.SMTP_HOST }}
           SMTP_PORT: ${{ secrets.SMTP_PORT }}
-          SMTP_SECURE: ${{ secrets.SMTP_SECURE }}
+          SMTP_SECURE: true
           SMTP_USER: ${{ secrets.SMTP_USER }}
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
           SMTP_FROM_NAME: ${{ secrets.SMTP_FROM_NAME }}
@@ -109,7 +109,7 @@ jobs:
           path: ${{ env.STAGING_ARTIFACT_NAME }}.tar.gz
           retention-days: 7
 
-  # Build for Production
+
   build-production:
     runs-on: ubuntu-latest
     needs: quality-checks
@@ -135,7 +135,7 @@ jobs:
           DATABASE_URL: ${{ env.DATABASE_URL }}
           SMTP_HOST: ${{ secrets.SMTP_HOST }}
           SMTP_PORT: ${{ secrets.SMTP_PORT }}
-          SMTP_SECURE: ${{ secrets.SMTP_SECURE }}
+          SMTP_SECURE: true
           SMTP_USER: ${{ secrets.SMTP_USER }}
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
           SMTP_FROM_NAME: ${{ secrets.SMTP_FROM_NAME }}
