@@ -12,6 +12,8 @@ ENVIRONMENT="${4:-production}"
 KEEP_RELEASES="${5:-3}"
 PORT="${6:-3000}"
 
+PM2_APP_NAME="cabinetdab-$ENVIRONMENT"
+
 # Validation
 if [[ -z "$SERVER_PATH" || -z "$REVISION" ]]; then
     echo "Error: SERVER_PATH and REVISION are required"
@@ -125,12 +127,12 @@ fi
 
 # Start or reload PM2
 log "Managing PM2 process"
-if pm2 describe "cabinetdab-$ENVIRONMENT" >/dev/null 2>&1; then
+if pm2 describe "$PM2_APP_NAME" >/dev/null 2>&1; then
     log "Reloading existing PM2 process with updated environment"
-    NODE_ENV="$ENVIRONMENT" PORT="$PORT" pm2 reload "cabinetdab--$ENVIRONMENT" --update-env
+    NODE_ENV="$ENVIRONMENT" PORT="$PORT" pm2 reload "$PM2_APP_NAME" --update-env
 else
     log "Starting new PM2 process"
-    NODE_ENV="$ENVIRONMENT" PORT="$PORT" pm2 start ecosystem.config.js --name "cabinetdab--$ENVIRONMENT" --update-env
+    NODE_ENV="$ENVIRONMENT" PORT="$PORT" pm2 start ecosystem.config.js --name "$PM2_APP_NAME" --update-env
 fi
 
 # Save PM2 configuration
@@ -141,7 +143,7 @@ log "Waiting for application to start..."
 sleep 5
 
 # Basic health check
-if pm2 status | grep -q "cabinetdab-$ENVIRONMENT.*online"; then
+if pm2 status | grep -q "$PM2_APP_NAME.*online"; then
     log "Application started successfully"
 else
     log "WARNING: Application may not have started properly"
@@ -151,7 +153,7 @@ fi
 # Verify port
 log "Verifying application is running on port $PORT"
 if netstat -tulnp 2>/dev/null | grep -q ":$PORT"; then
-    log "Port $PORT is in use"
+    log "Port $PORT running: $(netstat -tulnp | grep ":$PORT")"
 else
     log "ERROR: Application not running on port $PORT"
     exit 1
@@ -188,7 +190,7 @@ fi
 log "Deployment completed successfully"
 log "Current release: $REVISION"
 log "Application status:"
-pm2 status | grep "cabinetdab-$ENVIRONMENT" || true
+pm2 status | grep "$PM2_APP_NAME" || true
 
 # Final verification
 if [[ -L "$CURRENT_LINK" ]] && [[ -d "$(readlink "$CURRENT_LINK")" ]]; then
