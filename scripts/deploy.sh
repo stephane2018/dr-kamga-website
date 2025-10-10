@@ -46,6 +46,39 @@ log "Revision: $REVISION"
 log "Environment: $ENVIRONMENT"
 log "Keep Releases: $KEEP_RELEASES"
 
+# Verify SERVER_PATH exists and has correct permissions
+log "Verifying server path"
+if [[ ! -d "$SERVER_PATH" ]]; then
+    log "Creating server path: $SERVER_PATH"
+    if ! mkdir -p "$SERVER_PATH"; then
+        log "ERROR: Failed to create server path: $SERVER_PATH"
+        log "Please check parent directory permissions"
+        exit 1
+    fi
+fi
+
+# Set ownership and permissions
+log "Setting ownership and permissions for $SERVER_PATH"
+if ! chown -R $USER:www-data "$SERVER_PATH" 2>/dev/null; then
+    log "WARNING: Failed to set ownership (may require sudo privileges)"
+fi
+
+if ! chmod 755 "$SERVER_PATH" 2>/dev/null; then
+    log "WARNING: Failed to set permissions (may require sudo privileges)"
+fi
+
+# Verify write permissions after attempting to set them
+if [[ ! -w "$SERVER_PATH" ]]; then
+    log "ERROR: No write permission for $SERVER_PATH"
+    log "Current user: $(whoami)"
+    log "Directory owner: $(stat -f '%Su:%Sg' "$SERVER_PATH" 2>/dev/null || stat -c '%U:%G' "$SERVER_PATH" 2>/dev/null || echo 'unknown')"
+    log "Directory permissions: $(stat -f '%A' "$SERVER_PATH" 2>/dev/null || stat -c '%a' "$SERVER_PATH" 2>/dev/null || echo 'unknown')"
+    log "Please run with appropriate privileges or fix permissions manually"
+    exit 1
+fi
+
+log "Server path verified successfully"
+
 # Create directory structure
 log "Setting up directory structure"
 mkdir -p "$SERVER_PATH"/{releases,shared,logs}
