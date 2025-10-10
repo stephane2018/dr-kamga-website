@@ -18,19 +18,19 @@ export function StructuredData({ type = 'website', data }: StructuredDataProps) 
           "@type": "WebSite",
           name: "Cabinet DAB",
           alternateName: "Cabinet DAB",
-          url: "https://www.cabinetDab.com",
+          url: "https://www.cabinetdab.com",
           description: "Programme de formation agricole pour transformer votre exploitation locale en entreprise exportatrice",
           publisher: {
             "@type": "Organization",
             name: "Cabinet DAB",
             logo: {
               "@type": "ImageObject",
-              url: "https://www.cabinetDab.com/logo.png"
+              url: "https://www.cabinetdab.com/logo.png"
             }
           },
           potentialAction: {
             "@type": "SearchAction",
-            target: "https://www.cabinetDab.com/search?q={search_term_string}",
+            target: "https://www.cabinetdab.com/search?q={search_term_string}",
             "query-input": "required name=search_term_string"
           }
         }
@@ -41,8 +41,8 @@ export function StructuredData({ type = 'website', data }: StructuredDataProps) 
           "@type": "Organization",
           name: "CabinetDab",
           alternateName: "Cabinet DAB",
-          url: "https://www.cabinetDab.com",
-          logo: "https://www.cabinetDab.com/logo.png",
+          url: "https://www.cabinetdab.com",
+          logo: "https://www.cabinetdab.com/logo.png",
           contactPoint: {
             "@type": "ContactPoint",
             telephone: "+33-1-23-45-67-89",
@@ -50,7 +50,7 @@ export function StructuredData({ type = 'website', data }: StructuredDataProps) 
             availableLanguage: "French"
           },
           sameAs: [
-            "https://www.facebook.com/cabinetDab",
+            "https://www.facebook.com/cabinetdab",
             "https://www.linkedin.com/company/cabinetDab",
             "https://www.twitter.com/cabinetDab"
           ],

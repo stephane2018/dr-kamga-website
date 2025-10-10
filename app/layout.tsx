@@ -37,6 +37,17 @@ export const metadata: Metadata = {
     telephone: false,
   },
   metadataBase: new URL('https://www.cabinetdab.com'),
+  icons: {
+    icon: [
+      { url: '/favicon.png', sizes: '192x192', type: 'image/png' },
+      { url: '/new-logo.png', sizes: '512x512', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/new-logo.png', sizes: '180x180', type: 'image/png' },
+    ],
+    shortcut: '/favicon.png',
+  },
+  manifest: '/site.webmanifest',
   alternates: {
     canonical: '/',
     languages: {

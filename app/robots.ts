@@ -10,10 +10,24 @@ export default function robots(): MetadataRoute.Robots {
         allow: '/',
         disallow: [
           '/admin/',
+          '/admin/*',
           '/api/',
+          '/api/*',
+          '/unsubscribe',
           '/private/',
           '/_next/',
           '/static/',
+        ],
+      },
+      {
+        userAgent: 'Googlebot',
+        allow: '/',
+        disallow: [
+          '/admin/',
+          '/admin/*',
+          '/api/',
+          '/api/*',
+          '/unsubscribe',
         ],
       },
       {
