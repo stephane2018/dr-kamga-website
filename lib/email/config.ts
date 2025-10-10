@@ -9,7 +9,7 @@ export const emailConfig = {
   smtp: {
     host: process.env.SMTP_HOST || "smtp.hostinger.com",
     port: parseInt(process.env.SMTP_PORT || "465"),
-    secure: process.env.SMTP_SECURE === "true",
+    secure: process.env.SMTP_SECURE  || true,
     auth: {
       user: process.env.SMTP_USER || "mailing@cabinetdab.com",
       pass: process.env.SMTP_PASSWORD || "MonMailing2025@",
