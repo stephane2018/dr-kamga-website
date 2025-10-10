@@ -65,7 +65,7 @@ interface BackgroundSliderProps {
 
 export function BackgroundSlider({ images }: BackgroundSliderProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
-  console.log(emailConfig)
+ 
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length)
