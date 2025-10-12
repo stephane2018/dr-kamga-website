@@ -37,7 +37,7 @@ export function ProgramSection() {
             <h3 className="text-xl font-bold text-primary mb-3"> Gestion de la production 
             </h3>
             <p className="text-gray-600 text-sm leading-relaxed">
-             ont donne les outils pour structurer et optimiser votre unité pour devenir compétitif et rentable.
+             Ont donne les outils pour structurer et optimiser votre unité pour devenir compétitif et rentable.
             </p>
           </div>
 
