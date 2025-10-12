@@ -21,23 +21,27 @@ export function AboutHeroSection() {
               Parcours Expert
             </Badge>
             <h1 className="text-4xl md:text-5xl font-bold mb-6 text-balance text-white">
-              Dr. Kanga Kouamé - Mon Parcours
+              40 ans d'expérience au service de l'Agriculture Africaine
             </h1>
-            <p className="text-xl text-white/90 mb-6 text-pretty">
-              Docteur vétérinaire de formation et expert reconnu en agriculture, transformation locale et exportation de produits agroalimentaires. Découvrez comment 40 années d'expérience m'ont mené à développer ma méthode signature "De la ferme aux marchés mondiaux".
+            <p className="text-xl text-white/90 mb-6 text-pretty leading-relaxed">
+              Docteur vétérinaire et expert reconnu de la transformation locale et de l'exportation, le Dr Kanga Kouamé a conçu la méthode <span className="font-semibold">"De la ferme aux marchés mondiaux"</span> pour accompagner les producteurs vers l'autonomie et la compétitivité internationale.
             </p>
-            <div className="space-y-4 text-white/80">
-              <div className="flex items-center space-x-3">
-                <div className="w-2 h-2 bg-white rounded-full"></div>
-                <span>40+ années d'expérience terrain</span>
+            <div className="space-y-3 text-white/90">
+              <div className="flex items-start space-x-3">
+                <div className="w-2 h-2 bg-white rounded-full mt-2 flex-shrink-0"></div>
+                <span>Conseiller diplomatique de la CI auprès de la FAO, du PAM et du FIDA</span>
               </div>
-              <div className="flex items-center space-x-3">
-                <div className="w-2 h-2 bg-white rounded-full"></div>
-                <span>Diplômé de l'Université de Liège</span>
+              <div className="flex items-start space-x-3">
+                <div className="w-2 h-2 bg-white rounded-full mt-2 flex-shrink-0"></div>
+                <span>Docteur en médecine vétérinaire, diplômé de l'Université de Liège (Belgique)</span>
               </div>
-              <div className="flex items-center space-x-3">
-                <div className="w-2 h-2 bg-white rounded-full"></div>
-                <span>Expert FAO, PAM et FIDA</span>
+              <div className="flex items-start space-x-3">
+                <div className="w-2 h-2 bg-white rounded-full mt-2 flex-shrink-0"></div>
+                <span>Point focal OMC pour le système de contrôle sanitaire et phytosanitaire</span>
+              </div>
+              <div className="flex items-start space-x-3">
+                <div className="w-2 h-2 bg-white rounded-full mt-2 flex-shrink-0"></div>
+                <span>Autorité compétente officielle de la CI pour l'agrément des établissements</span>
               </div>
             </div>
           </div>
@@ -46,7 +50,7 @@ export function AboutHeroSection() {
               <div className="absolute inset-0 bg-gradient-to-br from-secondary/30 to-accent/30 rounded-[3rem] rotate-3 scale-105"></div>
               <div className="relative bg-gradient-to-br from-primary-foreground to-secondary/20 rounded-[2.5rem] p-2 shadow-2xl">
                 <img
-                  src="/kamga.jpg"
+                  src="/dr-kanga.jpeg"
                   alt="Dr. Kanga - Expert en agriculture internationale"
                   className="rounded-[2rem] w-full h-full object-cover aspect-square"
                 />
