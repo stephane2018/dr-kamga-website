@@ -175,7 +175,6 @@ export function HeroSection() {
         </div>
       </div>
 
-      {/* Modal de téléchargement */}
       <DownloadGuideModal open={isModalOpen} onOpenChange={setIsModalOpen} />
     </section>
   )

@@ -50,7 +50,7 @@ export function DownloadGuideModal({ open, onOpenChange }: DownloadGuideModalPro
 
       if (data.success) {
         const link = document.createElement("a")
-        link.href = "https://drive.usercontent.google.com/download?id=1ZS9A1l15O2mAXrVpoS1r6vGjSoYl3kNK&export=download&authuser=0&confirm=t&uuid=27f9facc-a194-4495-adde-272fee9b7a7c&at=AKSUxGPRnlfCkKS8RAr5hQEDWoqv:1760133697051"
+        link.href = "https://drive.google.com/file/d/1ZS9A1l15O2mAXrVpoS1r6vGjSoYl3kNK/view?usp=sharing"
         link.download = "Programme-Complet.pdf"
         document.body.appendChild(link)
         link.click()
