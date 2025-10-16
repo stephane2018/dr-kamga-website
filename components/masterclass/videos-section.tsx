@@ -1,16 +1,21 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Calendar, Video } from "lucide-react"
+import { useLanguage } from "@/locales/LanguageProvider"
 
 export function VideosSection() {
+  const { t } = useLanguage()
+  
   return (
     <section className="py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-balance">Vidéos Complémentaires</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-balance">{t.masterclass.videos.title}</h2>
           <p className="text-xl text-muted-foreground">
-            Découvrez nos vidéos pédagogiques pour approfondir vos connaissances
+            {t.masterclass.videos.subtitle}
           </p>
         </div>
 
@@ -23,20 +28,20 @@ export function VideosSection() {
             </div>
             <CardHeader>
               <div className="flex items-center justify-between">
-                <Badge variant="secondary">Capsule</Badge>
+                <Badge variant="secondary">{t.masterclass.videos.video1.badge}</Badge>
                 <div className="flex items-center space-x-1 text-sm text-muted-foreground">
                   <Calendar className="h-4 w-4" />
-                  <span>8 min</span>
+                  <span>{t.masterclass.videos.video1.duration}</span>
                 </div>
               </div>
-              <CardTitle className="text-lg">Les 3 règles pour produire selon les normes internationales</CardTitle>
+              <CardTitle className="text-lg">{t.masterclass.videos.video1.title}</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground mb-4">
-                Découvrez les standards essentiels pour préparer vos produits à l'exportation.
+                {t.masterclass.videos.video1.description}
               </p>
               <Button size="sm" className="w-full">
-                Voir la vidéo
+                {t.masterclass.videos.viewButton}
               </Button>
             </CardContent>
           </Card>
@@ -49,20 +54,20 @@ export function VideosSection() {
             </div>
             <CardHeader>
               <div className="flex items-center justify-between">
-                <Badge variant="outline">Cours Long</Badge>
+                <Badge variant="outline">{t.masterclass.videos.video2.badge}</Badge>
                 <div className="flex items-center space-x-1 text-sm text-muted-foreground">
                   <Calendar className="h-4 w-4" />
-                  <span>45 min</span>
+                  <span>{t.masterclass.videos.video2.duration}</span>
                 </div>
               </div>
-              <CardTitle className="text-lg">Comment transformer son produit et allonger sa durée de vie</CardTitle>
+              <CardTitle className="text-lg">{t.masterclass.videos.video2.title}</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground mb-4">
-                Techniques de transformation pour maximiser la valeur ajoutée de vos produits.
+                {t.masterclass.videos.video2.description}
               </p>
               <Button size="sm" className="w-full">
-                Voir la vidéo
+                {t.masterclass.videos.viewButton}
               </Button>
             </CardContent>
           </Card>
@@ -75,20 +80,20 @@ export function VideosSection() {
             </div>
             <CardHeader>
               <div className="flex items-center justify-between">
-                <Badge variant="secondary">Capsule</Badge>
+                <Badge variant="secondary">{t.masterclass.videos.video3.badge}</Badge>
                 <div className="flex items-center space-x-1 text-sm text-muted-foreground">
                   <Calendar className="h-4 w-4" />
-                  <span>12 min</span>
+                  <span>{t.masterclass.videos.video3.duration}</span>
                 </div>
               </div>
-              <CardTitle className="text-lg">Les étapes clés pour réussir son export</CardTitle>
+              <CardTitle className="text-lg">{t.masterclass.videos.video3.title}</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground mb-4">
-                Roadmap complète pour structurer votre démarche d'exportation.
+                {t.masterclass.videos.video3.description}
               </p>
               <Button size="sm" className="w-full">
-                Voir la vidéo
+                {t.masterclass.videos.viewButton}
               </Button>
             </CardContent>
           </Card>

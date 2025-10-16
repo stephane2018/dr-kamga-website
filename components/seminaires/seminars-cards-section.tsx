@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Users, Calendar, MapPin, Play, ChevronDown, ChevronUp, X, Image as ImageIcon } from "lucide-react"
 import Image from "next/image"
+import { useLanguage } from "@/locales/LanguageProvider"
 
 interface SeminarCardProps {
   slug: string
@@ -37,6 +38,7 @@ function SeminarCard({
   location,
   program
 }: SeminarCardProps) {
+  const { t } = useLanguage()
   const [isExpanded, setIsExpanded] = useState(false)
   const [showVideoModal, setShowVideoModal] = useState(false)
   const [showImageModal, setShowImageModal] = useState(false)
@@ -122,7 +124,7 @@ function SeminarCard({
             <div className="flex items-center gap-2">
               <Calendar className="h-3.5 w-3.5 text-primary flex-shrink-0" />
               <div>
-                <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-wide">Prochaine session</p>
+                <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-wide">{t.seminaires.cards.labels.nextSession}</p>
                 <p className="text-sm font-bold text-foreground">{nextSession}</p>
               </div>
             </div>
@@ -133,7 +135,7 @@ function SeminarCard({
             <div className="flex items-center gap-2">
               <MapPin className="h-3.5 w-3.5 text-secondary flex-shrink-0" />
               <div>
-                <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-wide">Lieu</p>
+                <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-wide">{t.seminaires.cards.labels.location}</p>
                 <p className="text-sm font-bold text-foreground">{location}</p>
               </div>
             </div>
@@ -149,12 +151,12 @@ function SeminarCard({
           >
             {isExpanded ? (
               <>
-                Masquer le programme
+                {t.seminaires.cards.labels.hideProgram}
                 <ChevronUp className="ml-2 h-4 w-4" />
               </>
             ) : (
               <>
-                Voir le programme
+                {t.seminaires.cards.labels.showProgram}
                 <ChevronDown className="ml-2 h-4 w-4" />
               </>
             )}
@@ -164,7 +166,7 @@ function SeminarCard({
             className="w-full bg-primary hover:bg-primary/90 py-2 text-sm rounded-lg"
           >
             <a href={`/seminaires/${slug}`}>
-              En savoir plus →
+              {t.seminaires.cards.labels.learnMore}
             </a>
           </Button>
         </div>
@@ -172,7 +174,7 @@ function SeminarCard({
         {/* Expandable Program Details */}
         {isExpanded && (
           <div className="space-y-3 pt-3 border-t border-gray-200 animate-in slide-in-from-top-2 duration-300">
-            <h4 className="font-bold text-sm mb-2">Programme détaillé</h4>
+            <h4 className="font-bold text-sm mb-2">{t.seminaires.cards.labels.detailedProgram}</h4>
             {program.map((day, index) => (
               <div key={index} className="space-y-1.5">
                 <div className="flex items-center gap-2 mb-1">

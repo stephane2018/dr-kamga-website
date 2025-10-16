@@ -1,6 +1,11 @@
+"use client"
+
 import { Badge } from "@/components/ui/badge"
+import { useLanguage } from "@/locales/LanguageProvider"
 
 export function MasterclassHeroSection() {
+  const { t } = useLanguage()
+  
   return (
     <section className="relative bg-gradient-to-br from-amber-900 via-amber-800 to-yellow-800 py-20 overflow-hidden">
       <div className="absolute inset-0 opacity-10">
@@ -26,11 +31,11 @@ export function MasterclassHeroSection() {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <Badge className="mb-4 bg-white/20 text-white border-white/30" variant="secondary">
-            Formation Expert
+            {t.masterclass.hero.badge}
           </Badge>
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 text-balance text-white">Masterclass Thématiques</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 text-balance text-white">{t.masterclass.hero.title}</h1>
           <p className="text-xl text-white/90 max-w-3xl mx-auto text-pretty">
-            Approfondissez vos connaissances avec des sessions expertes et interactives directement avec le Dr. Kanga.
+            {t.masterclass.hero.description}
           </p>
         </div>
       </div>

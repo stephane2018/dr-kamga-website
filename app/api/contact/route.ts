@@ -40,6 +40,7 @@ export async function POST(request: NextRequest) {
       interest: body.interest,
       situation: body.situation?.trim() || "",
       message: body.message.trim(),
+      language: body.language || 'fr', // Langue de l'email (fr ou en)
     }
 
     // Envoyer l'email

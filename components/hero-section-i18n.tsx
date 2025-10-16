@@ -1,4 +1,4 @@
-// components/HeroSection.tsx
+// components/hero-section-i18n.tsx
 "use client"
 
 import { Button } from "@/components/ui/button"
@@ -9,15 +9,12 @@ import { useState, useEffect } from "react"
 import { DownloadGuideModal } from "@/components/download-guide-modal"
 import { useLanguage } from "@/locales/LanguageProvider"
 
-
 const backgroundImages = [
   { url: 'https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=1920&q=80', animationClass: 'animate-fadeBackground-1' },
   { url: 'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=1920&q=80', animationClass: 'animate-fadeBackground-2' },
   { url: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=1920&q=80', animationClass: 'animate-fadeBackground-3' },
   { url: 'https://www.shutterstock.com/shutterstock/photos/1797691207/display_1500/stock-photo-intensive-agriculture-in-africa-chicken-farming-1797691207.jpg', animationClass: 'animate-fadeBackground-3' },
 ]
-
-
 
 interface ImageCardProps {
   src: string
@@ -31,14 +28,9 @@ export function ImageCard({
   alt,
   className = ""
 }: ImageCardProps) {
-
-
-
   return (
     <div className={`relative image-hover-effect  ${className}`}>
       <div className="relative h-full">
-        
-        {/* Image container with gradient border */}
         <div className={`relative  rounded-4xl  p-1 shadow-2xl h-full`}>
           <img
             src={src}
@@ -46,14 +38,11 @@ export function ImageCard({
             className=" w-full h-full object-cover rounded-4xl"
           />
         </div>
-        
-        
       </div>
     </div>
   )
 }
 
-// components/BackgroundSlider.tsx
 interface BackgroundImage {
   url: string
   animationClass: string
@@ -65,18 +54,17 @@ interface BackgroundSliderProps {
 
 export function BackgroundSlider({ images }: BackgroundSliderProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
- 
+
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length)
-    }, 5000) 
+    }, 5000)
 
     return () => clearInterval(interval)
   }, [images.length])
 
   return (
     <div className="absolute inset-0">
-      {/* Background Images */}
       <div className="relative w-full h-full">
         {images.map((image, index) => (
           <div
@@ -89,7 +77,6 @@ export function BackgroundSlider({ images }: BackgroundSliderProps) {
         ))}
       </div>
 
-     
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-3 z-10">
         {images.map((_, index) => (
           <button
@@ -110,7 +97,6 @@ export function BackgroundSlider({ images }: BackgroundSliderProps) {
         ))}
       </div>
 
-   
       <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-white/20 rounded-full overflow-hidden z-10">
         <div
           key={currentIndex}
@@ -121,7 +107,6 @@ export function BackgroundSlider({ images }: BackgroundSliderProps) {
   )
 }
 
-
 export function HeroSection() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const { language, t } = useLanguage()
@@ -131,13 +116,11 @@ export function HeroSection() {
       {/* Background Image Slider */}
       <BackgroundSlider images={backgroundImages} />
 
-
       <div className="absolute inset-0 bg-gradient-to-r from-primary/95 via-primary/90 to-primary/40"></div>
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/10 to-primary/20"></div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-
           <div>
             <Badge
               className="mb-6 bg-primary-foreground/20 text-primary-foreground border-primary-foreground/30"
@@ -173,7 +156,6 @@ export function HeroSection() {
               </Button>
             </div>
           </div>
-
         </div>
       </div>
 
@@ -181,4 +163,3 @@ export function HeroSection() {
     </section>
   )
 }
-

@@ -1,8 +1,11 @@
 import nodemailer from "nodemailer"
+import type SMTPTransport from "nodemailer/lib/smtp-transport"
 import { emailConfig } from "./config"
+import { getEmailTranslations, type EmailLanguage } from "./email-translations"
 
 export interface GuideDownloadData {
   email: string
+  language?: EmailLanguage
 }
 
 /**
@@ -10,8 +13,10 @@ export interface GuideDownloadData {
  */
 async function sendUserConfirmationEmail(
   transporter: nodemailer.Transporter,
-  email: string
+  email: string,
+  lang: EmailLanguage = 'fr'
 ): Promise<void> {
+  const t = getEmailTranslations(lang)
   const htmlContent = `
     <!DOCTYPE html>
     <html>
@@ -31,52 +36,48 @@ async function sendUserConfirmationEmail(
       <body>
         <div class="container">
           <div class="header">
-            <h1 style="margin: 0; font-size: 28px;">📚 Merci pour votre intérêt !</h1>
-            <p style="margin: 10px 0 0 0; opacity: 0.9; font-size: 16px;">Votre guide de la méthode Cabinet DAB</p>
+            <h1 style="margin: 0; font-size: 28px;">${t.guideDownload.user.thankYou}</h1>
+            <p style="margin: 10px 0 0 0; opacity: 0.9; font-size: 16px;">${t.guideDownload.user.guideTitle}</p>
           </div>
 
           <div class="content">
-            <p style="font-size: 16px; margin-top: 0;">Bonjour,</p>
+            <p style="font-size: 16px; margin-top: 0;">${t.guideDownload.user.hello}</p>
 
             <p style="font-size: 15px; line-height: 1.8;">
-              Merci d'avoir téléchargé notre guide <strong>"De la ferme aux marchés mondiaux"</strong> !
-              Nous espérons que ce document vous aidera à transformer votre exploitation agricole locale
-              en entreprise exportatrice prospère.
+              ${t.guideDownload.user.thankYouMessage}
             </p>
 
             <p style="font-size: 15px; line-height: 1.8;">
-              Votre téléchargement a démarré automatiquement. Si ce n'est pas le cas,
-              le PDF devrait être disponible dans vos téléchargements récents.
+              ${t.guideDownload.user.downloadStarted}
             </p>
 
             <div style="background: #f0fdf4; border-left: 4px solid #22c55e; padding: 20px; margin: 25px 0; border-radius: 5px;">
-              <h3 style="margin: 0 0 10px 0; color: #166534; font-size: 16px;">🎯 Pour aller plus loin</h3>
+              <h3 style="margin: 0 0 10px 0; color: #166534; font-size: 16px;">${t.guideDownload.user.goFurther}</h3>
               <p style="margin: 0; color: #166534; font-size: 14px; line-height: 1.6;">
-                Découvrez nos masterclass thématiques et notre programme de coaching personnalisé
-                pour accélérer votre transformation vers les marchés internationaux.
+                ${t.guideDownload.user.goFurtherDescription}
               </p>
             </div>
 
             <div style="text-align: center; margin: 30px 0;">
               <a href="${process.env.NEXT_PUBLIC_SITE_URL || 'https://dr-kanga.com'}" class="button">
-                Découvrir nos services
+                ${t.guideDownload.user.discoverServices}
               </a>
             </div>
 
             <p style="font-size: 14px; color: #6b7280; margin-top: 30px;">
-              Cordialement,<br>
-              <strong>Dr. Kanga Kouamé</strong><br>
-              Cabinet DAB
+              ${t.guideDownload.user.regards}<br>
+              <strong>${t.guideDownload.user.signature.split('\n')[0]}</strong><br>
+              ${t.guideDownload.user.signature.split('\n')[1]}
             </p>
           </div>
 
           <div class="footer">
-            <p style="margin: 0;">© ${new Date().getFullYear()} Cabinet DAB - Dr. Kanga Kouamé. Tous droits réservés.</p>
+            <p style="margin: 0;">© ${new Date().getFullYear()} ${t.common.cabinetName}. ${t.common.copyright}</p>
             <div class="unsubscribe">
               <p style="margin: 5px 0;">
-                Vous recevez cet email car vous avez téléchargé notre guide.
+                ${t.guideDownload.user.unsubscribeText}
                 <br>
-                Pour vous désabonner, <a href="${process.env.NEXT_PUBLIC_SITE_URL || 'https://dr-kanga.com'}/unsubscribe?email=${encodeURIComponent(email)}">cliquez ici</a>.
+                ${t.guideDownload.user.unsubscribeLink}, <a href="${process.env.NEXT_PUBLIC_SITE_URL || 'https://dr-kanga.com'}/unsubscribe?email=${encodeURIComponent(email)}">cliquez ici</a>.
               </p>
             </div>
           </div>
@@ -112,7 +113,7 @@ Pour vous désabonner : ${process.env.NEXT_PUBLIC_SITE_URL || 'https://cabinetda
   await transporter.sendMail({
     from: `"${emailConfig.from.name}" <${emailConfig.from.email}>`,
     to: email,
-    subject: "📚 Votre guide Cabinet DAB - De la ferme aux marchés mondiaux",
+    subject: t.guideDownload.user.subject,
     text: textContent,
     html: htmlContent,
   })
@@ -123,8 +124,10 @@ Pour vous désabonner : ${process.env.NEXT_PUBLIC_SITE_URL || 'https://cabinetda
  */
 async function sendTeamNotificationEmail(
   transporter: nodemailer.Transporter,
-  email: string
+  email: string,
+  lang: EmailLanguage = 'fr'
 ): Promise<void> {
+  const t = getEmailTranslations(lang)
   const htmlContent = `
     <!DOCTYPE html>
     <html>
@@ -145,19 +148,19 @@ async function sendTeamNotificationEmail(
       <body>
         <div class="container">
           <div class="alert">
-            <div class="alert-title">📥 NOUVEAU TÉLÉCHARGEMENT DE GUIDE</div>
+            <div class="alert-title">${t.guideDownload.team.newDownload}</div>
             <p style="margin: 5px 0 0 0; color: #3e2723; font-size: 14px;">Un lead vient de télécharger le guide de la méthode Cabinet DAB.</p>
           </div>
 
           <div class="header">
-            <h1 style="margin: 0; font-size: 28px;">📊 Nouveau Lead</h1>
-            <p style="margin: 10px 0 0 0; opacity: 0.9; font-size: 14px;">Téléchargement du Guide Méthode</p>
+            <h1 style="margin: 0; font-size: 28px;">${t.guideDownload.team.newLead}</h1>
+            <p style="margin: 10px 0 0 0; opacity: 0.9; font-size: 14px;">${t.guideDownload.team.guideDownload}</p>
           </div>
 
           <div class="content">
             <div class="info-box">
               <p style="margin: 0 0 10px 0; font-size: 14px; color: #6b7280; font-weight: bold; text-transform: uppercase;">
-                📧 Adresse Email du Lead
+                ${t.guideDownload.team.emailLead}
               </p>
               <div class="email-value">
                 <a href="mailto:${email}" style="color: #5d4037; text-decoration: none;">${email}</a>
@@ -166,20 +169,18 @@ async function sendTeamNotificationEmail(
 
             <p style="font-size: 15px; line-height: 1.8;">
               <strong>Action suggérée :</strong><br>
-              Considérez d'ajouter ce lead à votre liste de diffusion et de faire un suivi personnalisé
-              dans les prochains jours pour maximiser l'engagement.
+              ${t.guideDownload.team.suggestedAction}
             </p>
 
             <div style="background: #fef3c7; border-left: 4px solid #f59e0b; padding: 15px; border-radius: 5px; margin-top: 20px;">
               <p style="margin: 0; color: #78350f; font-size: 14px;">
-                💡 <strong>Conseil :</strong> Les leads qui téléchargent le guide sont généralement plus engagés.
-                Un suivi rapide peut augmenter significativement le taux de conversion.
+                ${t.guideDownload.team.tip} <strong></strong> ${t.guideDownload.team.tipMessage}
               </p>
             </div>
 
             <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid #e5e7eb;">
               <p style="margin: 0; font-size: 13px; color: #9ca3af;">
-                <strong>Date et heure :</strong> ${new Date().toLocaleString('fr-FR', {
+                <strong>${t.guideDownload.team.dateTime}</strong> ${new Date().toLocaleString(lang === 'fr' ? 'fr-FR' : 'en-US', {
                   dateStyle: 'full',
                   timeStyle: 'long',
                   timeZone: 'Africa/Abidjan'
@@ -189,7 +190,7 @@ async function sendTeamNotificationEmail(
           </div>
 
           <div class="footer">
-            <p style="margin: 0; font-size: 14px;">Cabinet DAB - Notification automatique</p>
+            <p style="margin: 0; font-size: 14px;">${t.guideDownload.team.autoNotification}</p>
           </div>
         </div>
       </body>
@@ -227,7 +228,7 @@ Cabinet DAB - Notification automatique
   await transporter.sendMail({
     from: `"${emailConfig.from.name}" <${emailConfig.from.email}>`,
     to: emailConfig.to,
-    subject: `📥 Nouveau Lead - Téléchargement Guide - ${email}`,
+    subject: `${t.guideDownload.team.subject} - ${email}`,
     text: textContent,
     html: htmlContent,
   })
@@ -241,7 +242,7 @@ export async function sendGuideDownloadEmails(
 ): Promise<{ success: boolean; error?: string }> {
   try {
     // Créer le transporteur SMTP
-    const transporter = nodemailer.createTransport({
+    const transportOptions: SMTPTransport.Options = {
       host: emailConfig.smtp.host,
       port: emailConfig.smtp.port,
       secure: emailConfig.smtp.secure,
@@ -249,15 +250,19 @@ export async function sendGuideDownloadEmails(
         user: emailConfig.smtp.auth.user,
         pass: emailConfig.smtp.auth.pass,
       },
-    })
+    }
+    
+    const transporter = nodemailer.createTransport(transportOptions)
 
     // Vérifier la connexion SMTP
     await transporter.verify()
 
+    const lang = data.language || 'fr'
+    
     // Envoyer les deux emails en parallèle
     await Promise.all([
-      sendUserConfirmationEmail(transporter, data.email),
-      sendTeamNotificationEmail(transporter, data.email),
+      sendUserConfirmationEmail(transporter, data.email, lang),
+      sendTeamNotificationEmail(transporter, data.email, lang),
     ])
 
     console.log("Emails de téléchargement de guide envoyés avec succès pour:", data.email)

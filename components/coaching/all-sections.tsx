@@ -1,10 +1,15 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { User, Target, Calendar, CheckCircle, Star, Phone } from "lucide-react"
 import Link from "next/link"
+import { useLanguage } from "@/locales/LanguageProvider"
 
 export function CoachingHeroSection() {
+  const { t } = useLanguage()
+  
   return (
     <section className="relative bg-gradient-to-br from-amber-900 via-amber-800 to-yellow-800 py-32 overflow-hidden">
       {/* Animated background elements */}
@@ -38,36 +43,36 @@ export function CoachingHeroSection() {
           {/* Premium badge */}
           <div className="flex justify-center mb-6">
             <Badge className="bg-white/20 text-white border-white/30 hover:bg-white/30 px-6 py-2 text-sm font-semibold backdrop-blur-sm" variant="secondary">
-              ⭐ Accompagnement Premium
+              {t.coaching.hero.badge}
             </Badge>
           </div>
 
           {/* Main heading */}
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 text-center text-white leading-tight">
-            Coaching Privé
+            {t.coaching.hero.title}
             <span className="block text-3xl md:text-4xl lg:text-5xl mt-4 text-yellow-200/90 font-light">
-              Votre Réussite à l'Export, Accélérée
+              {t.coaching.hero.subtitle}
             </span>
           </h1>
 
           {/* Description */}
           <p className="text-xl md:text-2xl text-white/90 max-w-4xl mx-auto text-center mb-12 leading-relaxed">
-            Un accompagnement personnalisé pour atteindre vos objectifs  avec l'expertise directe du Dr. Kanga et son équipe.
+            {t.coaching.hero.description}
           </p>
 
           {/* Value props grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 text-center hover:bg-white/15 transition-all">
-              <div className="text-4xl font-bold text-white mb-2">1-on-1</div>
-              <p className="text-white/80 text-sm">Accompagnement exclusif et personnalisé</p>
+              <div className="text-4xl font-bold text-white mb-2">{t.coaching.hero.valueProps.prop1.value}</div>
+              <p className="text-white/80 text-sm">{t.coaching.hero.valueProps.prop1.description}</p>
             </div>
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 text-center hover:bg-white/15 transition-all">
-              <div className="text-4xl font-bold text-white mb-2">20+ ans</div>
-              <p className="text-white/80 text-sm">D'expertise internationale en agriculture</p>
+              <div className="text-4xl font-bold text-white mb-2">{t.coaching.hero.valueProps.prop2.value}</div>
+              <p className="text-white/80 text-sm">{t.coaching.hero.valueProps.prop2.description}</p>
             </div>
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 text-center hover:bg-white/15 transition-all">
-              <div className="text-4xl font-bold text-white mb-2">3-6 mois</div>
-              <p className="text-white/80 text-sm">Pour voir des résultats concrets</p>
+              <div className="text-4xl font-bold text-white mb-2">{t.coaching.hero.valueProps.prop3.value}</div>
+              <p className="text-white/80 text-sm">{t.coaching.hero.valueProps.prop3.description}</p>
             </div>
           </div>
 
@@ -81,7 +86,7 @@ export function CoachingHeroSection() {
               asChild
               
             >
-              Réserver un Appel Découverte →
+              {t.coaching.hero.cta.primary}
             </Button>
             </Link>
             
@@ -93,14 +98,14 @@ export function CoachingHeroSection() {
               className="border-2 border-white/50 text-white hover:bg-white/10 text-lg px-8 py-6 rounded-xl backdrop-blur-sm"
               asChild
             >
-              Découvrir le Programme
+              {t.coaching.hero.cta.secondary}
             </Button>
             </Link>
           </div>
 
           {/* Social proof */}
           <div className="text-center mt-12">
-            <p className="text-white/70 text-sm mb-4">Places limitées - Seulement 10 agriculteurs accompagnés par trimestre</p>
+            <p className="text-white/70 text-sm mb-4">{t.coaching.hero.socialProof.limitedSpots}</p>
             <div className="flex items-center justify-center gap-2">
               <div className="flex -space-x-2">
                 <div className="w-10 h-10 rounded-full bg-gradient-to-br from-yellow-400 to-amber-600 border-2 border-white"></div>
@@ -108,7 +113,7 @@ export function CoachingHeroSection() {
                 <div className="w-10 h-10 rounded-full bg-gradient-to-br from-yellow-300 to-amber-500 border-2 border-white"></div>
               </div>
               <p className="text-white/80 text-sm ml-2">
-                <strong className="text-white">150+</strong> agriculteurs accompagnés avec succès
+                {t.coaching.hero.socialProof.successCount}
               </p>
             </div>
           </div>
@@ -119,36 +124,27 @@ export function CoachingHeroSection() {
 }
 
 export function PositioningSection() {
+  const { t } = useLanguage()
+  
   return (
     <section className="py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div>
             <Badge className="mb-4" variant="outline">
-              Offre Haut de Gamme
+              {t.coaching.positioning.badge}
             </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-balance">Réservé à Ceux Qui Veulent Accélérer</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-balance">{t.coaching.positioning.title}</h2>
             <p className="text-xl text-muted-foreground mb-8 text-pretty">
-              Le coaching privé est conçu pour les agriculteurs ambitieux qui souhaitent bénéficier d'un
-              accompagnement sur mesure et atteindre leurs objectifs d'exportation dans les meilleurs délais.
+              {t.coaching.positioning.description}
             </p>
             <div className="space-y-4">
-              <div className="flex items-center space-x-3">
-                <CheckCircle className="h-5 w-5 text-primary" />
-                <span>Accompagnement 100% personnalisé</span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <CheckCircle className="h-5 w-5 text-primary" />
-                <span>Accès direct au Dr. Kanga</span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <CheckCircle className="h-5 w-5 text-primary" />
-                <span>Résultats accélérés</span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <CheckCircle className="h-5 w-5 text-primary" />
-                <span>Suivi régulier et ajustements</span>
-              </div>
+              {t.coaching.positioning.benefits.map((benefit, index) => (
+                <div key={index} className="flex items-center space-x-3">
+                  <CheckCircle className="h-5 w-5 text-primary" />
+                  <span>{benefit}</span>
+                </div>
+              ))}
             </div>
           </div>
           <div className="bg-gradient-to-br from-primary/10 to-accent/10 rounded-2xl p-8">
@@ -156,18 +152,17 @@ export function PositioningSection() {
               <div className="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-6">
                 <User className="h-10 w-10 text-primary" />
               </div>
-              <h3 className="text-2xl font-bold mb-4">Dr. Kanga</h3>
+              <h3 className="text-2xl font-bold mb-4">{t.coaching.positioning.expert.name}</h3>
               <p className="text-muted-foreground mb-6">
-                Expert international en développement agricole avec plus de 20 ans d'expérience dans l'accompagnement
-                d'agriculteurs vers l'exportation.
+                {t.coaching.positioning.expert.description}
               </p>
               <div className="flex items-center justify-center space-x-1 mb-4">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="h-5 w-5 fill-primary text-primary" />
                 ))}
-                <span className="ml-2 text-sm text-muted-foreground">(4.9/5)</span>
+                <span className="ml-2 text-sm text-muted-foreground">{t.coaching.positioning.expert.rating}</span>
               </div>
-              <p className="text-sm text-muted-foreground">Basé sur 150+ accompagnements réussis</p>
+              <p className="text-sm text-muted-foreground">{t.coaching.positioning.expert.basedOn}</p>
             </div>
           </div>
         </div>
@@ -177,6 +172,8 @@ export function PositioningSection() {
 }
 
 export function ContentSection() {
+  const { t } = useLanguage()
+  
   return (
     <section className="relative py-20 overflow-hidden">
       {/* Soft gradient background */}
@@ -189,14 +186,14 @@ export function ContentSection() {
         <div className="text-center mb-16">
           <div className="inline-block mb-4">
             <span className="px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-semibold">
-              Programme Sur Mesure
+              {t.coaching.content.badge}
             </span>
           </div>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-balance">
-            Contenu de l'Accompagnement
+            {t.coaching.content.title}
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Un programme sur mesure adapté à votre situation et vos objectifs
+            {t.coaching.content.subtitle}
           </p>
         </div>
 
@@ -213,20 +210,15 @@ export function ContentSection() {
 
               <div className="mb-6">
                 <h3 className="text-2xl font-bold mt-2 mb-3 text-foreground">
-                  Diagnostic Personnalisé
+                  {t.coaching.content.cards.diagnostic.title}
                 </h3>
                 <p className="text-muted-foreground font-medium">
-                  Analyse complète de votre situation
+                  {t.coaching.content.cards.diagnostic.subtitle}
                 </p>
               </div>
 
               <div className="space-y-3">
-                {[
-                  "Audit de votre exploitation actuelle",
-                  "Évaluation de votre potentiel export",
-                  "Identification des points forts et axes d'amélioration",
-                  "Définition d'objectifs SMART"
-                ].map((item, index) => (
+                {t.coaching.content.cards.diagnostic.items.map((item, index) => (
                   <div key={index} className="flex items-start gap-3 group/item">
                     <div className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0 group-hover/item:scale-150 transition-transform"></div>
                     <p className="text-sm text-muted-foreground leading-relaxed">{item}</p>
@@ -247,20 +239,15 @@ export function ContentSection() {
 
               <div className="mb-6">
                 <h3 className="text-2xl font-bold mt-2 mb-3 text-foreground">
-                  Stratégie Sur Mesure
+                  {t.coaching.content.cards.strategy.title}
                 </h3>
                 <p className="text-muted-foreground font-medium">
-                  Plan d'action personnalisé
+                  {t.coaching.content.cards.strategy.subtitle}
                 </p>
               </div>
 
               <div className="space-y-3">
-                {[
-                  "Roadmap détaillée vers l'export",
-                  "Priorisation des actions selon votre contexte",
-                  "Adaptation aux 4 axes du programme",
-                  "Planning de mise en œuvre réaliste"
-                ].map((item, index) => (
+                {t.coaching.content.cards.strategy.items.map((item, index) => (
                   <div key={index} className="flex items-start gap-3 group/item">
                     <div className="w-1.5 h-1.5 bg-secondary rounded-full mt-2 flex-shrink-0 group-hover/item:scale-150 transition-transform"></div>
                     <p className="text-sm text-muted-foreground leading-relaxed">{item}</p>
@@ -281,20 +268,15 @@ export function ContentSection() {
 
               <div className="mb-6">
                 <h3 className="text-2xl font-bold mt-2 mb-3 text-foreground">
-                  Suivi Régulier
+                  {t.coaching.content.cards.followUp.title}
                 </h3>
                 <p className="text-muted-foreground font-medium">
-                  Accompagnement continu
+                  {t.coaching.content.cards.followUp.subtitle}
                 </p>
               </div>
 
               <div className="space-y-3">
-                {[
-                  "Appels mensuels avec le Dr. Kanga",
-                  "Ajustements de stratégie si nécessaire",
-                  "Résolution des blocages en temps réel",
-                  "Support par email entre les sessions"
-                ].map((item, index) => (
+                {t.coaching.content.cards.followUp.items.map((item, index) => (
                   <div key={index} className="flex items-start gap-3 group/item">
                     <div className="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0 group-hover/item:scale-150 transition-transform"></div>
                     <p className="text-sm text-muted-foreground leading-relaxed">{item}</p>
@@ -309,7 +291,7 @@ export function ContentSection() {
         <div className="text-center">
           <div className="inline-block bg-gradient-to-r from-primary/10 via-secondary/10 to-accent/10 rounded-2xl px-8 py-6 border border-primary/20">
             <p className="text-muted-foreground">
-              <span className="font-bold text-foreground">Résultat :</span> Un parcours unique, conçu pour transformer votre exploitation agricole en entreprise exportatrice prospère
+              {t.coaching.content.result}
             </p>
           </div>
         </div>
@@ -319,35 +301,37 @@ export function ContentSection() {
 }
 
 export function StatsSection() {
+  const { t } = useLanguage()
+  
   return (
     <section className="py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-gradient-to-r from-primary/10 to-secondary/10 rounded-2xl p-8 md:p-12">
           <div className="text-center mb-8">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-balance">
-              Proximité Directe avec un Expert International
+              {t.coaching.stats.title}
             </h2>
             <p className="text-xl text-muted-foreground">
-              Bénéficiez de l'expérience et du réseau du Dr. Kanga pour accélérer votre développement
+              {t.coaching.stats.subtitle}
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div className="text-center">
-              <div className="text-3xl font-bold text-primary mb-2">20+</div>
-              <div className="text-sm text-muted-foreground">Années d'expérience</div>
+              <div className="text-3xl font-bold text-primary mb-2">{t.coaching.stats.items.experience.value}</div>
+              <div className="text-sm text-muted-foreground">{t.coaching.stats.items.experience.label}</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-secondary mb-2">150+</div>
-              <div className="text-sm text-muted-foreground">Agriculteurs accompagnés</div>
+              <div className="text-3xl font-bold text-secondary mb-2">{t.coaching.stats.items.farmers.value}</div>
+              <div className="text-sm text-muted-foreground">{t.coaching.stats.items.farmers.label}</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-accent mb-2">30+</div>
-              <div className="text-sm text-muted-foreground">Pays d'exportation</div>
+              <div className="text-3xl font-bold text-accent mb-2">{t.coaching.stats.items.countries.value}</div>
+              <div className="text-sm text-muted-foreground">{t.coaching.stats.items.countries.label}</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-primary mb-2">3x</div>
-              <div className="text-sm text-muted-foreground">Multiplication du CA moyen</div>
+              <div className="text-3xl font-bold text-primary mb-2">{t.coaching.stats.items.growth.value}</div>
+              <div className="text-sm text-muted-foreground">{t.coaching.stats.items.growth.label}</div>
             </div>
           </div>
         </div>
@@ -357,11 +341,13 @@ export function StatsSection() {
 }
 
 export function TestimonialsSection() {
+  const { t } = useLanguage()
+  
   return (
     <section className="py-16 bg-muted/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-balance">Ce Que Disent Nos Clients</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-balance">{t.coaching.testimonials.title}</h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -372,8 +358,8 @@ export function TestimonialsSection() {
                   <User className="h-6 w-6 text-primary" />
                 </div>
                 <div>
-                  <CardTitle className="text-lg">Marie Dubois</CardTitle>
-                  <CardDescription>Productrice de légumes bio, Bretagne</CardDescription>
+                  <CardTitle className="text-lg">{t.coaching.testimonials.items.testimonial1.name}</CardTitle>
+                  <CardDescription>{t.coaching.testimonials.items.testimonial1.role}</CardDescription>
                 </div>
               </div>
             </CardHeader>
@@ -384,9 +370,7 @@ export function TestimonialsSection() {
                 ))}
               </div>
               <p className="text-muted-foreground">
-                "Grâce au coaching du Dr. Kanga, j'ai pu structurer mon approche export et décrocher mes premiers
-                contrats en Allemagne en seulement 6 mois. Son accompagnement personnalisé a fait toute la
-                différence."
+                {t.coaching.testimonials.items.testimonial1.content}
               </p>
             </CardContent>
           </Card>
@@ -398,8 +382,8 @@ export function TestimonialsSection() {
                   <User className="h-6 w-6 text-secondary" />
                 </div>
                 <div>
-                  <CardTitle className="text-lg">Jean-Pierre Martin</CardTitle>
-                  <CardDescription>Producteur de fruits, Provence</CardDescription>
+                  <CardTitle className="text-lg">{t.coaching.testimonials.items.testimonial2.name}</CardTitle>
+                  <CardDescription>{t.coaching.testimonials.items.testimonial2.role}</CardDescription>
                 </div>
               </div>
             </CardHeader>
@@ -410,8 +394,7 @@ export function TestimonialsSection() {
                 ))}
               </div>
               <p className="text-muted-foreground">
-                "Le Dr. Kanga m'a aidé à transformer complètement mon exploitation. De producteur local, je suis
-                devenu exportateur vers 5 pays. Son expertise et ses conseils sont inestimables."
+                {t.coaching.testimonials.items.testimonial2.content}
               </p>
             </CardContent>
           </Card>
@@ -422,13 +405,15 @@ export function TestimonialsSection() {
 }
 
 export function BookingSection() {
+  const { t } = useLanguage()
+  
   return (
     <section className="py-16">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-balance">Réserver Votre Appel Diagnostic</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-balance">{t.coaching.booking.title}</h2>
           <p className="text-xl text-muted-foreground">
-            Choisissez le créneau qui vous convient pour un appel diagnostic gratuit de 30 minutes
+            {t.coaching.booking.subtitle}
           </p>
         </div>
 
@@ -436,59 +421,49 @@ export function BookingSection() {
           <Card className="border-0 shadow-lg">
             <CardHeader>
               <div className="flex items-center justify-between mb-4">
-                <Badge className="bg-green-100 text-green-800">GRATUIT</Badge>
-                <div className="text-sm text-muted-foreground">30 minutes</div>
+                <Badge className="bg-green-100 text-green-800">{t.coaching.booking.diagnostic.badge}</Badge>
+                <div className="text-sm text-muted-foreground">{t.coaching.booking.diagnostic.duration}</div>
               </div>
-              <CardTitle className="text-xl">Appel Diagnostic</CardTitle>
-              <CardDescription>Évaluation gratuite de votre potentiel export</CardDescription>
+              <CardTitle className="text-xl">{t.coaching.booking.diagnostic.title}</CardTitle>
+              <CardDescription>{t.coaching.booking.diagnostic.description}</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-3 mb-6">
-                <div className="flex items-center space-x-3">
-                  <CheckCircle className="h-4 w-4 text-green-600" />
-                  <span className="text-sm">Analyse de votre situation actuelle</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <CheckCircle className="h-4 w-4 text-green-600" />
-                  <span className="text-sm">Évaluation de votre potentiel export</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <CheckCircle className="h-4 w-4 text-green-600" />
-                  <span className="text-sm">Conseils personnalisés</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <CheckCircle className="h-4 w-4 text-green-600" />
-                  <span className="text-sm">Plan d'action initial</span>
-                </div>
+                {t.coaching.booking.diagnostic.features.map((feature, index) => (
+                  <div key={index} className="flex items-center space-x-3">
+                    <CheckCircle className="h-4 w-4 text-green-600" />
+                    <span className="text-sm">{feature}</span>
+                  </div>
+                ))}
               </div>
               <div className="space-y-3 mb-6">
-                <p className="text-sm font-medium">Créneaux disponibles cette semaine:</p>
+                <p className="text-sm font-medium">{t.coaching.booking.diagnostic.slotsTitle}</p>
                 <div className="space-y-2">
                   <div className="flex items-center justify-between p-3 border rounded-lg hover:bg-muted/50 cursor-pointer">
                     <div>
                       <div className="font-medium">Mardi 10 Décembre</div>
                       <div className="text-sm text-muted-foreground">14h00 - 14h30</div>
                     </div>
-                    <Button size="sm" variant="outline">Choisir</Button>
+                    <Button size="sm" variant="outline">{t.coaching.booking.diagnostic.cta.split(' ').slice(-2).join(' ')}</Button>
                   </div>
                   <div className="flex items-center justify-between p-3 border rounded-lg hover:bg-muted/50 cursor-pointer">
                     <div>
                       <div className="font-medium">Jeudi 12 Décembre</div>
                       <div className="text-sm text-muted-foreground">10h00 - 10h30</div>
                     </div>
-                    <Button size="sm" variant="outline">Choisir</Button>
+                    <Button size="sm" variant="outline">{t.coaching.booking.diagnostic.cta.split(' ').slice(-2).join(' ')}</Button>
                   </div>
                   <div className="flex items-center justify-between p-3 border rounded-lg hover:bg-muted/50 cursor-pointer">
                     <div>
                       <div className="font-medium">Vendredi 13 Décembre</div>
                       <div className="text-sm text-muted-foreground">16h00 - 16h30</div>
                     </div>
-                    <Button size="sm" variant="outline">Choisir</Button>
+                    <Button size="sm" variant="outline">{t.coaching.booking.diagnostic.cta.split(' ').slice(-2).join(' ')}</Button>
                   </div>
                 </div>
               </div>
               <Button className="w-full" asChild>
-                <Link href="/contact?service=coaching-diagnostic">Voir plus de créneaux</Link>
+                <Link href="/contact?service=coaching-diagnostic">{t.coaching.booking.diagnostic.cta}</Link>
               </Button>
             </CardContent>
           </Card>
@@ -496,77 +471,63 @@ export function BookingSection() {
           <Card className="border-0 shadow-lg border-primary/20">
             <CardHeader>
               <div className="flex items-center justify-between mb-4">
-                <Badge className="bg-primary text-primary-foreground">PREMIUM</Badge>
-                <div className="text-sm text-muted-foreground">Programme complet</div>
+                <Badge className="bg-primary text-primary-foreground">{t.coaching.booking.premium.badge}</Badge>
+                <div className="text-sm text-muted-foreground">{t.coaching.booking.premium.duration}</div>
               </div>
-              <CardTitle className="text-xl">Coaching Complet</CardTitle>
-              <CardDescription>Accompagnement personnalisé de 3 à 6 mois</CardDescription>
+              <CardTitle className="text-xl">{t.coaching.booking.premium.title}</CardTitle>
+              <CardDescription>{t.coaching.booking.premium.description}</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-3 mb-6">
-                <div className="flex items-center space-x-3">
-                  <CheckCircle className="h-4 w-4 text-primary" />
-                  <span className="text-sm">Diagnostic approfondi (2h)</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <CheckCircle className="h-4 w-4 text-primary" />
-                  <span className="text-sm">Stratégie sur mesure</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <CheckCircle className="h-4 w-4 text-primary" />
-                  <span className="text-sm">Appels mensuels (1h)</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <CheckCircle className="h-4 w-4 text-primary" />
-                  <span className="text-sm">Support email illimité</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <CheckCircle className="h-4 w-4 text-primary" />
-                  <span className="text-sm">Accès aux ressources exclusives</span>
-                </div>
+                {t.coaching.booking.premium.features.map((feature, index) => (
+                  <div key={index} className="flex items-center space-x-3">
+                    <CheckCircle className="h-4 w-4 text-primary" />
+                    <span className="text-sm">{feature}</span>
+                  </div>
+                ))}
               </div>
               <div className="bg-primary/5 rounded-lg p-4 mb-6">
                 <div className="text-center">
-                  <div className="text-sm text-muted-foreground">Programme de 3 mois</div>
+                  <div className="text-sm text-muted-foreground">{t.coaching.booking.premium.programDuration}</div>
                 </div>
               </div>
               <Button className="w-full" asChild>
-                <Link href="/contact?service=coaching-premium">Demander un devis personnalisé</Link>
+                <Link href="/contact?service=coaching-premium">{t.coaching.booking.premium.cta}</Link>
               </Button>
             </CardContent>
           </Card>
         </div>
 
         <div className="mt-12 bg-gradient-to-r from-primary/5 to-secondary/5 rounded-xl p-6 border border-primary/10">
-          <h3 className="text-lg font-semibold mb-4 text-center">Comment ça marche ?</h3>
+          <h3 className="text-lg font-semibold mb-4 text-center">{t.coaching.booking.howItWorks.title}</h3>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-sm">
             <div className="text-center">
               <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-2">
                 <span className="text-primary font-bold">1</span>
               </div>
-              <p className="font-medium">Réservation</p>
-              <p className="text-muted-foreground">Choisissez votre créneau</p>
+              <p className="font-medium">{t.coaching.booking.howItWorks.steps.step1.title}</p>
+              <p className="text-muted-foreground">{t.coaching.booking.howItWorks.steps.step1.description}</p>
             </div>
             <div className="text-center">
               <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-2">
                 <span className="text-primary font-bold">2</span>
               </div>
-              <p className="font-medium">Préparation</p>
-              <p className="text-muted-foreground">Questionnaire pré-appel</p>
+              <p className="font-medium">{t.coaching.booking.howItWorks.steps.step2.title}</p>
+              <p className="text-muted-foreground">{t.coaching.booking.howItWorks.steps.step2.description}</p>
             </div>
             <div className="text-center">
               <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-2">
                 <span className="text-primary font-bold">3</span>
               </div>
-              <p className="font-medium">Appel</p>
-              <p className="text-muted-foreground">Diagnostic avec Dr. Kanga</p>
+              <p className="font-medium">{t.coaching.booking.howItWorks.steps.step3.title}</p>
+              <p className="text-muted-foreground">{t.coaching.booking.howItWorks.steps.step3.description}</p>
             </div>
             <div className="text-center">
               <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-2">
                 <span className="text-primary font-bold">4</span>
               </div>
-              <p className="font-medium">Suivi</p>
-              <p className="text-muted-foreground">Plan d'action personnalisé</p>
+              <p className="font-medium">{t.coaching.booking.howItWorks.steps.step4.title}</p>
+              <p className="text-muted-foreground">{t.coaching.booking.howItWorks.steps.step4.description}</p>
             </div>
           </div>
         </div>
@@ -576,17 +537,19 @@ export function BookingSection() {
 }
 
 export function CtaSection() {
+  const { t } = useLanguage()
+  
   return (
     <section className="py-16 bg-gradient-to-r from-primary to-secondary">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-4 text-balance">
-          Une Question ? Besoin d'Aide ?
+          {t.coaching.cta.title}
         </h2>
         <p className="text-xl text-primary-foreground/90 mb-8 text-pretty">
-          Notre équipe est là pour vous aider à choisir la formule d'accompagnement qui vous convient le mieux.
+          {t.coaching.cta.description}
         </p>
         <Button size="lg" variant="secondary" asChild>
-          <Link href="/contact">Nous contacter</Link>
+          <Link href="/contact">{t.coaching.cta.button}</Link>
         </Button>
       </div>
     </section>

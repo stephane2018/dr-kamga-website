@@ -1,8 +1,11 @@
 import nodemailer from "nodemailer"
+import type SMTPTransport from "nodemailer/lib/smtp-transport"
 import { emailConfig } from "./config"
+import { getEmailTranslations, type EmailLanguage } from "./email-translations"
 
 export interface UnsubscribeData {
   email: string
+  language?: EmailLanguage
 }
 
 /**
@@ -11,9 +14,11 @@ export interface UnsubscribeData {
 export async function sendUnsubscribeNotification(
   data: UnsubscribeData
 ): Promise<{ success: boolean; error?: string }> {
+  const lang = data.language || 'fr'
+  const t = getEmailTranslations(lang)
   try {
     // Créer le transporteur SMTP
-    const transporter = nodemailer.createTransport({
+    const transportOptions: SMTPTransport.Options = {
       host: emailConfig.smtp.host,
       port: emailConfig.smtp.port,
       secure: emailConfig.smtp.secure,
@@ -21,7 +26,9 @@ export async function sendUnsubscribeNotification(
         user: emailConfig.smtp.auth.user,
         pass: emailConfig.smtp.auth.pass,
       },
-    })
+    }
+    
+    const transporter = nodemailer.createTransport(transportOptions)
 
     // Vérifier la connexion SMTP
     await transporter.verify()
@@ -46,19 +53,19 @@ export async function sendUnsubscribeNotification(
         <body>
           <div class="container">
             <div class="alert">
-              <div class="alert-title">🔕 DÉSINSCRIPTION</div>
-              <p style="margin: 5px 0 0 0; color: #991b1b; font-size: 14px;">Un utilisateur s'est désabonné de la liste de diffusion.</p>
+              <div class="alert-title">${t.unsubscribe.alert}</div>
+              <p style="margin: 5px 0 0 0; color: #991b1b; font-size: 14px;">${t.unsubscribe.alertMessage}</p>
             </div>
 
             <div class="header">
-              <h1 style="margin: 0; font-size: 28px;">📤 Désinscription</h1>
-              <p style="margin: 10px 0 0 0; opacity: 0.9; font-size: 14px;">Notification de désabonnement</p>
+              <h1 style="margin: 0; font-size: 28px;">${t.unsubscribe.title}</h1>
+              <p style="margin: 10px 0 0 0; opacity: 0.9; font-size: 14px;">${t.unsubscribe.subtitle}</p>
             </div>
 
             <div class="content">
               <div class="info-box">
                 <p style="margin: 0 0 10px 0; font-size: 14px; color: #6b7280; font-weight: bold; text-transform: uppercase;">
-                  📧 Adresse Email
+                  ${t.unsubscribe.emailAddress}
                 </p>
                 <div class="email-value">
                   <a href="mailto:${data.email}" style="color: #dc2626; text-decoration: none;">${data.email}</a>
@@ -66,21 +73,19 @@ export async function sendUnsubscribeNotification(
               </div>
 
               <p style="font-size: 15px; line-height: 1.8;">
-                <strong>Action requise :</strong><br>
-                Veuillez retirer cette adresse email de votre liste de diffusion et de votre CRM pour respecter
-                la demande de désinscription de l'utilisateur.
+                <strong>${t.unsubscribe.actionRequired}</strong><br>
+                ${t.unsubscribe.actionMessage}
               </p>
 
               <div style="background: #fffbeb; border-left: 4px solid #f59e0b; padding: 15px; border-radius: 5px; margin-top: 20px;">
                 <p style="margin: 0; color: #78350f; font-size: 14px;">
-                  ⚠️ <strong>Important :</strong> Conformément au RGPD, vous devez traiter cette demande de désinscription
-                  rapidement et ne plus envoyer d'emails marketing à cette adresse.
+                  ${t.unsubscribe.important} <strong></strong> ${t.unsubscribe.importantMessage}
                 </p>
               </div>
 
               <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid #e5e7eb;">
                 <p style="margin: 0; font-size: 13px; color: #9ca3af;">
-                  <strong>Date et heure :</strong> ${new Date().toLocaleString('fr-FR', {
+                  <strong>${t.unsubscribe.dateTime}</strong> ${new Date().toLocaleString(lang === 'fr' ? 'fr-FR' : 'en-US', {
                     dateStyle: 'full',
                     timeStyle: 'long',
                     timeZone: 'Africa/Abidjan'
@@ -90,7 +95,7 @@ export async function sendUnsubscribeNotification(
             </div>
 
             <div class="footer">
-              <p style="margin: 0; font-size: 14px;">Cabinet DAB - Notification automatique</p>
+              <p style="margin: 0; font-size: 14px;">${t.unsubscribe.autoNotification}</p>
             </div>
           </div>
         </body>
@@ -129,7 +134,7 @@ Cabinet DAB - Notification automatique
     await transporter.sendMail({
       from: `"${emailConfig.from.name}" <${emailConfig.from.email}>`,
       to: emailConfig.to,
-      subject: `🔕 Désinscription - ${data.email}`,
+      subject: `${t.unsubscribe.subject} - ${data.email}`,
       text: textContent,
       html: htmlContent,
     })

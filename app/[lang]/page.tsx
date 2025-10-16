@@ -12,7 +12,7 @@ export const metadata = generateSEOMetadata({
   url: "/"
 })
 
-export default function HomePage() {
+export default function HomePage({ params }: { params: { lang: string } }) {
   return (
     <div className="min-h-screen bg-white">
       <Navigation />

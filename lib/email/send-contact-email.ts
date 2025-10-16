@@ -1,5 +1,7 @@
 import nodemailer from "nodemailer"
+import type SMTPTransport from "nodemailer/lib/smtp-transport"
 import { emailConfig } from "./config"
+import { getEmailTranslations, getInterestLabel, type EmailLanguage } from "./email-translations"
 
 export interface ContactFormData {
   firstName: string
@@ -9,6 +11,7 @@ export interface ContactFormData {
   interest: string
   situation?: string
   message: string
+  language?: EmailLanguage
 }
 
 /**
@@ -18,9 +21,11 @@ export interface ContactFormData {
  * @returns Promise<boolean> - true si l'email est envoyé avec succès
  */
 export async function sendContactEmail(data: ContactFormData): Promise<{ success: boolean; error?: string }> {
+  const lang = data.language || 'fr'
+  const t = getEmailTranslations(lang)
   try {
     // Créer le transporteur SMTP
-    const transporter = nodemailer.createTransport({
+    const transportOptions: SMTPTransport.Options = {
       host: emailConfig.smtp.host,
       port: emailConfig.smtp.port,
       secure: emailConfig.smtp.secure,
@@ -28,7 +33,9 @@ export async function sendContactEmail(data: ContactFormData): Promise<{ success
         user: emailConfig.smtp.auth.user,
         pass: emailConfig.smtp.auth.pass,
       },
-    })
+    }
+    
+    const transporter = nodemailer.createTransport(transportOptions)
 
     // Vérifier la connexion SMTP
     await transporter.verify()
@@ -60,86 +67,86 @@ export async function sendContactEmail(data: ContactFormData): Promise<{ success
         <body>
           <div class="container">
             <div class="alert">
-              <div class="alert-title">🔔 NOUVELLE DEMANDE DE CONTACT</div>
-              <p class="alert-text">Une personne a rempli le formulaire de contact sur le site web. Veuillez traiter cette demande dans les 24h.</p>
+              <div class="alert-title">${t.contact.newRequest}</div>
+              <p class="alert-text">${t.contact.actionRequired}</p>
             </div>
 
             <div class="header">
-              <h1 style="margin: 0; font-size: 28px;">📬 Formulaire de Contact</h1>
-              <p style="margin: 10px 0 0 0; opacity: 0.9; font-size: 14px;">Cabinet DAB - Dr. Kanga Kouamé</p>
+              <h1 style="margin: 0; font-size: 28px;">${t.contact.formTitle}</h1>
+              <p style="margin: 10px 0 0 0; opacity: 0.9; font-size: 14px;">${t.common.cabinetName}</p>
             </div>
 
             <div class="content">
               <div class="quick-info">
-                <h3 style="margin: 0 0 12px 0; color: #4338ca; font-size: 16px;">📋 Résumé rapide</h3>
+                <h3 style="margin: 0 0 12px 0; color: #4338ca; font-size: 16px;">${t.contact.quickSummary}</h3>
                 <div class="quick-info-row">
-                  <span class="quick-info-label">Contact :</span>
+                  <span class="quick-info-label">${t.contact.contact}</span>
                   <span>${data.firstName} ${data.lastName}</span>
                 </div>
                 <div class="quick-info-row">
-                  <span class="quick-info-label">Intéressé par :</span>
-                  <span>${getInterestLabel(data.interest)}</span>
+                  <span class="quick-info-label">${t.contact.interestedIn}</span>
+                  <span>${getInterestLabel(data.interest, lang)}</span>
                 </div>
                 <div class="quick-info-row">
-                  <span class="quick-info-label">Email :</span>
+                  <span class="quick-info-label">${t.contact.email}</span>
                   <span><a href="mailto:${data.email}" style="color: #4f46e5;">${data.email}</a></span>
                 </div>
                 <div class="quick-info-row">
-                  <span class="quick-info-label">Téléphone :</span>
+                  <span class="quick-info-label">${t.contact.phone}</span>
                   <span><a href="tel:${data.phone}" style="color: #4f46e5;">${data.phone}</a></span>
                 </div>
               </div>
 
               <div style="text-align: center; margin: 20px 0;">
-                <a href="mailto:${data.email}" class="action-btn">✉️ Répondre par Email</a>
-                <a href="tel:${data.phone}" class="action-btn" style="background: #7c3aed;">📞 Appeler</a>
+                <a href="mailto:${data.email}" class="action-btn">${t.contact.replyByEmail}</a>
+                <a href="tel:${data.phone}" class="action-btn" style="background: #7c3aed;">${t.contact.call}</a>
               </div>
 
               <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 30px 0;">
 
-              <h3 style="color: #1f2937; margin-bottom: 20px;">📝 Détails complets de la demande</h3>
+              <h3 style="color: #1f2937; margin-bottom: 20px;">${t.contact.fullDetails}</h3>
 
               <div class="field">
-                <span class="label">👤 Prénom</span>
+                <span class="label">${t.contact.firstName}</span>
                 <div class="value">${data.firstName}</div>
               </div>
 
               <div class="field">
-                <span class="label">👤 Nom</span>
+                <span class="label">${t.contact.lastName}</span>
                 <div class="value">${data.lastName}</div>
               </div>
 
               <div class="field">
-                <span class="label">📧 Adresse Email</span>
+                <span class="label">${t.contact.emailAddress}</span>
                 <div class="value"><a href="mailto:${data.email}" style="color: #4f46e5; text-decoration: none;">${data.email}</a></div>
               </div>
 
               <div class="field">
-                <span class="label">📱 Numéro de Téléphone</span>
+                <span class="label">${t.contact.phoneNumber}</span>
                 <div class="value"><a href="tel:${data.phone}" style="color: #4f46e5; text-decoration: none;">${data.phone}</a></div>
               </div>
 
               <div class="field">
-                <span class="label">🎯 Service Demandé</span>
-                <div class="value">${getInterestLabel(data.interest)}</div>
+                <span class="label">${t.contact.serviceRequested}</span>
+                <div class="value">${getInterestLabel(data.interest, lang)}</div>
               </div>
 
               ${data.situation ? `
                 <div class="field">
-                  <span class="label">📊 Situation Actuelle du Prospect</span>
+                  <span class="label">${t.contact.currentSituation}</span>
                   <div class="value">${data.situation.replace(/\n/g, '<br>')}</div>
                 </div>
               ` : ''}
 
               <div class="field">
-                <span class="label">💬 Message Complet</span>
+                <span class="label">${t.contact.fullMessage}</span>
                 <div class="value">${data.message.replace(/\n/g, '<br>')}</div>
               </div>
             </div>
 
             <div class="footer">
-              <p style="margin: 0 0 10px 0; font-size: 16px; font-weight: bold;">⏰ Action requise</p>
-              <p style="margin: 0; font-size: 14px; opacity: 0.9;">Veuillez répondre à cette demande dans les 24 heures pour maintenir notre engagement de qualité envers nos clients.</p>
+              <p style="margin: 0 0 10px 0; font-size: 16px; font-weight: bold;">${t.contact.actionRequiredFooter}</p>
+              <p style="margin: 0; font-size: 14px; opacity: 0.9;">${t.contact.responseTime}</p>
             </div>
           </div>
         </body>
@@ -148,37 +155,36 @@ export async function sendContactEmail(data: ContactFormData): Promise<{ success
 
     // Contenu texte brut (fallback)
     const textContent = `
-🔔 NOUVELLE DEMANDE DE CONTACT
-Cabinet DAB - Dr. Kanga Kouamé
+${t.contact.newRequest}
+${t.common.cabinetName}
 
-⚠️ ACTION REQUISE : Une personne a rempli le formulaire de contact sur le site web.
-Veuillez traiter cette demande dans les 24h.
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📋 RÉSUMÉ RAPIDE
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-Contact : ${data.firstName} ${data.lastName}
-Intéressé par : ${getInterestLabel(data.interest)}
-Email : ${data.email}
-Téléphone : ${data.phone}
+⚠️ ${t.contact.actionRequired}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📝 DÉTAILS COMPLETS
+${t.contact.quickSummary}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-👤 Prénom : ${data.firstName}
-👤 Nom : ${data.lastName}
-📧 Email : ${data.email}
-📱 Téléphone : ${data.phone}
-🎯 Service demandé : ${getInterestLabel(data.interest)}
-${data.situation ? `\n📊 Situation actuelle du prospect :\n${data.situation}\n` : ''}
-💬 Message complet :
+${t.contact.contact} ${data.firstName} ${data.lastName}
+${t.contact.interestedIn} ${getInterestLabel(data.interest, lang)}
+${t.contact.email} ${data.email}
+${t.contact.phone} ${data.phone}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+${t.contact.fullDetails}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+${t.contact.firstName} : ${data.firstName}
+${t.contact.lastName} : ${data.lastName}
+${t.contact.emailAddress} : ${data.email}
+${t.contact.phoneNumber} : ${data.phone}
+${t.contact.serviceRequested} : ${getInterestLabel(data.interest, lang)}
+${data.situation ? `\n${t.contact.currentSituation} :\n${data.situation}\n` : ''}
+${t.contact.fullMessage} :
 ${data.message}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-⏰ N'oubliez pas de répondre dans les 24h pour maintenir notre engagement de qualité !
+${t.contact.actionRequiredFooter} ${t.contact.responseTime}
     `
 
     // Envoyer l'email
@@ -186,7 +192,7 @@ ${data.message}
       from: `"${emailConfig.from.name}" <${emailConfig.from.email}>`,
       to: emailConfig.to,
       replyTo: data.email,
-      subject: `🔔 NOUVELLE DEMANDE - ${data.firstName} ${data.lastName} - ${getInterestLabel(data.interest)}`,
+      subject: `${t.contact.subject} - ${data.firstName} ${data.lastName} - ${getInterestLabel(data.interest, lang)}`,
       text: textContent,
       html: htmlContent,
     })
@@ -203,16 +209,3 @@ ${data.message}
   }
 }
 
-/**
- * Convertir le code d'intérêt en label lisible
- */
-function getInterestLabel(interest: string): string {
-  const labels: Record<string, string> = {
-    masterclass: "Masterclass Thématiques",
-    seminaires: "Séminaires Pratiques",
-    coaching: "Coaching Privé",
-    programme: 'Programme "De la ferme aux marchés mondiaux"',
-    information: "Informations générales",
-  }
-  return labels[interest] || interest
-}

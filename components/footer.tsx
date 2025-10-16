@@ -1,8 +1,12 @@
+"use client";
 import Link from "next/link"
 import { Mail, Phone, MapPin, Wheat, Sprout, Leaf, Sun, Tractor } from "lucide-react"
 import Image from "next/image"
+import { useLanguage } from "@/locales/LanguageProvider"
 
 export function Footer() {
+  const { t } = useLanguage()
+  
   return (
     <footer className="relative bg-muted border-t border-border overflow-hidden">
       {/* Agricultural Background Motifs */}
@@ -58,8 +62,7 @@ export function Footer() {
               {/* <span className="font-semibold text-lg text-primary">Cabinet DAB</span> */}
             </div>
             <p className="text-muted-foreground mb-4 max-w-md">
-              Transformez votre exploitation agricole locale en entreprise exportatrice grâce à la méthode éprouvée du
-              Dr. Kanga.
+              {t.footer.description}
             </p>
             <div className="space-y-2">
               <div className="flex items-center space-x-2 text-muted-foreground">
@@ -78,16 +81,16 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="font-semibold text-foreground mb-4">Formation</h3>
+            <h3 className="font-semibold text-foreground mb-4">{t.footer.quickLinks.title}</h3>
             <ul className="space-y-2">
               <li>
                 <Link href="/videos" className="text-muted-foreground hover:text-primary transition-colors">
-                  Vidéos Pédagogiques
+                  {t.footer.quickLinks.videos}
                 </Link>
               </li>
               <li>
                 <Link href="/masterclass" className="text-muted-foreground hover:text-primary transition-colors">
-                  Masterclass
+                  {t.footer.quickLinks.masterclass}
                 </Link>
               </li>
               {/* <li>
@@ -97,23 +100,23 @@ export function Footer() {
               </li> */}
               <li>
                 <Link href="/coaching" className="text-muted-foreground hover:text-primary transition-colors">
-                  Coaching Privé
+                  {t.footer.quickLinks.coaching}
                 </Link>
               </li>
             </ul>
           </div>
 
           <div>
-            <h3 className="font-semibold text-foreground mb-4">Ressources</h3>
+            <h3 className="font-semibold text-foreground mb-4">{t.footer.contact.title}</h3>
             <ul className="space-y-2">
               <li>
                 <Link href="/a-propos" className="text-muted-foreground hover:text-primary transition-colors">
-                  À Propos
+                  {t.footer.quickLinks.about}
                 </Link>
               </li>
               <li>
                 <Link href="/contact" className="text-muted-foreground hover:text-primary transition-colors">
-                  Contact
+                  {t.footer.quickLinks.contact}
                 </Link>
               </li>
              
@@ -122,7 +125,7 @@ export function Footer() {
         </div>
 
         <div className="border-t border-border mt-8 pt-8 text-center text-muted-foreground">
-          <p>&copy; 2025 Cabinet DAB. Tous droits réservés.</p>
+          <p>&copy; 2025 Cabinet DAB. {t.footer.copyright}</p>
         </div>
       </div>
     </footer>

@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import { translations, type Language } from '@/locales/translations'
 
 interface SEOProps {
   title?: string
@@ -12,11 +13,12 @@ interface SEOProps {
   author?: string
   section?: string
   noIndex?: boolean
+  lang?: Language
 }
 
 export function generateSEOMetadata({
-  title = "Cabinet DAB - De la ferme aux Marchés Mondiaux",
-  description = "Programme de formation agricole pour transformer votre exploitation locale en entreprise exportatrice. Masterclass, séminaires et coaching avec le Dr. Kanga.",
+  title,
+  description,
   keywords = [],
   image = "/og-image.jpg",
   url = "",
@@ -25,26 +27,39 @@ export function generateSEOMetadata({
   modifiedTime,
   author = "Dr. Kanga",
   section,
-  noIndex = false
+  noIndex = false,
+  lang = 'fr'
 }: SEOProps): Metadata {
+  const t = translations[lang]
+  
+  // Use provided values or fall back to translated defaults
+  const finalTitle = title || t.seo.home.title
+  const finalDescription = description || t.seo.home.description
   const baseUrl = "https://www.cabinetdab.com"
   const fullUrl = url ? `${baseUrl}${url}` : baseUrl
   const fullImageUrl = image.startsWith('http') ? image : `${baseUrl}${image}`
 
-  const baseKeywords = [
+  const baseKeywords = lang === 'fr' ? [
     "formation agricole",
     "export agricole",
     "transformation locale",
-    "assurance agricole",
     "Dr Kanga",
     "Cabinet DAB",
     "agriculture internationale",
     "coaching agricole"
+  ] : [
+    "agricultural training",
+    "agricultural export",
+    "local transformation",
+    "Dr Kanga",
+    "Cabinet DAB",
+    "international agriculture",
+    "agricultural coaching"
   ]
 
   return {
-    title: title === "Cabinetdab - De la ferme aux Marchés Mondiaux" ? title : `${title} | Cabinetdab`,
-    description,
+    title: finalTitle.includes('Cabinet DAB') ? finalTitle : `${finalTitle} | Cabinetdab`,
+    description: finalDescription,
     keywords: [...baseKeywords, ...keywords],
     authors: [{ name: author, url: `${baseUrl}/a-propos` }],
     creator: "Cabinetdab",
@@ -67,20 +82,24 @@ export function generateSEOMetadata({
     },
     alternates: {
       canonical: fullUrl,
+      languages: {
+        'fr': fullUrl.replace(`/${lang}`, '/fr'),
+        'en': fullUrl.replace(`/${lang}`, '/en'),
+      },
     },
     openGraph: {
-      title,
-      description,
+      title: finalTitle,
+      description: finalDescription,
       url: fullUrl,
       siteName: 'Cabinetdab',
-      locale: 'fr_FR',
+      locale: lang === 'fr' ? 'fr_FR' : 'en_US',
       type: type === 'article' ? 'article' : 'website',
       images: [
         {
           url: fullImageUrl,
           width: 1200,
           height: 630,
-          alt: title,
+          alt: finalTitle,
         }
       ],
       ...(type === 'article' && {
@@ -92,50 +111,61 @@ export function generateSEOMetadata({
     },
     twitter: {
       card: 'summary_large_image',
-      title,
-      description,
+      title: finalTitle,
+      description: finalDescription,
       images: [fullImageUrl],
       creator: '@cabinetdab',
     },
   }
 }
 
-// Helper function for common page types
-export const seoConfig = {
-  home: {
-    title: "Cabinet DAB - De la ferme aux Marchés Mondiaux",
-    description: "Programme de formation agricole pour transformer votre exploitation locale en entreprise exportatrice. Masterclass, séminaires et coaching avec le Dr. Kanga.",
-    keywords: ["programme signature", "formation complète", "méthode cabinetdab"],
-    image: "/og-image.jpg"
-  },
-  masterclass: {
-    title: "Masterclass Thématiques - Formation Agricole",
-    description: "Sessions expertes et interactives avec le Dr. Kanga. Perfectionnez vos connaissances sur des sujets spécifiques avec vidéos complémentaires incluses.",
-    keywords: ["masterclass", "formation en ligne", "sessions live", "expertise agricole"],
-    image: "/og-masterclass.jpg"
-  },
-  seminaires: {
-    title: "Séminaires Pratiques - Formation Agriculture",
-    description: "Immersion totale avec exercices pratiques et networking. Appliquez concrètement les méthodes apprises dans nos séminaires de 3 jours.",
-    keywords: ["séminaires", "formation présentielle", "networking", "exercices pratiques"],
-    image: "/og-seminaires.jpg"
-  },
-  coaching: {
-    title: "Coaching Privé Agricole - Accompagnement Personnalisé",
-    description: "Accompagnement personnalisé pour accélérer vos résultats. Service premium pour entrepreneurs ambitieux avec suivi continu.",
-    keywords: ["coaching privé", "accompagnement personnalisé", "suivi individuel", "plan sur-mesure"],
-    image: "/og-coaching.jpg"
-  },
-  contact: {
-    title: "Contact - Cabinetdab Formation Agricole",
-    description: "Contactez notre équipe pour plus d'informations sur nos programmes de formation agricole et nos services d'accompagnement.",
-    keywords: ["contact", "information", "devis", "consultation"],
-    image: "/og-contact.jpg"
-  },
-  apropos: {
-    title: "À Propos - Dr. Kanga et Cabinetdab",
-    description: "Découvrez l'expertise du Dr. Kanga et l'histoire de Cabinetdab, plus de 20 ans d'expérience dans l'accompagnement d'agriculteurs vers l'export.",
-    keywords: ["Dr Kanga", "équipe", "expertise", "expérience", "histoire"],
-    image: "/og-apropos.jpg"
+export function getSEOConfig(lang: Language = 'fr') {
+  const t = translations[lang]
+  
+  return {
+    home: {
+      title: t.seo.home.title,
+      description: t.seo.home.description,
+      keywords: t.seo.home.keywords,
+      image: "/og-image.jpg",
+      lang
+    },
+    masterclass: {
+      title: t.seo.masterclass.title,
+      description: t.seo.masterclass.description,
+      keywords: t.seo.masterclass.keywords,
+      image: "/og-masterclass.jpg",
+      lang
+    },
+    seminaires: {
+      title: t.seo.seminaires.title,
+      description: t.seo.seminaires.description,
+      keywords: t.seo.seminaires.keywords,
+      image: "/og-seminaires.jpg",
+      lang
+    },
+    coaching: {
+      title: t.seo.coaching.title,
+      description: t.seo.coaching.description,
+      keywords: t.seo.coaching.keywords,
+      image: "/og-coaching.jpg",
+      lang
+    },
+    contact: {
+      title: t.seo.contact.title,
+      description: t.seo.contact.description,
+      keywords: t.seo.contact.keywords,
+      image: "/og-contact.jpg",
+      lang
+    },
+    apropos: {
+      title: t.seo.apropos.title,
+      description: t.seo.apropos.description,
+      keywords: t.seo.apropos.keywords,
+      image: "/og-apropos.jpg",
+      lang
+    }
   }
 }
+
+export const seoConfig = getSEOConfig('fr')

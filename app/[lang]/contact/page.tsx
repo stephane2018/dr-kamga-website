@@ -10,8 +10,10 @@ import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Mail, Phone, MapPin, Calendar, MessageSquare, Clock, CheckCircle, ArrowRight, Sparkles, Loader2 } from "lucide-react"
+import { useLanguage } from "@/locales/LanguageProvider"
 
 export default function ContactPage() {
+  const { t, language } = useLanguage()
   const [isLoading, setIsLoading] = useState(false)
   const [selectedInterest, setSelectedInterest] = useState("")
   const [formStatus, setFormStatus] = useState<{
@@ -35,6 +37,7 @@ export default function ContactPage() {
       interest: selectedInterest,
       situation: formData.get("situation"),
       message: formData.get("message"),
+      language: language, // Envoyer la langue actuelle pour l'email
     }
 
     try {
@@ -51,21 +54,21 @@ export default function ContactPage() {
       if (result.success) {
         setFormStatus({
           type: "success",
-          message: result.message || "Votre message a été envoyé avec succès !",
+          message: result.message || t.contactPage.form.success,
         })
         form.reset()
         setSelectedInterest("")
       } else {
         setFormStatus({
           type: "error",
-          message: result.error || "Une erreur est survenue lors de l'envoi du message.",
+          message: result.error || t.contactPage.form.error,
         })
       }
     } catch (error) {
       console.log(error);
       setFormStatus({
         type: "error",
-        message: "Une erreur est survenue. Veuillez réessayer plus tard.",
+        message: t.contactPage.form.error,
       })
     } finally {
       setIsLoading(false)
@@ -102,25 +105,27 @@ export default function ContactPage() {
               </div>
             </div>
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 text-balance leading-tight">
-              Parlons de Votre <span className="text-primary">Projet</span>
+              {t.contactPage.hero.title.split(' ').map((word, i, arr) => 
+                i === arr.length - 1 ? <span key={i} className="text-primary">{word}</span> : word + ' '
+              )}
             </h1>
             <p className="text-lg sm:text-xl text-muted-foreground max-w-4xl mx-auto text-pretty mb-6 sm:mb-8 px-4">
-              Prêt à transformer votre agriculture en entreprise d'exportation ?
+              {t.contactPage.hero.subtitle}
               <br className="hidden md:block" />
-              Contactez-nous pour découvrir comment notre méthode peut vous accompagner vers les marchés internationaux.
+              {t.contactPage.hero.description}
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center space-y-3 sm:space-y-0 sm:space-x-6 lg:space-x-8 text-sm text-muted-foreground">
               <div className="flex items-center space-x-2">
                 <CheckCircle className="h-4 w-4 text-primary flex-shrink-0" />
-                <span className="whitespace-nowrap">Réponse sous 24h</span>
+                <span className="whitespace-nowrap">{t.contactPage.hero.features.feature1}</span>
               </div>
               <div className="flex items-center space-x-2">
                 <CheckCircle className="h-4 w-4 text-secondary flex-shrink-0" />
-                <span className="whitespace-nowrap">Appel diagnostic gratuit</span>
+                <span className="whitespace-nowrap">{t.contactPage.hero.features.feature2}</span>
               </div>
               <div className="flex items-center space-x-2">
                 <CheckCircle className="h-4 w-4 text-accent flex-shrink-0" />
-                <span className="whitespace-nowrap">Accompagnement personnalisé</span>
+                <span className="whitespace-nowrap">{t.contactPage.hero.features.feature3}</span>
               </div>
             </div>
           </div>
@@ -140,20 +145,20 @@ export default function ContactPage() {
                     <MessageSquare className="h-6 w-6 text-primary" />
                   </div>
                   <div className="flex-1">
-                    <CardTitle className="text-xl sm:text-2xl text-gray-900 mb-1">Envoyez-nous un message</CardTitle>
-                    <CardDescription className="text-sm sm:text-base">Remplissez ce formulaire et nous vous recontacterons dans les 24h</CardDescription>
+                    <CardTitle className="text-xl sm:text-2xl text-gray-900 mb-1">{t.contactPage.form.title}</CardTitle>
+                    <CardDescription className="text-sm sm:text-base">{t.contactPage.form.subtitle}</CardDescription>
                   </div>
                 </div>
                 <div className="bg-gradient-to-r from-primary/10 to-secondary/10 rounded-lg p-3 sm:p-4">
                   <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-4 text-xs sm:text-sm text-gray-700">
                     <div className="flex items-center space-x-2">
                       <Clock className="h-4 w-4 text-primary flex-shrink-0" />
-                      <span className="font-medium">Réponse garantie sous 24h</span>
+                      <span className="font-medium">{t.contactPage.form.guaranteeResponse}</span>
                     </div>
                     <div className="hidden sm:block text-gray-500">|</div>
                     <div className="flex items-center space-x-2">
                       <CheckCircle className="h-4 w-4 text-secondary flex-shrink-0" />
-                      <span className="font-medium">Consultation gratuite incluse</span>
+                      <span className="font-medium">{t.contactPage.form.freeConsultation}</span>
                     </div>
                   </div>
                 </div>
@@ -180,22 +185,22 @@ export default function ContactPage() {
                 <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label htmlFor="firstName" className="text-sm font-medium">Prénom *</Label>
+                      <Label htmlFor="firstName" className="text-sm font-medium">{t.contactPage.form.fields.firstName.label}</Label>
                       <Input
                         id="firstName"
                         name="firstName"
-                        placeholder="Votre prénom"
+                        placeholder={t.contactPage.form.fields.firstName.placeholder}
                         required
                         disabled={isLoading}
                         className="h-11 border-gray-200 focus:border-primary focus:ring-primary/20 transition-all duration-200"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="lastName" className="text-sm font-medium">Nom *</Label>
+                      <Label htmlFor="lastName" className="text-sm font-medium">{t.contactPage.form.fields.lastName.label}</Label>
                       <Input
                         id="lastName"
                         name="lastName"
-                        placeholder="Votre nom"
+                        placeholder={t.contactPage.form.fields.lastName.placeholder}
                         required
                         disabled={isLoading}
                         className="h-11 border-gray-200 focus:border-primary focus:ring-primary/20 transition-all duration-200"
@@ -205,24 +210,24 @@ export default function ContactPage() {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label htmlFor="email" className="text-sm font-medium">Email *</Label>
+                      <Label htmlFor="email" className="text-sm font-medium">{t.contactPage.form.fields.email.label}</Label>
                       <Input
                         id="email"
                         name="email"
                         type="email"
-                        placeholder="votre@email.com"
+                        placeholder={t.contactPage.form.fields.email.placeholder}
                         required
                         disabled={isLoading}
                         className="h-11 border-gray-200 focus:border-primary focus:ring-primary/20 transition-all duration-200"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="phone" className="text-sm font-medium">Téléphone *</Label>
+                      <Label htmlFor="phone" className="text-sm font-medium">{t.contactPage.form.fields.phone.label}</Label>
                       <Input
                         id="phone"
                         name="phone"
                         type="tel"
-                        placeholder="+33 1 23 45 67 89"
+                        placeholder={t.contactPage.form.fields.phone.placeholder}
                         required
                         disabled={isLoading}
                         className="h-11 border-gray-200 focus:border-primary focus:ring-primary/20 transition-all duration-200"
@@ -231,49 +236,49 @@ export default function ContactPage() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="interest" className="text-sm font-medium">Vous êtes intéressé par *</Label>
+                    <Label htmlFor="interest" className="text-sm font-medium">{t.contactPage.form.fields.interest.label}</Label>
                     <Select value={selectedInterest} onValueChange={setSelectedInterest} disabled={isLoading} required>
                       <SelectTrigger className="h-11 border-gray-200 focus:border-primary focus:ring-primary/20 transition-all duration-200">
-                        <SelectValue placeholder="Sélectionnez une option" />
+                        <SelectValue placeholder={t.contactPage.form.fields.interest.placeholder} />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="masterclass">
                           <div className="flex items-center space-x-2">
                             <div className="w-2 h-2 bg-primary rounded-full flex-shrink-0"></div>
-                            <span className="text-sm">Masterclass Thématiques</span>
+                            <span className="text-sm">{t.contactPage.form.fields.interest.options.masterclass}</span>
                           </div>
                         </SelectItem>
                         <SelectItem value="seminaires">
                           <div className="flex items-center space-x-2">
                             <div className="w-2 h-2 bg-secondary rounded-full flex-shrink-0"></div>
-                            <span className="text-sm">Séminaires Pratiques</span>
+                            <span className="text-sm">{t.contactPage.form.fields.interest.options.seminaires}</span>
                           </div>
                         </SelectItem>
                         <SelectItem value="coaching">
                           <div className="flex items-center space-x-2">
                             <div className="w-2 h-2 bg-accent rounded-full flex-shrink-0"></div>
-                            <span className="text-sm">Coaching Privé</span>
+                            <span className="text-sm">{t.contactPage.form.fields.interest.options.coaching}</span>
                           </div>
                         </SelectItem>
                         <SelectItem value="programme">
                           <div className="flex items-center space-x-2">
                             <div className="w-2 h-2 bg-primary rounded-full flex-shrink-0"></div>
-                            <span className="text-sm">Programme "De la ferme aux marchés mondiaux"</span>
+                            <span className="text-sm">{t.contactPage.form.fields.interest.options.programme}</span>
                           </div>
                         </SelectItem>
                         <SelectItem value="information">
-                          <span className="text-sm">Informations générales</span>
+                          <span className="text-sm">{t.contactPage.form.fields.interest.options.information}</span>
                         </SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="situation" className="text-sm font-medium">Décrivez votre situation actuelle</Label>
+                    <Label htmlFor="situation" className="text-sm font-medium">{t.contactPage.form.fields.situation.label}</Label>
                     <Textarea
                       id="situation"
                       name="situation"
-                      placeholder="Parlez-nous de votre exploitation, vos produits, vos objectifs d'exportation..."
+                      placeholder={t.contactPage.form.fields.situation.placeholder}
                       rows={3}
                       disabled={isLoading}
                       className="min-h-[80px] border-gray-200 focus:border-primary focus:ring-primary/20 transition-all duration-200 resize-none"
@@ -281,11 +286,11 @@ export default function ContactPage() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="message" className="text-sm font-medium">Message *</Label>
+                    <Label htmlFor="message" className="text-sm font-medium">{t.contactPage.form.fields.message.label}</Label>
                     <Textarea
                       id="message"
                       name="message"
-                      placeholder="Comment pouvons-nous vous aider à atteindre vos objectifs d'exportation ?"
+                      placeholder={t.contactPage.form.fields.message.placeholder}
                       rows={4}
                       required
                       disabled={isLoading}
@@ -302,18 +307,18 @@ export default function ContactPage() {
                     {isLoading ? (
                       <>
                         <Loader2 className="h-4 w-4 mr-2 flex-shrink-0 animate-spin" />
-                        <span>Envoi en cours...</span>
+                        <span>{t.contactPage.form.sending}</span>
                       </>
                     ) : (
                       <>
                         <ArrowRight className="h-4 w-4 mr-2 flex-shrink-0" />
-                        <span>Envoyer le message</span>
+                        <span>{t.contactPage.form.submit}</span>
                       </>
                     )}
                   </Button>
 
                   <p className="text-xs text-gray-500 text-center mt-3 sm:mt-4 leading-relaxed">
-                    En envoyant ce formulaire, vous acceptez d'être contacté par notre équipe pour discuter de votre projet.
+                    {t.contactPage.form.disclaimer}
                   </p>
                 </form>
               </CardContent>
@@ -326,16 +331,16 @@ export default function ContactPage() {
 
                 {/* Quick Contact Cards - Compact */}
                 <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-6">
-                  <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-4 text-center">Autres moyens de contact</h3>
+                  <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-4 text-center">{t.contactPage.contact.title}</h3>
                   <div className="space-y-3 sm:space-y-4">
                     <div className="flex items-center space-x-4 p-3 sm:p-4 bg-gradient-to-r from-primary/5 to-primary/10 rounded-lg hover:shadow-md transition-all duration-300">
                       <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
                         <Mail className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h4 className="font-bold text-gray-900 text-sm sm:text-base">Email</h4>
-                        <p className="text-xs sm:text-sm text-primary font-medium truncate">info@cabinetdab.com</p>
-                        <p className="text-xs text-gray-500">Réponse sous 24h</p>
+                        <h4 className="font-bold text-gray-900 text-sm sm:text-base">{t.contactPage.contact.email.title}</h4>
+                        <p className="text-xs sm:text-sm text-primary font-medium truncate">{t.contactPage.contact.email.value}</p>
+                        <p className="text-xs text-gray-500">{t.contactPage.contact.email.subtitle}</p>
                       </div>
                     </div>
 
@@ -344,9 +349,9 @@ export default function ContactPage() {
                         <Phone className="h-5 w-5 sm:h-6 sm:w-6 text-secondary" />
                       </div>
                       <div className="flex-1">
-                        <h4 className="font-bold text-gray-900 text-sm sm:text-base">Téléphone</h4>
-                        <p className="text-xs sm:text-sm text-secondary font-medium">+33 1 23 45 67 89</p>
-                        <p className="text-xs text-gray-500">Lun-Ven 9h-18h</p>
+                        <h4 className="font-bold text-gray-900 text-sm sm:text-base">{t.contactPage.contact.phone.title}</h4>
+                        <p className="text-xs sm:text-sm text-secondary font-medium">{t.contactPage.contact.phone.value}</p>
+                        <p className="text-xs text-gray-500">{t.contactPage.contact.phone.subtitle}</p>
                       </div>
                     </div>
 
@@ -355,9 +360,9 @@ export default function ContactPage() {
                         <MapPin className="h-5 w-5 sm:h-6 sm:w-6 text-accent" />
                       </div>
                       <div className="flex-1">
-                        <h4 className="font-bold text-gray-900 text-sm sm:text-base">Bureau</h4>
-                        <p className="text-xs sm:text-sm text-accent font-medium">Abidjan, Côte d'Ivoire</p>
-                        <p className="text-xs text-gray-500">Interventions mondiales</p>
+                        <h4 className="font-bold text-gray-900 text-sm sm:text-base">{t.contactPage.contact.office.title}</h4>
+                        <p className="text-xs sm:text-sm text-accent font-medium">{t.contactPage.contact.office.value}</p>
+                        <p className="text-xs text-gray-500">{t.contactPage.contact.office.subtitle}</p>
                       </div>
                     </div>
                   </div>
@@ -369,22 +374,22 @@ export default function ContactPage() {
                     <CardHeader >
                       <CardTitle className="flex items-center space-x-2 text-base sm:text-lg">
                         <Clock className="h-4 w-4 sm:h-5 sm:w-5 text-primary flex-shrink-0" />
-                        <span>Horaires d'ouverture</span>
+                        <span>{t.contactPage.hours.title}</span>
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="p-4 sm:p-6">
                       <div className="space-y-2 sm:space-y-3">
                         <div className="flex justify-between items-center py-1.5 sm:py-2 border-b border-gray-100">
-                          <span className="font-medium text-sm sm:text-base">Lundi - Vendredi</span>
-                          <span className="text-primary font-semibold text-sm sm:text-base">9h00 - 18h00</span>
+                          <span className="font-medium text-sm sm:text-base">{t.contactPage.hours.weekdays.label}</span>
+                          <span className="text-primary font-semibold text-sm sm:text-base">{t.contactPage.hours.weekdays.hours}</span>
                         </div>
                         <div className="flex justify-between items-center py-1.5 sm:py-2 border-b border-gray-100">
-                          <span className="font-medium text-sm sm:text-base">Samedi</span>
-                          <span className="text-secondary font-semibold text-sm sm:text-base">9h00 - 12h00</span>
+                          <span className="font-medium text-sm sm:text-base">{t.contactPage.hours.saturday.label}</span>
+                          <span className="text-secondary font-semibold text-sm sm:text-base">{t.contactPage.hours.saturday.hours}</span>
                         </div>
                         <div className="flex justify-between items-center py-1.5 sm:py-2">
-                          <span className="font-medium text-sm sm:text-base">Dimanche</span>
-                          <span className="text-gray-400 text-sm sm:text-base">Fermé</span>
+                          <span className="font-medium text-sm sm:text-base">{t.contactPage.hours.sunday.label}</span>
+                          <span className="text-gray-400 text-sm sm:text-base">{t.contactPage.hours.sunday.hours}</span>
                         </div>
                       </div>
                     </CardContent>
@@ -397,37 +402,37 @@ export default function ContactPage() {
           {/* Stats Section */}
           <div className="mt-12 sm:mt-16 lg:mt-20 bg-white rounded-xl sm:rounded-2xl shadow-lg p-6 sm:p-8">
             <div className="text-center mb-6 sm:mb-8">
-              <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">Notre Impact</h3>
-              <p className="text-gray-600 text-sm sm:text-base">Des résultats concrets pour nos partenaires</p>
+              <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">{t.contactPage.impact.title}</h3>
+              <p className="text-gray-600 text-sm sm:text-base">{t.contactPage.impact.subtitle}</p>
             </div>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
               <div className="text-center">
                 <div className="w-12 h-12 sm:w-16 sm:h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
                   <Sparkles className="h-6 w-6 sm:h-8 sm:w-8 text-primary" />
                 </div>
-                <div className="text-2xl sm:text-3xl font-bold text-primary mb-1 sm:mb-2">40+</div>
-                <div className="text-xs sm:text-sm text-gray-600 leading-tight">Années d'expérience</div>
+                <div className="text-2xl sm:text-3xl font-bold text-primary mb-1 sm:mb-2">{t.contactPage.impact.stats.experience.value}</div>
+                <div className="text-xs sm:text-sm text-gray-600 leading-tight">{t.contactPage.impact.stats.experience.label}</div>
               </div>
               <div className="text-center">
                 <div className="w-12 h-12 sm:w-16 sm:h-16 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
                   <CheckCircle className="h-6 w-6 sm:h-8 sm:w-8 text-secondary" />
                 </div>
-                <div className="text-2xl sm:text-3xl font-bold text-secondary mb-1 sm:mb-2">500+</div>
-                <div className="text-xs sm:text-sm text-gray-600 leading-tight">Entreprises accompagnées</div>
+                <div className="text-2xl sm:text-3xl font-bold text-secondary mb-1 sm:mb-2">{t.contactPage.impact.stats.companies.value}</div>
+                <div className="text-xs sm:text-sm text-gray-600 leading-tight">{t.contactPage.impact.stats.companies.label}</div>
               </div>
               <div className="text-center">
                 <div className="w-12 h-12 sm:w-16 sm:h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
                   <MapPin className="h-6 w-6 sm:h-8 sm:w-8 text-accent" />
                 </div>
-                <div className="text-2xl sm:text-3xl font-bold text-accent mb-1 sm:mb-2">15</div>
-                <div className="text-xs sm:text-sm text-gray-600 leading-tight">Pays d'intervention</div>
+                <div className="text-2xl sm:text-3xl font-bold text-accent mb-1 sm:mb-2">{t.contactPage.impact.stats.countries.value}</div>
+                <div className="text-xs sm:text-sm text-gray-600 leading-tight">{t.contactPage.impact.stats.countries.label}</div>
               </div>
               <div className="text-center">
                 <div className="w-12 h-12 sm:w-16 sm:h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
                   <ArrowRight className="h-6 w-6 sm:h-8 sm:w-8 text-primary" />
                 </div>
-                <div className="text-2xl sm:text-3xl font-bold text-primary mb-1 sm:mb-2">95%</div>
-                <div className="text-xs sm:text-sm text-gray-600 leading-tight">Taux de satisfaction</div>
+                <div className="text-2xl sm:text-3xl font-bold text-primary mb-1 sm:mb-2">{t.contactPage.impact.stats.satisfaction.value}</div>
+                <div className="text-xs sm:text-sm text-gray-600 leading-tight">{t.contactPage.impact.stats.satisfaction.label}</div>
               </div>
             </div>
           </div>

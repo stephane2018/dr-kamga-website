@@ -7,8 +7,11 @@ import { Suspense } from "react"
 import { StructuredData } from "@/components/structured-data"
 import { NewsletterModal } from "@/components/newsletter-modal"
 import { CookieConsent } from "@/components/cookie-consent"
+import { LanguageProvider } from "@/locales/LanguageProvider"
 import "./globals.css"
 
+// Note: This is the root layout. For language-specific metadata, 
+// use generateSEOMetadata() in individual page files with the lang parameter
 export const metadata: Metadata = {
   title: {
     default: "CabinetDab - De la ferme aux Marchés Mondiaux",
@@ -117,10 +120,12 @@ export default function RootLayout({
         <StructuredData type="course" />
       </head>
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
-        <Suspense fallback={null}>{children}</Suspense>
-        <NewsletterModal />
-        <CookieConsent />
-        <Analytics />
+        <LanguageProvider>
+          <Suspense fallback={null}>{children}</Suspense>
+          <NewsletterModal />
+          <CookieConsent />
+          <Analytics />
+        </LanguageProvider>
       </body>
     </html>
   )

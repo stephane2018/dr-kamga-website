@@ -1,6 +1,10 @@
+"use client";
 import { Badge } from "@/components/ui/badge"
+import { useLanguage } from "@/locales/LanguageProvider"
 
 export function AboutHeroSection() {
+  const { t } = useLanguage()
+  
   return (
     <section className="relative bg-gradient-to-br from-amber-900 via-amber-800 to-yellow-800 py-20 overflow-hidden">
       <div className="absolute inset-0 opacity-10">
@@ -18,30 +22,30 @@ export function AboutHeroSection() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div>
             <Badge className="mb-4 bg-white/20 text-white border-white/30" variant="secondary">
-              Parcours Expert
+              {t.about.hero.badge}
             </Badge>
             <h1 className="text-4xl md:text-5xl font-bold mb-6 text-balance text-white">
-              40 ans d'expérience au service de l'Agriculture Africaine
+              {t.about.hero.title}
             </h1>
             <p className="text-xl text-white/90 mb-6 text-pretty leading-relaxed">
-              Docteur vétérinaire et expert reconnu de la transformation locale et de l'exportation, le Dr Kanga Kouamé a conçu la méthode <span className="font-semibold">"De la ferme aux marchés mondiaux"</span> pour accompagner les producteurs vers l'autonomie et la compétitivité internationale.
+              {t.about.hero.description}
             </p>
             <div className="space-y-3 text-white/90">
               <div className="flex items-start space-x-3">
                 <div className="w-2 h-2 bg-white rounded-full mt-2 flex-shrink-0"></div>
-                <span>Conseiller diplomatique de la CI auprès de la FAO, du PAM et du FIDA</span>
+                <span>{t.about.hero.credentials.credential1}</span>
               </div>
               <div className="flex items-start space-x-3">
                 <div className="w-2 h-2 bg-white rounded-full mt-2 flex-shrink-0"></div>
-                <span>Docteur en médecine vétérinaire, diplômé de l'Université de Liège (Belgique)</span>
+                <span>{t.about.hero.credentials.credential2}</span>
               </div>
               <div className="flex items-start space-x-3">
                 <div className="w-2 h-2 bg-white rounded-full mt-2 flex-shrink-0"></div>
-                <span>Point focal OMC pour le système de contrôle sanitaire et phytosanitaire</span>
+                <span>{t.about.hero.credentials.credential3}</span>
               </div>
               <div className="flex items-start space-x-3">
                 <div className="w-2 h-2 bg-white rounded-full mt-2 flex-shrink-0"></div>
-                <span>Autorité compétente officielle de la CI pour l'agrément des établissements</span>
+                <span>{t.about.hero.credentials.credential4}</span>
               </div>
             </div>
           </div>
