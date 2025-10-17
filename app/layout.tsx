@@ -8,103 +8,11 @@ import { StructuredData } from "@/components/structured-data"
 import { NewsletterModal } from "@/components/newsletter-modal"
 import { CookieConsent } from "@/components/cookie-consent"
 import { LanguageProvider } from "@/locales/LanguageProvider"
+import { getMetadata } from "@/locales/metadata"
 import "./globals.css"
 
-// Note: This is the root layout. For language-specific metadata, 
-// use generateSEOMetadata() in individual page files with the lang parameter
-export const metadata: Metadata = {
-  title: {
-    default: "CabinetDab - De la ferme aux Marchés Mondiaux",
-    template: "%s | CabinetDab"
-  },
-  description:
-    "Programme de formation agricole de CabinetDab pour transformer votre exploitation locale en entreprise exportatrice. Masterclass, séminaires et coaching avec le Dr. Kanga.",
-  keywords: [
-    "formation agricole",
-    "export agricole",
-    "transformation locale",
-    "assurance agricole",
-    "Dr Kanga",
-    "CabinetDab",
-    "agriculture internationale",
-    "coaching agricole",
-    "séminaires agriculture",
-    "masterclass agriculture"
-  ],
-  authors: [{ name: "Dr. Kanga", url: "https://www.cabinetdab.com/a-propos" }],
-  creator: "CabinetDab",
-  publisher: "CabinetDab",
-  formatDetection: {
-    email: false,
-    address: false,
-    telephone: false,
-  },
-  metadataBase: new URL('https://www.cabinetdab.com'),
-  icons: {
-    icon: [
-      { url: '/favicon.png', sizes: '192x192', type: 'image/png' },
-      { url: '/new-logo.png', sizes: '512x512', type: 'image/png' },
-    ],
-    apple: [
-      { url: '/new-logo.png', sizes: '180x180', type: 'image/png' },
-    ],
-    shortcut: '/favicon.png',
-  },
-  manifest: '/site.webmanifest',
-  alternates: {
-    canonical: '/',
-    languages: {
-      'fr-FR': '/fr',
-      'fr': '/',
-    },
-  },
-  openGraph: {
-    title: "CabinetDab - De la ferme aux Marchés Mondiaux",
-    description: "Programme de formation agricole pour transformer votre exploitation locale en entreprise exportatrice. Masterclass, séminaires et coaching avec le Dr. Kanga.",
-    url: 'https://www.cabinetdab.com',
-    siteName: 'CabinetDab',
-    locale: 'fr_FR',
-    type: 'website',
-    images: [
-      {
-        url: '/og-image.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'CabinetDab - Formation agricole pour l\'exportation',
-      },
-      {
-        url: '/og-image-square.jpg',
-        width: 1200,
-        height: 1200,
-        alt: 'Dr. Kanga - Expert en agriculture',
-      }
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: "CabinetDab - De la ferme aux Marchés Mondiaux",
-    description: "Programme de formation agricole pour transformer votre exploitation locale en entreprise exportatrice.",
-    images: ['/twitter-image.jpg'],
-    creator: '@cabinetdab',
-  },
-  robots: {
-    index: true,
-    follow: true,
-    nocache: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      noimageindex: false,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
-  verification: {
-    google: 'your-google-verification-code',
-    yandex: 'your-yandex-verification-code',
-  },
-}
+// This will be overridden by generateMetadata in [lang]/layout.tsx for specific language routes
+export const metadata: Metadata = getMetadata('fr')
 
 export default function RootLayout({
   children,
@@ -112,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="fr">
+    <html lang="fr" suppressHydrationWarning>
       <head>
         <StructuredData type="website" />
         <StructuredData type="organization" />
