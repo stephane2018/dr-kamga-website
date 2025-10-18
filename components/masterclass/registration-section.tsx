@@ -46,8 +46,11 @@ export function RegistrationSection() {
                   <span className="font-medium text-primary">{t.masterclass.registration.card1.seats}</span>
                 </div>
               </div>
-              <Button className="w-full" asChild>
-                <Link href="/contact?masterclass=production">{t.masterclass.registration.registerButton}</Link>
+              <Button className="w-full" asChild disabled={true}>
+                <Link 
+                // href="/contact?masterclass=production"
+                href="#"
+                >{t.masterclass.registration.registerButton}</Link>
               </Button>
             </CardContent>
           </Card>
@@ -80,8 +83,10 @@ export function RegistrationSection() {
                   <span className="font-medium text-primary">{t.masterclass.registration.card2.seats}</span>
                 </div>
               </div>
-              <Button className="w-full" asChild>
-                <Link href="/contact?masterclass=transformation">{t.masterclass.registration.registerButton}</Link>
+              <Button className="w-full" asChild disabled={true}>
+                <Link
+                //  href="/contact?masterclass=transformation"
+                  href="#">{t.masterclass.registration.registerButton}</Link>
               </Button>
             </CardContent>
           </Card>

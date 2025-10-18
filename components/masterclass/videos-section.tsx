@@ -20,7 +20,10 @@ export function VideosSection() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <Card className="group hover:shadow-lg transition-shadow border-0">
+          <Card className=" shadow-none group hover:shadow-lg transition-shadow border-0 relative">
+            <Badge className="absolute top-4 right-4 z-10 bg-yellow-500 hover:bg-yellow-600 text-white">
+              {t.masterclass.videos.comingSoon}
+            </Badge>
             <div className="aspect-video bg-gradient-to-br from-primary/20 to-primary/5 rounded-t-lg flex items-center justify-center">
               <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center group-hover:bg-primary/30 transition-colors">
                 <Video className="h-8 w-8 text-primary ml-1" />
@@ -40,13 +43,16 @@ export function VideosSection() {
               <p className="text-sm text-muted-foreground mb-4">
                 {t.masterclass.videos.video1.description}
               </p>
-              <Button size="sm" className="w-full">
+              <Button size="sm" className="w-full" disabled>
                 {t.masterclass.videos.viewButton}
               </Button>
             </CardContent>
           </Card>
 
-          <Card className="group hover:shadow-lg transition-shadow border-0">
+          <Card className="group  shadow-none hover:shadow-lg transition-shadow border-0 relative">
+            <Badge className="absolute top-4 right-4 z-10 bg-yellow-500 hover:bg-yellow-600 text-white">
+              {t.masterclass.videos.comingSoon}
+            </Badge>
             <div className="aspect-video bg-gradient-to-br from-secondary/20 to-secondary/5 rounded-t-lg flex items-center justify-center">
               <div className="w-16 h-16 bg-secondary/20 rounded-full flex items-center justify-center group-hover:bg-secondary/30 transition-colors">
                 <Video className="h-8 w-8 text-secondary ml-1" />
@@ -66,13 +72,16 @@ export function VideosSection() {
               <p className="text-sm text-muted-foreground mb-4">
                 {t.masterclass.videos.video2.description}
               </p>
-              <Button size="sm" className="w-full">
+              <Button size="sm" className="w-full" disabled>
                 {t.masterclass.videos.viewButton}
               </Button>
             </CardContent>
           </Card>
 
-          <Card className="group hover:shadow-lg transition-shadow border-0">
+          <Card className="group shadow-none hover:shadow-lg transition-shadow border-0 relative">
+            <Badge className="absolute top-4 right-4 z-10 bg-yellow-500 hover:bg-yellow-600 text-white">
+              {t.masterclass.videos.comingSoon}
+            </Badge>
             <div className="aspect-video bg-gradient-to-br from-accent/20 to-accent/5 rounded-t-lg flex items-center justify-center">
               <div className="w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center group-hover:bg-accent/30 transition-colors">
                 <Video className="h-8 w-8 text-accent ml-1" />
@@ -92,7 +101,7 @@ export function VideosSection() {
               <p className="text-sm text-muted-foreground mb-4">
                 {t.masterclass.videos.video3.description}
               </p>
-              <Button size="sm" className="w-full">
+              <Button size="sm" className="w-full" disabled>
                 {t.masterclass.videos.viewButton}
               </Button>
             </CardContent>

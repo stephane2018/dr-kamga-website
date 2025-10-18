@@ -575,6 +575,7 @@ export interface Translations {
       title: string
       subtitle: string
       viewButton: string
+      comingSoon: string
       video1: {
         badge: string
         duration: string
@@ -1083,13 +1084,13 @@ export const translations: Record<Language, Translations> = {
         title: 'Ce Que Disent Nos Clients',
         items: {
           testimonial1: {
-            name: 'Marie Dubois',
-            role: 'Productrice de légumes bio, Bretagne',
+            name: 'Koussi Eboué',
+            role: 'Producteur agricole, Yamsoukro',
             content: 'Grâce au coaching du Dr. Kanga, j\'ai pu structurer mon approche export et décrocher mes premiers contrats en Allemagne en seulement 6 mois. Son accompagnement personnalisé a fait toute la différence.',
           },
           testimonial2: {
-            name: 'Jean-Pierre Martin',
-            role: 'Producteur de fruits, Provence',
+            name: 'Sofia Kané',
+            role: 'Productrice de ferme agricole, Abidjan',
             content: 'Le Dr. Kanga m\'a aidé à transformer complètement mon exploitation. De producteur local, je suis devenu exportateur vers 5 pays. Son expertise et ses conseils sont inestimables.',
           },
         },
@@ -1227,7 +1228,7 @@ export const translations: Record<Language, Translations> = {
           firstName: { label: 'Prénom *', placeholder: 'Votre prénom' },
           lastName: { label: 'Nom *', placeholder: 'Votre nom' },
           email: { label: 'Email *', placeholder: 'votre@email.com' },
-          phone: { label: 'Téléphone *', placeholder: '+33 1 23 45 67 89' },
+          phone: { label: 'Téléphone *', placeholder: '+225 01 41 09 91 90' },
           interest: {
             label: 'Vous êtes intéressé par *',
             placeholder: 'Sélectionnez une option',
@@ -1263,7 +1264,7 @@ export const translations: Record<Language, Translations> = {
         },
         phone: {
           title: 'Téléphone',
-          value: '+33 1 23 45 67 89',
+          value: '+225 01 41 09 91 90',
           subtitle: 'Lun-Ven 9h-18h',
         },
         office: {
@@ -1422,6 +1423,7 @@ export const translations: Record<Language, Translations> = {
         title: 'Vidéos Complémentaires',
         subtitle: 'Découvrez nos vidéos pédagogiques pour approfondir vos connaissances',
         viewButton: 'Voir la vidéo',
+        comingSoon: 'Bientôt disponible',
         video1: {
           badge: 'Capsule',
           duration: '8 min',
@@ -1922,13 +1924,13 @@ export const translations: Record<Language, Translations> = {
         title: 'What Our Clients Say',
         items: {
           testimonial1: {
-            name: 'Marie Dubois',
-            role: 'Organic vegetable producer, Brittany',
+            name: 'Koussi Eboué',
+            role: 'Farmer Producer, Yamsoukro',
             content: 'Thanks to Dr. Kanga\'s coaching, I was able to structure my export approach and secure my first contracts in Germany in just 6 months. His personalized support made all the difference.',
           },
           testimonial2: {
-            name: 'Jean-Pierre Martin',
-            role: 'Fruit producer, Provence',
+            name: 'Sofia Kané',
+            role: 'Farmer Producer, Abidjan',
             content: 'Dr. Kanga helped me completely transform my farm. From a local producer, I became an exporter to 5 countries. His expertise and advice are invaluable.',
           },
         },
@@ -2102,7 +2104,7 @@ export const translations: Record<Language, Translations> = {
         },
         phone: {
           title: 'Phone',
-          value: '+33 1 23 45 67 89',
+          value: '+225 01 41 09 91 90',
           subtitle: 'Mon-Fri 9am-6pm',
         },
         office: {
@@ -2261,6 +2263,7 @@ export const translations: Record<Language, Translations> = {
         title: 'Complementary Videos',
         subtitle: 'Discover our educational videos to deepen your knowledge',
         viewButton: 'Watch video',
+        comingSoon: 'Coming Soon',
         video1: {
           badge: 'Short',
           duration: '8 min',
@@ -2295,7 +2298,7 @@ export const translations: Record<Language, Translations> = {
         card1: {
           title: 'Production Masterclass - Axis 1',
           description: 'Produce for export from day one',
-          date: 'December 15, 2024',
+          date: 'October 15, 2025',
           time: '2pm-5:30pm (GMT+1)',
           seats: '8/20',
         },
@@ -2303,7 +2306,7 @@ export const translations: Record<Language, Translations> = {
           title: 'Transformation Masterclass - Axis 2',
           description: 'Keys to profitable transformation',
           location: 'Paris',
-          date: 'December 22, 2024',
+          date: 'October 17, 2025',
           time: '9am-1pm',
           seats: '5/15',
         },

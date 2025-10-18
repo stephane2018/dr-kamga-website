@@ -11,11 +11,13 @@ import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Mail, Phone, MapPin, Calendar, MessageSquare, Clock, CheckCircle, ArrowRight, Sparkles, Loader2 } from "lucide-react"
 import { useLanguage } from "@/locales/LanguageProvider"
+import { PhoneInput } from "@/components/phone-input"
 
 export default function ContactPage() {
   const { t, language } = useLanguage()
   const [isLoading, setIsLoading] = useState(false)
   const [selectedInterest, setSelectedInterest] = useState("")
+  const [fullPhoneNumber, setFullPhoneNumber] = useState("")
   const [formStatus, setFormStatus] = useState<{
     type: "success" | "error" | null
     message: string
@@ -33,7 +35,7 @@ export default function ContactPage() {
       firstName: formData.get("firstName"),
       lastName: formData.get("lastName"),
       email: formData.get("email"),
-      phone: formData.get("phone"),
+      phone: fullPhoneNumber,
       interest: selectedInterest,
       situation: formData.get("situation"),
       message: formData.get("message"),
@@ -221,18 +223,15 @@ export default function ContactPage() {
                         className="h-11 border-gray-200 focus:border-primary focus:ring-primary/20 transition-all duration-200"
                       />
                     </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="phone" className="text-sm font-medium">{t.contactPage.form.fields.phone.label}</Label>
-                      <Input
-                        id="phone"
-                        name="phone"
-                        type="tel"
-                        placeholder={t.contactPage.form.fields.phone.placeholder}
-                        required
-                        disabled={isLoading}
-                        className="h-11 border-gray-200 focus:border-primary focus:ring-primary/20 transition-all duration-200"
-                      />
-                    </div>
+                    <PhoneInput
+                      label={t.contactPage.form.fields.phone.label}
+                      placeholder={t.contactPage.form.fields.phone.placeholder}
+                      required
+                      disabled={isLoading}
+                      defaultCountryCode="+225"
+                      language={language}
+                      onPhoneChange={setFullPhoneNumber}
+                    />
                   </div>
 
                   <div className="space-y-2">
