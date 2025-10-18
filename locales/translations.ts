@@ -1458,7 +1458,7 @@ export const translations: Record<Language, Translations> = {
         card1: {
           title: 'Masterclass Production - Axe 1',
           description: 'Produire pour l\'export dès le premier jour',
-          date: '15 Décembre 2024',
+          date: '15 Octobre 2025',
           time: '14h-17h30 (GMT+1)',
           seats: '8/20',
         },
@@ -1466,7 +1466,7 @@ export const translations: Record<Language, Translations> = {
           title: 'Masterclass Transformation - Axe 2',
           description: 'Les clés d\'une transformation rentable',
           location: 'Paris',
-          date: '22 Décembre 2024',
+          date: '17 Octobre 2025',
           time: '9h-13h',
           seats: '5/15',
         },

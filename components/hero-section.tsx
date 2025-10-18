@@ -18,7 +18,6 @@ const backgroundImages = [
   { url: '/slide/slide-7.jpeg', animationClass: 'animate-fadeBackground-7' },
   { url: '/slide/slide-8.jpeg', animationClass: 'animate-fadeBackground-8' },
   { url: '/slide/slide-9.jpeg', animationClass: 'animate-fadeBackground-9' },
-  
 ]
 
 
