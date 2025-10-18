@@ -5,16 +5,23 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Download } from "lucide-react"
 import Link from "next/link"
+import Image from "next/image"
 import { useState, useEffect } from "react"
 import { DownloadGuideModal } from "@/components/download-guide-modal"
 import { useLanguage } from "@/locales/LanguageProvider"
 
 
 const backgroundImages = [
-  { url: 'https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=1920&q=80', animationClass: 'animate-fadeBackground-1' },
-  { url: 'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=1920&q=80', animationClass: 'animate-fadeBackground-2' },
-  { url: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=1920&q=80', animationClass: 'animate-fadeBackground-3' },
-  { url: 'https://www.shutterstock.com/shutterstock/photos/1797691207/display_1500/stock-photo-intensive-agriculture-in-africa-chicken-farming-1797691207.jpg', animationClass: 'animate-fadeBackground-3' },
+  { url: '/slide/slide-1.jpeg', animationClass: 'animate-fadeBackground-1' },
+  { url: '/slide/slide-2.jpeg', animationClass: 'animate-fadeBackground-2' },
+  { url: '/slide/slide-3.jpeg', animationClass: 'animate-fadeBackground-3' },
+  { url: '/slide/slide-4.jpeg', animationClass: 'animate-fadeBackground-4' },
+  { url: '/slide/slide-5.jpeg', animationClass: 'animate-fadeBackground-5' },
+  { url: '/slide/slide-6.jpeg', animationClass: 'animate-fadeBackground-6' },
+  { url: '/slide/slide-7.jpeg', animationClass: 'animate-fadeBackground-7' },
+  { url: '/slide/slide-8.jpeg', animationClass: 'animate-fadeBackground-8' },
+  { url: '/slide/slide-9.jpeg', animationClass: 'animate-fadeBackground-9' },
+  
 ]
 
 
@@ -31,23 +38,22 @@ export function ImageCard({
   alt,
   className = ""
 }: ImageCardProps) {
-
-
-
   return (
-    <div className={`relative image-hover-effect  ${className}`}>
+    <div className={`relative image-hover-effect ${className}`}>
       <div className="relative h-full">
-        
         {/* Image container with gradient border */}
-        <div className={`relative  rounded-4xl  p-1 shadow-2xl h-full`}>
-          <img
-            src={src}
-            alt={alt}
-            className=" w-full h-full object-cover rounded-4xl"
-          />
+        <div className="relative rounded-4xl p-1 shadow-2xl h-full">
+          <div className="relative w-full h-full rounded-4xl overflow-hidden">
+            <Image
+              src={src}
+              alt={alt}
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className="object-cover"
+              loading="lazy"
+            />
+          </div>
         </div>
-        
-        
       </div>
     </div>
   )
@@ -65,11 +71,12 @@ interface BackgroundSliderProps {
 
 export function BackgroundSlider({ images }: BackgroundSliderProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
- 
+  const [isLoaded, setIsLoaded] = useState<boolean[]>(new Array(images.length).fill(false))
+
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length)
-    }, 5000) 
+    }, 5000)
 
     return () => clearInterval(interval)
   }, [images.length])
@@ -81,11 +88,25 @@ export function BackgroundSlider({ images }: BackgroundSliderProps) {
         {images.map((image, index) => (
           <div
             key={index}
-            className={`absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-1500 ease-in-out ${
+            className={`absolute inset-0 transition-opacity duration-1500 ease-in-out ${
               index === currentIndex ? 'opacity-100' : 'opacity-0'
             }`}
-            style={{ backgroundImage: `url('${image.url}')` }}
-          ></div>
+          >
+            <Image
+              src={image.url}
+              alt={`Background slide ${index + 1}`}
+              fill
+              priority={index === 0}
+              quality={85}
+              sizes="100vw"
+              className="object-cover object-center"
+              onLoad={() => {
+                const newLoaded = [...isLoaded]
+                newLoaded[index] = true
+                setIsLoaded(newLoaded)
+              }}
+            />
+          </div>
         ))}
       </div>
 
