@@ -14,8 +14,6 @@ import { useLanguage } from "@/locales/LanguageProvider"
 const backgroundImages = [
   { url: '/slide/slide-1.jpeg', animationClass: 'animate-fadeBackground-1' },
   { url: '/slide/slide-2.jpeg', animationClass: 'animate-fadeBackground-2' },
-  // { url: '/slide/slide-3.jpeg', animationClass: 'animate-fadeBackground-3' },
-  // { url: '/slide/slide-4.jpeg', animationClass: 'animate-fadeBackground-4' },
   { url: '/slide/slide-6.jpeg', animationClass: 'animate-fadeBackground-6' },
   { url: '/slide/slide-7.jpeg', animationClass: 'animate-fadeBackground-7' },
   { url: '/slide/slide-8.jpeg', animationClass: 'animate-fadeBackground-8' },
