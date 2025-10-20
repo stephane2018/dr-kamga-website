@@ -17,6 +17,7 @@ export default function robots(): MetadataRoute.Robots {
           '/private/',
           '/_next/',
           '/static/',
+          '/pdf/',
         ],
       },
       {
@@ -28,6 +29,7 @@ export default function robots(): MetadataRoute.Robots {
           '/api/',
           '/api/*',
           '/unsubscribe',
+          '/pdf/',
         ],
       },
       {
