@@ -145,10 +145,7 @@ export function HeroSection() {
 
   return (
     <section className="relative min-h-[700px] flex items-center overflow-hidden">
-      {/* Background Image Slider */}
       <BackgroundSlider images={backgroundImages} />
-
-
       <div className="absolute inset-0 bg-gradient-to-r from-primary/95 via-primary/90 to-primary/40"></div>
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/10 to-primary/20"></div>
 

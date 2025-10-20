@@ -27,9 +27,15 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // Détecter la langue de l'utilisateur à partir des headers ou du body
+    const acceptLanguage = request.headers.get('accept-language') || ''
+    const detectedLang = acceptLanguage.toLowerCase().startsWith('en') ? 'en' : 'fr'
+    const language = body.language || detectedLang
+
     // Préparer les données pour l'envoi
     const downloadData: GuideDownloadData = {
       email: body.email.trim().toLowerCase(),
+      language: language as 'fr' | 'en',
     }
 
     // Envoyer les emails (à l'utilisateur et à l'équipe)

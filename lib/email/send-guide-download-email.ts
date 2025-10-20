@@ -87,27 +87,25 @@ async function sendUserConfirmationEmail(
   `
 
   const textContent = `
-Merci pour votre intérêt !
+${t.guideDownload.user.thankYou}
 
-Bonjour,
+${t.guideDownload.user.hello}
 
-Merci d'avoir téléchargé notre guide "De la ferme aux marchés mondiaux" !
-Nous espérons que ce document vous aidera à transformer votre exploitation agricole locale en entreprise exportatrice prospère.
+${t.guideDownload.user.thankYouMessage}
 
-Votre téléchargement a démarré automatiquement. Si ce n'est pas le cas, le PDF devrait être disponible dans vos téléchargements récents.
+${t.guideDownload.user.downloadStarted}
 
-🎯 POUR ALLER PLUS LOIN
-Découvrez nos masterclass thématiques et notre programme de coaching personnalisé pour accélérer votre transformation vers les marchés internationaux.
+${t.guideDownload.user.goFurther}
+${t.guideDownload.user.goFurtherDescription}
 
-Visitez notre site : ${process.env.NEXT_PUBLIC_SITE_URL || 'https://cabinetdab.com'}
+${t.guideDownload.user.discoverServices}: ${process.env.NEXT_PUBLIC_SITE_URL || 'https://cabinetdab.com'}
 
-Cordialement,
-Dr. Kanga Kouamé
-Cabinet DAB
+${t.guideDownload.user.regards}
+${t.guideDownload.user.signature}
 
 ---
-Vous recevez cet email car vous avez téléchargé notre guide.
-Pour vous désabonner : ${process.env.NEXT_PUBLIC_SITE_URL || 'https://cabinetdab.com'}/unsubscribe?email=${encodeURIComponent(email)}
+${t.guideDownload.user.unsubscribeText}
+${t.guideDownload.user.unsubscribeLink}: ${process.env.NEXT_PUBLIC_SITE_URL || 'https://cabinetdab.com'}/unsubscribe?email=${encodeURIComponent(email)}
   `
 
   await transporter.sendMail({
@@ -198,31 +196,30 @@ async function sendTeamNotificationEmail(
   `
 
   const textContent = `
-📥 NOUVEAU TÉLÉCHARGEMENT DE GUIDE
+📥 ${t.guideDownload.team.newDownload}
 
-Un lead vient de télécharger le guide de la méthode Cabinet DAB.
+${t.guideDownload.team.newLead}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📧 ADRESSE EMAIL DU LEAD
+📧 ${t.guideDownload.team.emailLead}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ${email}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Action suggérée :
-Considérez d'ajouter ce lead à votre liste de diffusion et de faire un suivi personnalisé dans les prochains jours pour maximiser l'engagement.
+${t.guideDownload.team.suggestedAction}
 
-💡 Conseil : Les leads qui téléchargent le guide sont généralement plus engagés. Un suivi rapide peut augmenter significativement le taux de conversion.
+${t.guideDownload.team.tip} ${t.guideDownload.team.tipMessage}
 
-Date et heure : ${new Date().toLocaleString('fr-FR', {
+${t.guideDownload.team.dateTime} ${new Date().toLocaleString(lang === 'fr' ? 'fr-FR' : 'en-US', {
   dateStyle: 'full',
   timeStyle: 'long',
   timeZone: 'Africa/Abidjan'
 })}
 
 ---
-Cabinet DAB - Notification automatique
+${t.guideDownload.team.autoNotification}
   `
 
   await transporter.sendMail({

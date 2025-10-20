@@ -27,17 +27,13 @@ export function DownloadGuideModal({ open, onOpenChange }: DownloadGuideModalPro
     e.preventDefault()
     setError("")
     setIsLoading(true)
-
     try {
-    
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
       if (!emailRegex.test(email)) {
         setError("Veuillez entrer une adresse email valide")
         setIsLoading(false)
         return
       }
-
-
       const response = await fetch("/api/download-guide", {
         method: "POST",
         headers: {
@@ -50,13 +46,11 @@ export function DownloadGuideModal({ open, onOpenChange }: DownloadGuideModalPro
 
       if (data.success) {
         const link = document.createElement("a")
-        link.href = "https://drive.google.com/file/d/1ZS9A1l15O2mAXrVpoS1r6vGjSoYl3kNK/view?usp=sharing"
-        link.download = "Programme-Complet.pdf"
+        link.href = "/pdf/DE_LA_FERME_AUX_MARCHES_MONDIAUX_OK.pdf"
+        link.download = "programme_complet.pdf"
         document.body.appendChild(link)
         link.click()
         document.body.removeChild(link)
-
-        // Fermer la modal
         setEmail("")
         onOpenChange(false)
       } else {
