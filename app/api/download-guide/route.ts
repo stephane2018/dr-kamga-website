@@ -8,10 +8,8 @@ import { sendGuideDownloadEmails, GuideDownloadData } from "@/lib/email/send-gui
  */
 export async function POST(request: NextRequest) {
   try {
-    // Récupérer les données du formulaire
     const body = await request.json()
 
-    // Validation de l'email
     if (!body.email || body.email.trim() === "") {
       return NextResponse.json(
         { success: false, error: "L'adresse email est requise" },

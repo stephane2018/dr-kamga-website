@@ -45,12 +45,16 @@ export function DownloadGuideModal({ open, onOpenChange }: DownloadGuideModalPro
       const data = await response.json()
 
       if (data.success) {
+        window.open("https://drive.google.com/file/d/1ND9lCp_-V4fYfaTnHJ512Aq2Fi2Bgw5Q/view?usp=sharing", "_blank", "noopener,noreferrer")
+
         const link = document.createElement("a")
-        link.href = "/pdf/DE_LA_FERME_AUX_MARCHES_MONDIAUX_OK.pdf"
-        link.download = "programme_complet.pdf"
+        link.href = "https://drive.google.com/uc?export=download&id=1ND9lCp_-V4fYfaTnHJ512Aq2Fi2Bgw5Q"
+        link.download = "de_la_ferme_aux_marches_mondiaux.pdf"
         document.body.appendChild(link)
         link.click()
         document.body.removeChild(link)
+
+        // Fermer la modal
         setEmail("")
         onOpenChange(false)
       } else {
