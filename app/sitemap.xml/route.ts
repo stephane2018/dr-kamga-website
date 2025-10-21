@@ -25,27 +25,26 @@ export async function GET() {
 
   const urlEntries = routes
     .map(
-      (route) => `
-  <url>
+      (route) => `  <url>
     <loc>${baseUrl}${route.path}</loc>
     <lastmod>${currentDate}</lastmod>
     <changefreq>${route.changeFrequency}</changefreq>
     <priority>${route.priority}</priority>
   </url>`
     )
-    .join('')
+    .join('\n')
 
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urlEntries}
 </urlset>`
 
   return new NextResponse(sitemap, {
     status: 200,
     headers: {
-      'Content-Type': 'application/xml',
+      'Content-Type': 'application/xml; charset=UTF-8',
       'Cache-Control': 'public, max-age=3600, s-maxage=3600',
+      'X-Robots-Tag': 'noindex',
     },
   })
 }
