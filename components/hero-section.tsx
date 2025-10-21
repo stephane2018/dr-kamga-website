@@ -156,6 +156,7 @@ export function HeroSection() {
             <Badge
               className="mb-6 bg-primary-foreground/20 text-primary-foreground border-primary-foreground/30"
               variant="outline"
+
             >
               {language === 'fr' ? 'Programme Signature' : 'Signature Program'}
             </Badge>
@@ -172,6 +173,7 @@ export function HeroSection() {
                 onClick={() => setIsModalOpen(true)}
                 className="flex items-center gap-2"
               >
+                
                 <Download className="h-4 w-4" />
                 {language === 'fr' ? 'Découvrir la méthode' : 'Discover the method'}
               </Button>
