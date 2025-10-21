@@ -7,6 +7,7 @@ import { Suspense } from "react"
 import { StructuredData } from "@/components/structured-data"
 import { NewsletterModal } from "@/components/newsletter-modal"
 import { CookieConsent } from "@/components/cookie-consent"
+import { GA } from "@/components/google-analytics"
 import { LanguageProvider } from "@/locales/LanguageProvider"
 import { getMetadata } from "@/locales/metadata"
 import "./globals.css"
@@ -33,6 +34,7 @@ export default function RootLayout({
           <NewsletterModal />
           <CookieConsent />
           <Analytics />
+          <GA />
         </LanguageProvider>
       </body>
     </html>
