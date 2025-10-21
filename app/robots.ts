@@ -18,11 +18,15 @@ export default function robots(): MetadataRoute.Robots {
           '/_next/',
           '/static/',
           '/pdf/',
+          '/*?*utm_*',
+          '/*?*fbclid*',
+          '/*?*gclid*',
         ],
+        crawlDelay: 10,
       },
       {
         userAgent: 'Googlebot',
-        allow: '/',
+        allow: ['/', '/*.jpg', '/*.jpeg', '/*.png', '/*.webp', '/*.svg', '/*.gif'],
         disallow: [
           '/admin/',
           '/admin/*',
@@ -33,7 +37,40 @@ export default function robots(): MetadataRoute.Robots {
         ],
       },
       {
+        userAgent: 'Googlebot-Image',
+        allow: ['/', '/*.jpg', '/*.jpeg', '/*.png', '/*.webp', '/*.svg', '/*.gif'],
+        disallow: ['/admin/', '/api/'],
+      },
+      {
+        userAgent: 'Bingbot',
+        allow: ['/', '/*.jpg', '/*.jpeg', '/*.png', '/*.webp', '/*.svg'],
+        disallow: [
+          '/admin/',
+          '/admin/*',
+          '/api/',
+          '/api/*',
+          '/unsubscribe',
+          '/pdf/',
+        ],
+        crawlDelay: 10,
+      },
+      {
+        userAgent: 'Slurp',
+        allow: '/',
+        disallow: ['/admin/', '/api/', '/unsubscribe'],
+        crawlDelay: 10,
+      },
+      {
+        userAgent: 'DuckDuckBot',
+        allow: '/',
+        disallow: ['/admin/', '/api/', '/unsubscribe'],
+      },
+      {
         userAgent: 'GPTBot',
+        disallow: '/',
+      },
+      {
+        userAgent: 'ChatGPT-User',
         disallow: '/',
       },
       {
@@ -42,6 +79,22 @@ export default function robots(): MetadataRoute.Robots {
       },
       {
         userAgent: 'CCBot',
+        disallow: '/',
+      },
+      {
+        userAgent: 'anthropic-ai',
+        disallow: '/',
+      },
+      {
+        userAgent: 'Claude-Web',
+        disallow: '/',
+      },
+      {
+        userAgent: 'Bytespider',
+        disallow: '/',
+      },
+      {
+        userAgent: 'PerplexityBot',
         disallow: '/',
       },
     ],

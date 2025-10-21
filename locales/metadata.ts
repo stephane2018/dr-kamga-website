@@ -174,8 +174,7 @@ export function getMetadata(language: Language = 'fr'): Metadata {
       },
     },
     verification: {
-      google: 'your-google-verification-code',
-      yandex: 'your-yandex-verification-code',
+      google: 'NEPTsymhFMhA-fUCBU1FPjjIUmsvHKENn07fhzk86a4',
     },
   }
 }
