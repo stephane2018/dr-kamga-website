@@ -642,6 +642,31 @@ export interface Translations {
       description: string
       button: string
     }
+    waitlist: {
+      title: string
+      subtitle: string
+      description: string
+      fields: {
+        email: {
+          label: string
+          placeholder: string
+        }
+        phone: {
+          label: string
+          placeholder: string
+        }
+        expectations: {
+          label: string
+          placeholder: string
+        }
+      }
+      submitButton: string
+      submitting: string
+      successTitle: string
+      successMessage: string
+      errorMessage: string
+      close: string
+    }
   }
 
   // Contact Form (legacy - keep for compatibility)
@@ -1455,19 +1480,20 @@ export const translations: Record<Language, Translations> = {
           price: 'Prix:',
           seatsLeft: 'Places restantes:',
         },
+       
         card1: {
-          title: 'Masterclass Production - Axe 1',
-          description: 'Produire pour l\'export dès le premier jour',
-          date: '15 Octobre 2025',
-          time: '14h-17h30 (GMT+1)',
+          title: 'Masterclass 1 (ZOOM): ',
+          description: 'Accès aux marchés et financement des projets agricoles',
+          date: '13 December 2025',
+          time: '10am-1pm (GMT+1)',
           seats: '8/20',
         },
         card2: {
-          title: 'Masterclass Transformation - Axe 2',
-          description: 'Les clés d\'une transformation rentable',
+          title: 'Masterclass 2 (ZOOM): ',
+          description: 'Création et gestion de projets agricoles',
           location: 'Paris',
-          date: '17 Octobre 2025',
-          time: '9h-13h',
+          date: '20 December 2025',
+          time: '10am-1pm (GMT+1)',
           seats: '5/15',
         },
         registerButton: 'S\'inscrire maintenant',
@@ -1489,6 +1515,31 @@ export const translations: Record<Language, Translations> = {
         title: 'Questions sur les Masterclass ?',
         description: 'Notre équipe est là pour vous aider à choisir la masterclass qui vous convient.',
         button: 'Nous contacter',
+      },
+      waitlist: {
+        title: 'Rejoignez la Liste d\'Attente',
+        subtitle: 'Soyez informé en priorité de la prochaine session',
+        description: 'Inscrivez-vous sur notre liste d\'attente et vous serez contacté pour recevoir un lien de paiement sécurisé dès l\'ouverture des inscriptions.',
+        fields: {
+          email: {
+            label: 'Adresse email *',
+            placeholder: 'votre@email.com',
+          },
+          phone: {
+            label: 'Numéro de téléphone *',
+            placeholder: '+225 01 23 45 67 89',
+          },
+          expectations: {
+            label: 'Vos attentes pour cette masterclass',
+            placeholder: 'Parlez-nous de ce que vous souhaitez apprendre ou accomplir...',
+          },
+        },
+        submitButton: 'Rejoindre la liste d\'attente',
+        submitting: 'Envoi en cours...',
+        successTitle: 'Inscription réussie !',
+        successMessage: 'Vous avez été ajouté à notre liste d\'attente. Nous vous contacterons très prochainement avec un lien de paiement sécurisé.',
+        errorMessage: 'Une erreur est survenue. Veuillez réessayer.',
+        close: 'Fermer',
       },
     },
     contact: {
@@ -2296,18 +2347,18 @@ export const translations: Record<Language, Translations> = {
           seatsLeft: 'Seats left:',
         },
         card1: {
-          title: 'Production Masterclass - Axis 1',
-          description: 'Produce for export from day one',
-          date: 'October 15, 2025',
-          time: '2pm-5:30pm (GMT+1)',
+          title: 'Masterclass 1 (ZOOM): ',
+          description: 'Market Access and Agricultural Project Financing',
+          date: '13 December 2025',
+          time: '10am-1pm (GMT+1)',
           seats: '8/20',
         },
         card2: {
-          title: 'Transformation Masterclass - Axis 2',
-          description: 'Keys to profitable transformation',
+          title: 'Masterclass 2 (ZOOM): ',
+          description: 'Creation and Management of Agricultural Projects',
           location: 'Paris',
-          date: 'October 17, 2025',
-          time: '9am-1pm',
+          date: '20 December 2025',
+          time: '10am-1pm (GMT+1)',
           seats: '5/15',
         },
         registerButton: 'Register now',
@@ -2329,6 +2380,31 @@ export const translations: Record<Language, Translations> = {
         title: 'Questions about Masterclasses?',
         description: 'Our team is here to help you choose the masterclass that suits you.',
         button: 'Contact us',
+      },
+      waitlist: {
+        title: 'Join the Waiting List',
+        subtitle: 'Be notified first about the next session',
+        description: 'Sign up for our waiting list and you will be contacted to receive a secure payment link as soon as registration opens.',
+        fields: {
+          email: {
+            label: 'Email address *',
+            placeholder: 'your@email.com',
+          },
+          phone: {
+            label: 'Phone number *',
+            placeholder: '+1 234 567 8900',
+          },
+          expectations: {
+            label: 'Your expectations for this masterclass',
+            placeholder: 'Tell us what you want to learn or achieve...',
+          },
+        },
+        submitButton: 'Join the waiting list',
+        submitting: 'Submitting...',
+        successTitle: 'Successfully registered!',
+        successMessage: 'You have been added to our waiting list. We will contact you very soon with a secure payment link.',
+        errorMessage: 'An error occurred. Please try again.',
+        close: 'Close',
       },
     },
     contact: {

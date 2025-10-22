@@ -1,14 +1,25 @@
 "use client"
 
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import Link from "next/link"
 import { useLanguage } from "@/locales/LanguageProvider"
+import { WaitlistModal } from "./waitlist-modal"
 
 export function RegistrationSection() {
   const { t } = useLanguage()
-  
+  const [isWaitlistModalOpen, setIsWaitlistModalOpen] = useState(false)
+  const [selectedMasterclass, setSelectedMasterclass] = useState<{
+    title: string
+    type: string
+  } | null>(null)
+
+  const handleOpenModal = (title: string, type: string) => {
+    setSelectedMasterclass({ title, type })
+    setIsWaitlistModalOpen(true)
+  }
+
   return (
     <section className="py-16 bg-muted/50">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -46,11 +57,14 @@ export function RegistrationSection() {
                   <span className="font-medium text-primary">{t.masterclass.registration.card1.seats}</span>
                 </div>
               </div>
-              <Button className="w-full" asChild disabled={true}>
-                <Link 
-                // href="/contact?masterclass=production"
-                href="#"
-                >{t.masterclass.registration.registerButton}</Link>
+              <Button
+                className="w-full"
+                onClick={() => handleOpenModal(
+                  t.masterclass.registration.card1.title + ' - ' + t.masterclass.registration.card1.description,
+                  t.masterclass.registration.online
+                )}
+              >
+                {t.masterclass.registration.registerButton}
               </Button>
             </CardContent>
           </Card>
@@ -59,7 +73,7 @@ export function RegistrationSection() {
             <CardHeader>
               <div className="flex items-center justify-between mb-4">
                 <Badge className="bg-secondary text-secondary-foreground">{t.masterclass.registration.inPerson}</Badge>
-                <div className="text-sm text-muted-foreground">{t.masterclass.registration.card2.location}</div>
+                {/* <div className="text-sm text-muted-foreground">{t.masterclass.registration.card2.location}</div> */}
               </div>
               <CardTitle className="text-xl">{t.masterclass.registration.card2.title}</CardTitle>
               <CardDescription>{t.masterclass.registration.card2.description}</CardDescription>
@@ -83,10 +97,14 @@ export function RegistrationSection() {
                   <span className="font-medium text-primary">{t.masterclass.registration.card2.seats}</span>
                 </div>
               </div>
-              <Button className="w-full" asChild disabled={true}>
-                <Link
-                //  href="/contact?masterclass=transformation"
-                  href="#">{t.masterclass.registration.registerButton}</Link>
+              <Button
+                className="w-full"
+                onClick={() => handleOpenModal(
+                  t.masterclass.registration.card2.title + ' - ' + t.masterclass.registration.card2.description,
+                  t.masterclass.registration.inPerson
+                )}
+              >
+                {t.masterclass.registration.registerButton}
               </Button>
             </CardContent>
           </Card>
@@ -118,6 +136,15 @@ export function RegistrationSection() {
             </div>
           </div>
         </div>
+
+        {selectedMasterclass && (
+          <WaitlistModal
+            open={isWaitlistModalOpen}
+            onOpenChange={setIsWaitlistModalOpen}
+            masterclassTitle={selectedMasterclass.title}
+            masterclassType={selectedMasterclass.type}
+          />
+        )}
       </div>
     </section>
   )
