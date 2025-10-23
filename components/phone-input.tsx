@@ -54,7 +54,7 @@ export function PhoneInput({
       )}
       <div className="flex gap-2 my-0 items-center">
         <Select value={selectedCountryCode} onValueChange={handleCountryCodeChange} disabled={disabled}>
-          <SelectTrigger className="h-12 w-[120px] border-gray-200 focus:border-primary focus:ring-primary/20 transition-all duration-200">
+          <SelectTrigger className="h-14 w-[120px] border-gray-200 focus:border-primary focus:ring-primary/20 transition-all duration-200">
             <SelectValue />
           </SelectTrigger>
           <SelectContent className="max-h-[300px]">

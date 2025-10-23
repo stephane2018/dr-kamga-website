@@ -175,6 +175,7 @@ export interface Translations {
         credential2: string
         credential3: string
         credential4: string
+        credential5: string
       }
     }
     expertise: {
@@ -360,6 +361,22 @@ export interface Translations {
       title: string
       description: string
       button: string
+    }
+    diagnosticModal: {
+      title: string
+      subtitle: string
+      description: string
+      fields: {
+        name: { label: string; placeholder: string }
+        email: { label: string; placeholder: string }
+        phone: { label: string; placeholder: string }
+      }
+      submitButton: string
+      submitting: string
+      successTitle: string
+      successMessage: string
+      errorMessage: string
+      close: string
     }
   }
 
@@ -755,27 +772,27 @@ export const translations: Record<Language, Translations> = {
       axes: {
         axis1: {
           title: 'Création de l\'exploitation Agricole',
-          description: 'Création d\'une exploitation agricole adaptée à votre projet agricole et à votre niveau de développement.',
+          description: 'Apprendre à créer des exploitations agricoles répondant aux normes internationales pour faciliter votre développement.',
         },
         axis2: {
           title: 'Gestion de la production',
-          description: 'Ont donne des outils pour structurer et optimiser votre unité pour devenir compétitif et rentable.',
+          description: 'Apprendre à gérer efficacement et durablement  votre production pour devenir compétitif et rentable.',
         },
         axis3: {
           title: 'Transformation',
-          description: 'Transformez vos matières premières en produits à forte valeur ajoutée avec des équipements adaptés et des processus optimisés.',
+          description: 'Apprendre les mécanismes innovant de transformation de vos matières premières en produits à forte valeur  ajoutée.',
         },
         axis4: {
           title: 'Exportation',
-          description: 'Maîtrisez les 3 étapes clés pour réussir votre export et préparez un dossier compétitif et crédible.',
+          description: 'Apprendre à maîtriser les 3 étapes clés pour réussir votre et préparer un dossier compétitif et crédible.',
         },
         axis5: {
           title: 'Assurances agricoles',
-          description: 'Garantissez votre investissement et protégez vos produits pendant la transformation et l\'export.',
+          description: 'Apprendre à garantir votre investissement et protéger vos produits pendant la transformation et l’export.',
         },
         axis6: {
           title: 'Financement agricole',
-          description: 'Accédez à des financements adaptés à votre projet agricole et à votre niveau de développement.',
+          description: 'Apprendre comment accéder à des financements adaptés à votre projet agricole et à votre niveau de développement.',
         },
       },
     },
@@ -889,10 +906,11 @@ export const translations: Record<Language, Translations> = {
         title: '40 ans d\'expérience au service de l\'Agriculture Africaine',
         description: 'Docteur vétérinaire et expert reconnu de la transformation locale et de l\'exportation, le Dr Kanga Kouamé a conçu la méthode "De la ferme aux marchés mondiaux" pour accompagner les producteurs vers l\'autonomie et la compétitivité internationale.',
         credentials: {
-          credential1: 'Conseiller diplomatique de la CI auprès de la FAO, du PAM et du FIDA',
-          credential2: 'Docteur en médecine vétérinaire, diplômé de l\'Université de Liège (Belgique)',
-          credential3: 'Point focal OMC pour le système de contrôle sanitaire et phytosanitaire',
-          credential4: 'Autorité compétente officielle de la CI pour l\'agrément des établissements',
+          credential1: 'Conseiller diplomatique de la CI en charge des questions agricoles auprès de la FAO , au PAM et le FIDA',
+          credential2: 'Dr en médecine vétérinaire, diplômé de l’université de Liège en Belgique. Spécialisé en production et santé animale, hygiène publique.',
+          credential3: 'Point focal de l’OMC (Organisation Mondiale du Commerce) pour le système de contrôle sanitaire et phyto sanitaire.',
+          credential4: 'Autorité compétente officielle de la CI pour l’agrément des établissements de traitement et de certification des denrées animales et d’origines animales.',
+          credential5: 'Gestion des exploitations agro-sylvo-pastorales et halieutiques (Plantation, Élevage, Pêche …) ',
         },
       },
       expertise: {
@@ -901,19 +919,19 @@ export const translations: Record<Language, Translations> = {
         domains: {
           policies: {
             title: 'Politiques Agricoles',
-            description: 'Analyse des politiques de production, exportation et importation pour la mise en œuvre de l\'AGOA',
+            description: 'Analyse des politiques de productions agricoles et leur exportation et importation pour la mise en œuvre de l’AGOA (African Growth and Opportunity Act)',
           },
           health: {
             title: 'Santé Animale',
-            description: 'Lutte contre les maladies animales et zoonotiques, contrôle sanitaire et phytosanitaire',
+            description: 'Lutte contre les maladies animales et zoonotiques',
           },
           transformation: {
             title: 'Transformation',
-            description: 'Conservation et transformation (préparations culinaires, emballage, packaging)',
+            description: 'Conservation et transformation (Préparation culinaires, emballage, packaging…)',
           },
           commercialization: {
             title: 'Commercialisation',
-            description: 'Accès aux marchés, études de marché, promotion des produits, valorisation nutritionnelle',
+            description: 'Commercialisation, accès aux marchés et valorisation  (études de marchés, promotion des produits, valeurs nutritionnelles …)',
           },
           management: {
             title: 'Gestion d\'Exploitations',
@@ -921,7 +939,7 @@ export const translations: Record<Language, Translations> = {
           },
           specialties: {
             title: 'Spécialités Clés',
-            description: 'Chaînes de valeur, transformation locale, marchés internationaux',
+            description: 'Spécialités clés : Chaînes de valeur, transformation locale, marchés internationaux',
           },
         },
         formation: {
@@ -965,7 +983,7 @@ export const translations: Record<Language, Translations> = {
         },
         international: {
           title: 'Institutions Internationales',
-          subtitle: '10+ ans à l\'Ambassade de CI à Rome',
+          subtitle: '10+ ans à l\'Ambassade de CI à Rome, en qualité de ',
           agencies: 'Conseiller agricole auprès des agences Onusiennes :',
           agencyList: [
             'FAO (Organisation des Nations Unies pour l\'Alimentation et l\'Agriculture)',
@@ -989,7 +1007,7 @@ export const translations: Record<Language, Translations> = {
         },
         cabinet: {
           title: 'Cabinet DAB',
-          subtitle: 'Promoteur et gérant du cabinet Development Agricultural Business',
+          subtitle: 'Promoteur et gérant du cabinet DAB Development Agricultural Business',
           items: [
             'Promoteur du programme "De la Ferme aux marchés mondiaux..."',
             'Formations et coaching entrepreneurs agricoles',
@@ -1135,7 +1153,7 @@ export const translations: Record<Language, Translations> = {
             'Plan d\'action initial',
           ],
           slotsTitle: 'Créneaux disponibles cette semaine:',
-          cta: 'Voir plus de créneaux',
+          cta: 'demande de rendez vous téléphonique',
         },
         premium: {
           badge: 'PREMIUM',
@@ -1166,6 +1184,22 @@ export const translations: Record<Language, Translations> = {
         title: 'Une Question ? Besoin d\'Aide ?',
         description: 'Notre équipe est là pour vous aider à choisir la formule d\'accompagnement qui vous convient le mieux.',
         button: 'Nous contacter',
+      },
+      diagnosticModal: {
+        title: 'Demande de Rendez-vous Téléphonique',
+        subtitle: 'Réservez votre appel diagnostic gratuit',
+        description: 'Remplissez ce formulaire et nous vous contacterons dans les 24h pour planifier votre appel diagnostic gratuit de 30 minutes avec le Dr. Kanga.',
+        fields: {
+          name: { label: 'Nom complet *', placeholder: 'Votre nom complet' },
+          email: { label: 'Adresse email *', placeholder: 'votre@email.com' },
+          phone: { label: 'Numéro de téléphone *', placeholder: '+225 01 23 45 67 89' },
+        },
+        submitButton: 'Envoyer la demande',
+        submitting: 'Envoi en cours...',
+        successTitle: 'Demande envoyée !',
+        successMessage: 'Votre demande a été envoyée avec succès. Nous vous contacterons dans les 24h pour planifier votre appel.',
+        errorMessage: 'Une erreur est survenue. Veuillez réessayer.',
+        close: 'Fermer',
       },
     },
     seminaires: {
@@ -1253,7 +1287,7 @@ export const translations: Record<Language, Translations> = {
           firstName: { label: 'Prénom *', placeholder: 'Votre prénom' },
           lastName: { label: 'Nom *', placeholder: 'Votre nom' },
           email: { label: 'Email *', placeholder: 'votre@email.com' },
-          phone: { label: 'Téléphone *', placeholder: '+225 01 41 09 91 90' },
+          phone: { label: 'Téléphone *', placeholder: '01 41 09 91 90' },
           interest: {
             label: 'Vous êtes intéressé par *',
             placeholder: 'Sélectionnez une option',
@@ -1478,23 +1512,23 @@ export const translations: Record<Language, Translations> = {
           date: 'Date:',
           time: 'Horaire:',
           price: 'Prix:',
-          seatsLeft: 'Places restantes:',
+          seatsLeft: '',
         },
        
         card1: {
           title: 'Masterclass 1 (ZOOM): ',
           description: 'Accès aux marchés et financement des projets agricoles',
           date: '13 December 2025',
-          time: '10am-1pm (GMT+1)',
-          seats: '8/20',
+          time: '08h30-13h00',
+          seats: '',
         },
         card2: {
           title: 'Masterclass 2 (ZOOM): ',
           description: 'Création et gestion de projets agricoles',
           location: 'Paris',
           date: '20 December 2025',
-          time: '10am-1pm (GMT+1)',
-          seats: '5/15',
+          time: '08h30 - 13h00',
+          seats: '',
         },
         registerButton: 'S\'inscrire maintenant',
         modalitiesTitle: 'Modalités d\'inscription',
@@ -1621,27 +1655,27 @@ export const translations: Record<Language, Translations> = {
       axes: {
         axis1: {
           title: 'Agricultural Farm Creation',
-          description: 'Creation of an agricultural farm adapted to your agricultural project and your level of development.',
+          description: 'Learn how to create agricultural farms that meet international standards to facilitate your growth.',
         },
         axis2: {
-          title: 'Production Management',
-          description: 'We provide tools to structure and optimize your unit to become competitive and profitable.',
+          title: 'Crop Management',
+          description: 'Learn how to efficiently and sustainably manage your crops to become competitive and profitable.',
         },
         axis3: {
-          title: 'Processing',
-          description: 'Transform your raw materials into high value-added products with adapted equipment and optimized processes.',
+          title: 'Transformation',
+          description: 'Learn innovative mechanisms for transforming your raw materials into high-added-value products.',
         },
         axis4: {
           title: 'Export',
-          description: 'Master the 3 key steps to succeed in your export and prepare a competitive and credible file.',
+          description: 'Learn how to master the three key steps to succeed in exports and prepare a competitive and credible dossier.',
         },
         axis5: {
           title: 'Agricultural Insurance',
-          description: 'Guarantee your investment and protect your products during processing and export.',
+          description: 'Learn how to insure your investment and protect your products during the transformation and export.',
         },
         axis6: {
           title: 'Agricultural Financing',
-          description: 'Access financing adapted to your agricultural project and your level of development.',
+          description: 'Learn how to access adapted financing suitable for your agricultural project and your development level.',
         },
       },
     },
@@ -1755,10 +1789,11 @@ export const translations: Record<Language, Translations> = {
         title: '40 years of experience serving African Agriculture',
         description: 'Veterinary doctor and recognized expert in local transformation and export, Dr Kanga Kouamé designed the "From Farm to Global Markets" method to support producers towards autonomy and international competitiveness.',
         credentials: {
-          credential1: 'Diplomatic advisor of CI to FAO, WFP and IFAD',
-          credential2: 'Doctor of Veterinary Medicine, graduated from the University of Liège (Belgium)',
-          credential3: 'WTO focal point for sanitary and phytosanitary control system',
-          credential4: 'Official competent authority of CI for establishment approval',
+          credential1: 'Diplomatic negotiator of the CI for agricultural questions at the FAO, PAM and FIDA',
+          credential2: 'PhD in veterinary medicine, graduated from the University of Liège in Belgium. Specialized in animal production and animal health, public health.',
+          credential3: 'Focal point of the WTO (World Trade Organization) for the control and phytosanitary system.',
+          credential4: 'Authorized body of the CI for the certification of animal products and animal food products.',
+          credential5: 'Management of agricultural-forestry-pastoral-aquatic exploitation (Plantation, Breeding, Fishing ...).',
         },
       },
       expertise: {
@@ -1767,27 +1802,27 @@ export const translations: Record<Language, Translations> = {
         domains: {
           policies: {
             title: 'Agricultural Policies',
-            description: 'Analysis of production, export and import policies for AGOA implementation',
+            description: 'Analysis of agricultural production policies and their export and importation for the implementation of the AGOA (African Growth and Opportunity Act)',
           },
           health: {
             title: 'Animal Health',
-            description: 'Fight against animal and zoonotic diseases, sanitary and phytosanitary control',
+            description: 'Fight against animal diseases and zoonotic diseases',
           },
           transformation: {
-            title: 'Processing',
-            description: 'Conservation and processing (culinary preparations, packaging)',
+            title: 'Transformations',
+            description: 'Conservation and transformation (Preparation of dishes, packaging, packaging...)',
           },
           commercialization: {
-            title: 'Marketing',
-            description: 'Market access, market studies, product promotion, nutritional enhancement',
+            title: 'Commercialization',
+            description: 'Commercialization, access to markets and value addition (market studies, product promotion, nutritional values...)',
           },
           management: {
             title: 'Farm Management',
-            description: 'Agro-sylvo-pastoral and fisheries operations (plantation, livestock, fishing)',
+            description: 'Agro-sylvo-pastoral-aquatic exploitations (plantation, breeding, fishing...)',
           },
           specialties: {
             title: 'Key Specialties',
-            description: 'Value chains, local processing, international markets',
+            description: 'Key specialties: Value chains, local transformation, international markets',
           },
         },
         formation: {
@@ -1831,7 +1866,7 @@ export const translations: Record<Language, Translations> = {
         },
         international: {
           title: 'International Institutions',
-          subtitle: '10+ years at the CI Embassy in Rome',
+          subtitle: '10+ years at the CI Embassy in Rome, as a',
           agencies: 'Agricultural advisor to UN agencies:',
           agencyList: [
             'FAO (Food and Agriculture Organization of the United Nations)',
@@ -1855,7 +1890,7 @@ export const translations: Record<Language, Translations> = {
         },
         cabinet: {
           title: 'Cabinet DAB',
-          subtitle: 'Promoter and manager of Development Agricultural Business cabinet',
+          subtitle: 'Promoter and manager of Development Agricultural Business cabinet DAB',
           items: [
             'Promoter of the "From Farm to Global Markets..." program',
             'Training and coaching for agricultural entrepreneurs',
@@ -2001,7 +2036,7 @@ export const translations: Record<Language, Translations> = {
             'Initial action plan',
           ],
           slotsTitle: 'Available slots this week:',
-          cta: 'See more slots',
+          cta: 'Request a phone call appointment',
         },
         premium: {
           badge: 'PREMIUM',
@@ -2032,6 +2067,22 @@ export const translations: Record<Language, Translations> = {
         title: 'A Question? Need Help?',
         description: 'Our team is here to help you choose the support package that suits you best.',
         button: 'Contact us',
+      },
+      diagnosticModal: {
+        title: 'Request a Phone Appointment',
+        subtitle: 'Book your free diagnostic call',
+        description: 'Fill out this form and we will contact you within 24 hours to schedule your free 30-minute diagnostic call with Dr. Kanga.',
+        fields: {
+          name: { label: 'Full name *', placeholder: 'Your full name' },
+          email: { label: 'Email address *', placeholder: 'your@email.com' },
+          phone: { label: 'Phone number *', placeholder: '+1 234 567 8900' },
+        },
+        submitButton: 'Send request',
+        submitting: 'Sending...',
+        successTitle: 'Request sent!',
+        successMessage: 'Your request has been sent successfully. We will contact you within 24 hours to schedule your call.',
+        errorMessage: 'An error occurred. Please try again.',
+        close: 'Close',
       },
     },
     seminaires: {
@@ -2119,7 +2170,7 @@ export const translations: Record<Language, Translations> = {
           firstName: { label: 'First Name *', placeholder: 'Your first name' },
           lastName: { label: 'Last Name *', placeholder: 'Your last name' },
           email: { label: 'Email *', placeholder: 'your@email.com' },
-          phone: { label: 'Phone *', placeholder: '+1 234 567 8900' },
+          phone: { label: 'Phone *', placeholder: '567 89 00 00' },
           interest: {
             label: 'You are interested in *',
             placeholder: 'Select an option',
@@ -2344,14 +2395,14 @@ export const translations: Record<Language, Translations> = {
           date: 'Date:',
           time: 'Time:',
           price: 'Price:',
-          seatsLeft: 'Seats left:',
+          seatsLeft: '',
         },
         card1: {
           title: 'Masterclass 1 (ZOOM): ',
           description: 'Market Access and Agricultural Project Financing',
           date: '13 December 2025',
           time: '10am-1pm (GMT+1)',
-          seats: '8/20',
+          seats: '',
         },
         card2: {
           title: 'Masterclass 2 (ZOOM): ',
@@ -2359,7 +2410,7 @@ export const translations: Record<Language, Translations> = {
           location: 'Paris',
           date: '20 December 2025',
           time: '10am-1pm (GMT+1)',
-          seats: '5/15',
+          seats: '',
         },
         registerButton: 'Register now',
         modalitiesTitle: 'Registration Process',

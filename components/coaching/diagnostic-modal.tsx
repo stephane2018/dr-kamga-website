@@ -1,0 +1,192 @@
+"use client"
+
+import { useState } from "react"
+import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Loader2, Mail, Phone, User, CheckCircle2 } from "lucide-react"
+import { useLanguage } from "@/locales/LanguageProvider"
+import { PhoneInput } from "@/components/phone-input"
+
+interface DiagnosticModalProps {
+  open: boolean
+  onOpenChange: (open: boolean) => void
+}
+
+export function DiagnosticModal({ open, onOpenChange }: DiagnosticModalProps) {
+  const { t } = useLanguage()
+  const [name, setName] = useState("")
+  const [email, setEmail] = useState("")
+  const [phone, setPhone] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
+  const [isSuccess, setIsSuccess] = useState(false)
+  const [error, setError] = useState("")
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setError("")
+    setIsLoading(true)
+
+    try {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+      if (!emailRegex.test(email)) {
+        setError(t.coaching.diagnosticModal.errorMessage)
+        setIsLoading(false)
+        return
+      }
+
+      const response = await fetch("/api/coaching-diagnostic", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: name.trim(),
+          email: email.trim().toLowerCase(),
+          phone: phone.trim(),
+        }),
+      })
+
+      const data = await response.json()
+
+      if (data.success) {
+        setIsSuccess(true)
+        setTimeout(() => {
+          setIsSuccess(false)
+          setName("")
+          setEmail("")
+          setPhone("")
+          onOpenChange(false)
+        }, 3000)
+      } else {
+        setError(data.error || t.coaching.diagnosticModal.errorMessage)
+      }
+    } catch (err) {
+      setError(t.coaching.diagnosticModal.errorMessage)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="sm:max-w-md">
+        {!isSuccess ? (
+          <>
+            <DialogHeader>
+              <DialogTitle className="text-2xl font-bold text-center">
+                {t.coaching.diagnosticModal.title}
+              </DialogTitle>
+              <DialogDescription className="text-center pt-2">
+                {t.coaching.diagnosticModal.subtitle}
+              </DialogDescription>
+            </DialogHeader>
+
+            <div className="bg-muted/50 rounded-lg p-4 my-2">
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                {t.coaching.diagnosticModal.description}
+              </p>
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="name">{t.coaching.diagnosticModal.fields.name.label}</Label>
+                <div className="relative">
+                  <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    id="name"
+                    type="text"
+                    placeholder={t.coaching.diagnosticModal.fields.name.placeholder}
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className="pl-10"
+                    required
+                    disabled={isLoading}
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="email">{t.coaching.diagnosticModal.fields.email.label}</Label>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder={t.coaching.diagnosticModal.fields.email.placeholder}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="pl-10"
+                    required
+                    disabled={isLoading}
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="phone">{t.coaching.diagnosticModal.fields.phone.label}</Label>
+                <div className="relative">
+                   <Input
+                    id="phone"
+                    type="tel"
+                    placeholder={t.coaching.diagnosticModal.fields.phone.placeholder}
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    className="pl-10"
+                    required
+                    disabled={isLoading}
+                  />
+                </div>
+              </div>
+
+              {error && (
+                <div className="p-3 rounded-lg bg-destructive/10 border border-destructive/20">
+                  <p className="text-sm text-destructive">{error}</p>
+                </div>
+              )}
+
+              <div className="flex gap-3 pt-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => onOpenChange(false)}
+                  disabled={isLoading}
+                  className="flex-1"
+                >
+                  {t.coaching.diagnosticModal.close}
+                </Button>
+                <Button type="submit" disabled={isLoading || !email || !phone || !name} className="flex-1">
+                  {isLoading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      {t.coaching.diagnosticModal.submitting}
+                    </>
+                  ) : (
+                    t.coaching.diagnosticModal.submitButton
+                  )}
+                </Button>
+              </div>
+            </form>
+          </>
+        ) : (
+          <div className="text-center py-8">
+            <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+              <CheckCircle2 className="w-8 h-8 text-white" />
+            </div>
+            <h3 className="text-2xl font-bold text-gray-900 mb-2">
+              {t.coaching.diagnosticModal.successTitle}
+            </h3>
+            <p className="text-gray-600">{t.coaching.diagnosticModal.successMessage}</p>
+          </div>
+        )}
+      </DialogContent>
+    </Dialog>
+  )
+}

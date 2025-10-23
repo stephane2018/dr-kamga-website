@@ -107,6 +107,37 @@ export interface EmailTranslations {
     autoNotification: string
   }
 
+  // Coaching Diagnostic Email
+  coachingDiagnostic: {
+    user: {
+      subject: string
+      title: string
+      subtitle: string
+      hello: string
+      thankYou: string
+      nextSteps: string
+      step1: string
+      step2: string
+      step3: string
+      contactSoon: string
+      regards: string
+      signature: string
+    }
+    team: {
+      subject: string
+      alert: string
+      alertMessage: string
+      title: string
+      subtitle: string
+      nameLabel: string
+      emailLabel: string
+      phoneLabel: string
+      actionRequired: string
+      dateTime: string
+      autoNotification: string
+    }
+  }
+
   // Common
   common: {
     cabinetName: string
@@ -214,6 +245,35 @@ export const emailTranslations: Record<EmailLanguage, EmailTranslations> = {
       dateTime: 'Date et heure :',
       autoNotification: 'Cabinet DAB - Notification automatique',
     },
+    coachingDiagnostic: {
+      user: {
+        subject: '📞 Demande de Rendez-vous Confirmée - Coaching Diagnostic',
+        title: 'Demande Reçue !',
+        subtitle: 'Appel Diagnostic Gratuit - Coaching Privé',
+        hello: 'Bonjour,',
+        thankYou: 'Merci pour votre demande d\'appel diagnostic gratuit. Nous avons bien reçu vos informations et nous sommes ravis de votre intérêt pour notre programme de coaching privé.',
+        nextSteps: 'Prochaines étapes :',
+        step1: 'Notre équipe va examiner votre demande dans les prochaines heures',
+        step2: 'Nous vous contacterons par téléphone ou email dans les 24h pour planifier votre appel',
+        step3: 'Vous recevrez une confirmation avec la date et l\'heure de votre appel diagnostic de 30 minutes',
+        contactSoon: 'En attendant, n\'hésitez pas à consulter nos autres ressources sur notre site.',
+        regards: 'Cordialement,',
+        signature: 'Dr. Kanga Kouamé\nCabinet DAB',
+      },
+      team: {
+        subject: '📞 Nouvelle Demande - Appel Diagnostic Coaching',
+        alert: '📞 NOUVELLE DEMANDE D\'APPEL DIAGNOSTIC',
+        alertMessage: 'Un prospect a demandé un rendez-vous téléphonique pour un appel diagnostic coaching.',
+        title: 'Nouvelle Demande de Coaching',
+        subtitle: 'Appel Diagnostic Gratuit',
+        nameLabel: 'Nom',
+        emailLabel: 'Email',
+        phoneLabel: 'Téléphone',
+        actionRequired: '💡 Action requise : Contactez ce prospect dans les 24h pour planifier l\'appel diagnostic gratuit de 30 minutes.',
+        dateTime: 'Date et heure :',
+        autoNotification: 'Cabinet DAB - Notification automatique',
+      },
+    },
     common: {
       cabinetName: 'Cabinet DAB - Dr. Kanga Kouamé',
       copyright: 'Tous droits réservés.',
@@ -317,6 +377,35 @@ export const emailTranslations: Record<EmailLanguage, EmailTranslations> = {
       importantMessage: 'In accordance with GDPR, you must process this unsubscribe request promptly and no longer send marketing emails to this address.',
       dateTime: 'Date and time:',
       autoNotification: 'Cabinet DAB - Automatic notification',
+    },
+    coachingDiagnostic: {
+      user: {
+        subject: '📞 Appointment Request Confirmed - Coaching Diagnostic',
+        title: 'Request Received!',
+        subtitle: 'Free Diagnostic Call - Private Coaching',
+        hello: 'Hello,',
+        thankYou: 'Thank you for your free diagnostic call request. We have received your information and we are delighted by your interest in our private coaching program.',
+        nextSteps: 'Next steps:',
+        step1: 'Our team will review your request in the coming hours',
+        step2: 'We will contact you by phone or email within 24 hours to schedule your call',
+        step3: 'You will receive a confirmation with the date and time of your 30-minute diagnostic call',
+        contactSoon: 'In the meantime, feel free to browse our other resources on our website.',
+        regards: 'Best regards,',
+        signature: 'Dr. Kanga Kouamé\nCabinet DAB',
+      },
+      team: {
+        subject: '📞 New Request - Coaching Diagnostic Call',
+        alert: '📞 NEW DIAGNOSTIC CALL REQUEST',
+        alertMessage: 'A prospect has requested a phone appointment for a coaching diagnostic call.',
+        title: 'New Coaching Request',
+        subtitle: 'Free Diagnostic Call',
+        nameLabel: 'Name',
+        emailLabel: 'Email',
+        phoneLabel: 'Phone',
+        actionRequired: '💡 Action required: Contact this prospect within 24 hours to schedule the free 30-minute diagnostic call.',
+        dateTime: 'Date and time:',
+        autoNotification: 'Cabinet DAB - Automatic notification',
+      },
     },
     common: {
       cabinetName: 'Cabinet DAB - Dr. Kanga Kouamé',

@@ -35,9 +35,9 @@ export function ExpertiseSection() {
           <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow">
             <CardContent className="p-6">
               <div className="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center mb-4">
-                <Shield className="h-6 w-6 text-secondary" />
+                <Shield className="h-6 w-6 text-primary" />
               </div>
-              <h3 className="font-bold mb-2 text-secondary">{t.about.expertise.domains.health.title}</h3>
+              <h3 className="font-bold mb-2 text-primary">{t.about.expertise.domains.health.title}</h3>
               <p className="text-sm text-muted-foreground">
                 {t.about.expertise.domains.health.description}
               </p>
@@ -47,9 +47,9 @@ export function ExpertiseSection() {
           <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow">
             <CardContent className="p-6">
               <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mb-4">
-                <Package className="h-6 w-6 text-accent" />
+                <Package className="h-6 w-6 text-primary" />
               </div>
-              <h3 className="font-bold mb-2 text-accent">{t.about.expertise.domains.transformation.title}</h3>
+              <h3 className="font-bold mb-2 text-primary">{t.about.expertise.domains.transformation.title}</h3>
               <p className="text-sm text-muted-foreground">
                 {t.about.expertise.domains.transformation.description}
               </p>
@@ -71,9 +71,9 @@ export function ExpertiseSection() {
           <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow">
             <CardContent className="p-6">
               <div className="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center mb-4">
-                <Leaf className="h-6 w-6 text-secondary" />
+                <Leaf className="h-6 w-6 text-primary" />
               </div>
-              <h3 className="font-bold mb-2 text-secondary">{t.about.expertise.domains.management.title}</h3>
+              <h3 className="font-bold mb-2 text-primary">{t.about.expertise.domains.management.title}</h3>
               <p className="text-sm text-muted-foreground">
                 {t.about.expertise.domains.management.description}
               </p>

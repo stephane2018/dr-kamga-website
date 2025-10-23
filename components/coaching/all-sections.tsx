@@ -1,11 +1,13 @@
 "use client"
 
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { User, Target, Calendar, CheckCircle, Star, Phone } from "lucide-react"
 import Link from "next/link"
 import { useLanguage } from "@/locales/LanguageProvider"
+import { DiagnosticModal } from "./diagnostic-modal"
 
 export function CoachingHeroSection() {
   const { t } = useLanguage()
@@ -103,7 +105,7 @@ export function CoachingHeroSection() {
             </Link>
           </div>
 
-          {/* Social proof */}
+          {/* Social proof
           <div className="text-center mt-12">
             <p className="text-white/70 text-sm mb-4">{t.coaching.hero.socialProof.limitedSpots}</p>
             <div className="flex items-center justify-center gap-2">
@@ -116,7 +118,7 @@ export function CoachingHeroSection() {
                 {t.coaching.hero.socialProof.successCount}
               </p>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </section>
@@ -406,7 +408,8 @@ export function TestimonialsSection() {
 
 export function BookingSection() {
   const { t } = useLanguage()
-  
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
   return (
     <section className="py-16">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -439,7 +442,7 @@ export function BookingSection() {
               <div className="space-y-3 mb-6">
                 <p className="text-sm font-medium">{t.coaching.booking.diagnostic.slotsTitle}</p>
                 <div className="space-y-2">
-                  <div className="flex items-center justify-between p-3 border rounded-lg hover:bg-muted/50 cursor-pointer">
+                  {/* <div className="flex items-center justify-between p-3 border rounded-lg hover:bg-muted/50 cursor-pointer">
                     <div>
                       <div className="font-medium">Mardi 10 Décembre</div>
                       <div className="text-sm text-muted-foreground">14h00 - 14h30</div>
@@ -459,11 +462,11 @@ export function BookingSection() {
                       <div className="text-sm text-muted-foreground">16h00 - 16h30</div>
                     </div>
                     <Button size="sm" variant="outline">{t.coaching.booking.diagnostic.cta.split(' ').slice(-2).join(' ')}</Button>
-                  </div>
+                  </div> */}
                 </div>
               </div>
-              <Button className="w-full" asChild>
-                <Link href="/contact?service=coaching-diagnostic">{t.coaching.booking.diagnostic.cta}</Link>
+              <Button className="w-full" onClick={() => setIsModalOpen(true)}>
+                {t.coaching.booking.diagnostic.cta}
               </Button>
             </CardContent>
           </Card>
@@ -532,6 +535,8 @@ export function BookingSection() {
           </div>
         </div>
       </div>
+
+      <DiagnosticModal open={isModalOpen} onOpenChange={setIsModalOpen} />
     </section>
   )
 }

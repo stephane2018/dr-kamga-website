@@ -47,6 +47,10 @@ export function AboutHeroSection() {
                 <div className="w-2 h-2 bg-white rounded-full mt-2 flex-shrink-0"></div>
                 <span>{t.about.hero.credentials.credential4}</span>
               </div>
+               <div className="flex items-start space-x-3">
+                <div className="w-2 h-2 bg-white rounded-full mt-2 flex-shrink-0"></div>
+                <span>{t.about.hero.credentials.credential5}</span>
+              </div>
             </div>
           </div>
           <div className="relative">
