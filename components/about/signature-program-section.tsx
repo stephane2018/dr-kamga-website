@@ -38,9 +38,9 @@ export function SignatureProgramSection() {
           <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
             <CardContent className="p-8 text-center">
               <div className="w-16 h-16 bg-secondary/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Award className="h-8 w-8 text-secondary" />
+                <Award className="h-8 w-8 text-primary" />
               </div>
-              <h3 className="text-xl font-bold mb-4 text-secondary">{t.about.signature.pillars.equip.title}</h3>
+              <h3 className="text-xl font-bold mb-4 text-primary">{t.about.signature.pillars.equip.title}</h3>
               <p className="text-muted-foreground">
                 {t.about.signature.pillars.equip.description}
               </p>
@@ -50,9 +50,9 @@ export function SignatureProgramSection() {
           <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
             <CardContent className="p-8 text-center">
               <div className="w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Users className="h-8 w-8 text-accent" />
+                <Users className="h-8 w-8 text-primary" />
               </div>
-              <h3 className="text-xl font-bold mb-4 text-accent">{t.about.signature.pillars.accompany.title}</h3>
+              <h3 className="text-xl font-bold mb-4 text-primary">{t.about.signature.pillars.accompany.title}</h3>
               <p className="text-muted-foreground">
                 {t.about.signature.pillars.accompany.description}
               </p>

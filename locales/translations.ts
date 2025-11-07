@@ -798,7 +798,7 @@ export const translations: Record<Language, Translations> = {
     },
     progressPath: {
       title: 'Votre Chemin de Progression',
-      subtitle: 'Attaquer les marchés mondiaux sereinement...Comme des milliers d\'exportateurs de produits locaux, nous vous aidons à organiser toute votre chaine de valeur pour accéder aux marchés mondiaux en boostant ainsi votre chiffre d\'affaires.',
+      subtitle: 'Explorer et conquérir les marchés mondiaux sereinement...Comme des milliers d\'exportateurs de produits locaux, nous vous aidons à organiser toute votre chaine de valeur pour accéder aux marchés mondiaux en boostant ainsi votre chiffre d\'affaires.',
       ctaText: 'Découvrez comment',
       services: {
         masterclass: {
@@ -1019,7 +1019,7 @@ export const translations: Record<Language, Translations> = {
       signature: {
         badge: 'Programme Signature',
         title: '"De la ferme aux marchés mondiaux"',
-        description: 'Une méthode conçue pour sensibiliser, équiper et accompagner les producteurs locaux dans le développement durable de leur agro-business.',
+        description: 'Une méthode conçue pour sensibiliser, équiper et accompagner les producteurs locaux dans le développement durable de leurs activités agro-industrielles',
         pillars: {
           awareness: {
             title: 'Sensibiliser',
@@ -1034,8 +1034,8 @@ export const translations: Record<Language, Translations> = {
             description: 'Soutenir dans la durée pour assurer le développement durable',
           },
         },
-        quote: '"La réussite individuelle doit nourrir un projet collectif et contribuer au développement de la matière grise africaine."',
-        vision: 'Préparer les générations futures à prendre le relais du développement agricole africain.',
+        quote: '"La réussite individuelle doit nourrir un projet collectif et contribuer au développement de la matière grise Africaine."',
+        vision: 'Préparer les générations futures à prendre le relais du développement agricole Africain.',
       },
     },
     coaching: {
@@ -1518,7 +1518,7 @@ export const translations: Record<Language, Translations> = {
         card1: {
           title: 'Masterclass 1 (ZOOM): ',
           description: 'Accès aux marchés et financement des projets agricoles',
-          date: '13 December 2025',
+          date: '13 Decembre 2025',
           time: '08h30-13h00',
           seats: '',
         },
@@ -1526,7 +1526,7 @@ export const translations: Record<Language, Translations> = {
           title: 'Masterclass 2 (ZOOM): ',
           description: 'Création et gestion de projets agricoles',
           location: 'Paris',
-          date: '20 December 2025',
+          date: '20 Decembre 2025',
           time: '08h30 - 13h00',
           seats: '',
         },
@@ -1681,7 +1681,7 @@ export const translations: Record<Language, Translations> = {
     },
     progressPath: {
       title: 'Your Path to Success',
-      subtitle: 'Attack global markets with confidence...Like thousands of local product exporters, we help you organize your entire value chain to access global markets and boost your revenue.',
+      subtitle: 'Explore and conquer global markets with confidence...Like thousands of local product exporters, we help you organize your entire value chain to access global markets, thus boosting your revenue.',
       ctaText: 'Discover how',
       services: {
         masterclass: {
@@ -1902,7 +1902,7 @@ export const translations: Record<Language, Translations> = {
       signature: {
         badge: 'Signature Program',
         title: '"From Farm to Global Markets"',
-        description: 'A method designed to raise awareness, equip and support local producers in the sustainable development of their agro-business.',
+        description: 'A method designed to raise awareness, equip and support local producers in the sustainable development of their agro-industrial activities',
         pillars: {
           awareness: {
             title: 'Raise Awareness',
