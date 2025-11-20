@@ -43,7 +43,7 @@ export default function AdminDashboardPage() {
     setIsLoggingOut(true)
     try {
       await signOut({
-        callbackUrl: "/admin/login",
+        callbackUrl: "/",
         redirect: true,
       })
     } catch (error) {

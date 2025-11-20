@@ -5,7 +5,7 @@ import { signIn } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Lock, Mail, AlertCircle } from "lucide-react"
+import { Lock, Mail, AlertCircle, Home } from "lucide-react"
 
 export default function AdminLoginPage() {
   const router = useRouter()
@@ -128,18 +128,20 @@ export default function AdminLoginPage() {
                 "Se connecter"
               )}
             </Button>
+
+            {/* Back to Home Button */}
+            <Button
+              type="button"
+              variant="secondary"
+              className="w-full h-12"
+              onClick={() => router.push("/")}
+            >
+              <Home className="mr-2 h-4 w-4" />
+              Retour à l'accueil
+            </Button>
           </form>
 
-          {/* Info */}
-          <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-            <p className="text-xs text-blue-800">
-              <strong>Identifiants par défaut:</strong>
-              <br />
-              Email: admin@cabinetdab.com
-              <br />
-              Mot de passe: admin123
-            </p>
-          </div>
+
 
           {/* Footer Note */}
           <p className="text-center text-xs text-muted-foreground mt-6">
