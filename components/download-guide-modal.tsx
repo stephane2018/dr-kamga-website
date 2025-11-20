@@ -46,7 +46,8 @@ export function DownloadGuideModal({ open, onOpenChange }: DownloadGuideModalPro
 
       if (data.success) {
         const link = document.createElement("a")
-        link.href = "https://cabinetdab.com/site/LIVRE_BLANC.pdf"
+        link.href = "https://drive.google.com/uc?export=download&id=1-0k4AAmgPVjrufHT2CIzGm-uXyiyLYHO"
+        link.target = "_blank"
         link.download = "LIVRE_BLANC.pdf"
         document.body.appendChild(link)
         link.click()
