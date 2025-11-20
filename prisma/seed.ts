@@ -27,16 +27,22 @@ async function main() {
     update: {},
     create: {
       id: '1',
-      icon: '🌾',
-      title: 'Transformation Locale',
-      description: 'Apprenez à transformer vos produits agricoles pour maximiser leur valeur',
-      features: JSON.stringify([
-        'Techniques de conservation',
-        'Packaging et branding',
-        'Normes sanitaires'
-      ]),
-      cta: 'Commencer',
-      backgroundColor: 'from-amber-50 to-orange-50'
+      icon: 'Sprout',
+      titleFr: 'Transformation Locale',
+      titleEn: 'Local Transformation',
+      descriptionFr: 'Apprenez à transformer vos produits agricoles pour maximiser leur valeur',
+      descriptionEn: 'Learn how to transform your agricultural products to maximize their value',
+      features: JSON.stringify({
+        fr: ['Techniques de conservation', 'Packaging et branding', 'Normes sanitaires'],
+        en: ['Preservation techniques', 'Packaging and branding', 'Sanitary standards']
+      }),
+      ctaFr: 'Commencer',
+      ctaEn: 'Start',
+      backgroundColor: 'from-amber-50 to-orange-50',
+      type: 'online',
+      date: '2025-03-15',
+      time: '14:00',
+      seats: '20'
     }
   })
 
@@ -45,20 +51,26 @@ async function main() {
     update: {},
     create: {
       id: '2',
-      icon: '🌍',
-      title: 'Export International',
-      description: 'Maîtrisez les stratégies d\'exportation vers les marchés mondiaux',
-      features: JSON.stringify([
-        'Analyse de marché',
-        'Documentation export',
-        'Logistique internationale'
-      ]),
-      cta: 'Découvrir',
-      backgroundColor: 'from-blue-50 to-cyan-50'
+      icon: 'Globe',
+      titleFr: 'Export International',
+      titleEn: 'International Export',
+      descriptionFr: 'Maîtrisez les stratégies d\'exportation vers les marchés mondiaux',
+      descriptionEn: 'Master export strategies for global markets',
+      features: JSON.stringify({
+        fr: ['Analyse de marché', 'Documentation export', 'Logistique internationale'],
+        en: ['Market analysis', 'Export documentation', 'International logistics']
+      }),
+      ctaFr: 'Découvrir',
+      ctaEn: 'Discover',
+      backgroundColor: 'from-blue-50 to-cyan-50',
+      type: 'online',
+      date: '2025-04-10',
+      time: '10:00',
+      seats: '15'
     }
   })
 
-  console.log('Created masterclasses:', masterclass1.title, masterclass2.title)
+  console.log('Created masterclasses:', masterclass1.titleFr, masterclass2.titleFr)
 
   // Create sample seminar
   const seminar = await prisma.seminar.upsert({
@@ -68,37 +80,62 @@ async function main() {
       slug: 'transformation-unit',
       duration: '2 jours',
       participants: '12-15 participants',
-      title: 'Créer une unité de transformation compétitive',
-      subtitle: 'Du concept à la mise en œuvre',
-      description: 'Apprenez à concevoir, dimensionner et lancer votre unité de transformation pour maximiser la valeur ajoutée de vos produits.',
+      titleFr: 'Créer une unité de transformation compétitive',
+      titleEn: 'Create a competitive transformation unit',
+      subtitleFr: 'Du concept à la mise en œuvre',
+      subtitleEn: 'From concept to implementation',
+      descriptionFr: 'Apprenez à concevoir, dimensionner et lancer votre unité de transformation pour maximiser la valeur ajoutée de vos produits.',
+      descriptionEn: 'Learn how to design, size, and launch your transformation unit to maximize the added value of your products.',
       image: '/images/seminaires/transformation-unit.jpg',
       videoUrl: 'https://www.youtube.com/watch?v=example',
       nextSession: '15-16 Mars 2025',
       location: 'Paris, France',
-      program: JSON.stringify([
-        {
-          day: 'J1',
-          title: 'Conception et planification',
-          items: [
-            'Étude de faisabilité et business plan',
-            'Choix des équipements et technologies',
-            'Dimensionnement et layout optimal'
-          ]
-        },
-        {
-          day: 'J2',
-          title: 'Mise en œuvre pratique',
-          items: [
-            'Simulation de processus de transformation',
-            'Calcul des coûts et pricing',
-            'Contrôle qualité et traçabilité'
-          ]
-        }
-      ])
+      program: JSON.stringify({
+        fr: [
+          {
+            day: 'J1',
+            title: 'Conception et planification',
+            items: [
+              'Étude de faisabilité et business plan',
+              'Choix des équipements et technologies',
+              'Dimensionnement et layout optimal'
+            ]
+          },
+          {
+            day: 'J2',
+            title: 'Mise en œuvre pratique',
+            items: [
+              'Simulation de processus de transformation',
+              'Calcul des coûts et pricing',
+              'Contrôle qualité et traçabilité'
+            ]
+          }
+        ],
+        en: [
+          {
+            day: 'D1',
+            title: 'Design and planning',
+            items: [
+              'Feasibility study and business plan',
+              'Choice of equipment and technologies',
+              'Sizing and optimal layout'
+            ]
+          },
+          {
+            day: 'D2',
+            title: 'Practical implementation',
+            items: [
+              'Transformation process simulation',
+              'Cost calculation and pricing',
+              'Quality control and traceability'
+            ]
+          }
+        ]
+      })
     }
   })
 
-  console.log('Created seminar:', seminar.title)
+  console.log('Created seminar:', seminar.titleFr)
 
   console.log('Seed completed!')
 }
