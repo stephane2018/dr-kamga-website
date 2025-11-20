@@ -28,8 +28,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { MessageSquare, Phone, Mail, Calendar, User, AlertCircle, CheckCircle, Clock, X } from "lucide-react"
+import { MessageSquare, Phone, Mail, Calendar, User, AlertCircle, CheckCircle, Clock, X, Eye } from "lucide-react"
 import { AdminSkeleton } from "./admin-skeleton"
+import { formatDistanceToNow } from "date-fns"
+import { fr } from "date-fns/locale"
 
 interface Appointment {
   id: string
@@ -42,6 +44,7 @@ interface Appointment {
   message: string
   language: string
   status: string
+  readAt: string | null
   notes: string | null
   createdAt: string
   updatedAt: string
@@ -75,10 +78,44 @@ export function AppointmentsAdmin() {
     }
   }
 
-  const handleViewDetails = (appointment: Appointment) => {
-    setSelectedAppointment(appointment)
+  const handleViewDetails = async (appointment: Appointment) => {
+    const isPending = appointment.status === "pending"
+
+    let appointmentToSet = appointment
+
+    if (isPending) {
+      const newReadAt = new Date().toISOString()
+      appointmentToSet = {
+        ...appointment,
+        status: "read",
+        readAt: newReadAt,
+      }
+
+      // Update list immediately for better UX
+      setAppointments((prev) =>
+        prev.map((a) => (a.id === appointment.id ? appointmentToSet : a))
+      )
+
+      try {
+        await fetch(`/api/admin/appointments/${appointment.id}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ status: "read", readAt: newReadAt }),
+        })
+      } catch (error) {
+        console.error("Error marking appointment as read:", error)
+        // Revert on error
+        setAppointments((prev) =>
+          prev.map((a) => (a.id === appointment.id ? appointment : a))
+        )
+      }
+    }
+
+    setSelectedAppointment(appointmentToSet)
     setNotes(appointment.notes || "")
-    setStatus(appointment.status)
+    setStatus(appointmentToSet.status)
     setIsDetailsOpen(true)
   }
 
@@ -114,6 +151,13 @@ export function AppointmentsAdmin() {
           <Badge variant="outline" className="bg-yellow-50 text-yellow-700 border-yellow-200">
             <Clock className="h-3 w-3 mr-1" />
             En attente
+          </Badge>
+        )
+      case "read":
+        return (
+          <Badge variant="outline" className="bg-purple-50 text-purple-700 border-purple-200">
+            <Eye className="h-3 w-3 mr-1" />
+            Lu
           </Badge>
         )
       case "contacted":
@@ -154,6 +198,8 @@ export function AppointmentsAdmin() {
   if (isLoading) {
     return <AdminSkeleton />
   }
+
+  console.log("appointments", filteredAppointments);
 
   return (
     <div className="space-y-6">
@@ -196,7 +242,8 @@ export function AppointmentsAdmin() {
                     <TableHead>Contact</TableHead>
                     <TableHead>Intérêt</TableHead>
                     <TableHead>Statut</TableHead>
-                    <TableHead>Date</TableHead>
+                    <TableHead>Date réception</TableHead>
+                    <TableHead>Date Status</TableHead>
                     <TableHead className="text-right">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
@@ -233,6 +280,20 @@ export function AppointmentsAdmin() {
                         <div className="flex items-center gap-1 text-sm text-muted-foreground">
                           <Calendar className="h-3 w-3" />
                           {new Date(appointment.createdAt).toLocaleDateString("fr-FR")}
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="text-sm text-muted-foreground">
+                          {appointment.updatedAt ? (
+                            <span>
+                              Lu il y a{" "}
+                              {formatDistanceToNow(new Date(appointment.updatedAt), {
+                                locale: fr,
+                              })}
+                            </span>
+                          ) : (
+                            <span className="text-muted-foreground/50 italic">Non lu</span>
+                          )}
                         </div>
                       </TableCell>
                       <TableCell className="text-right">
@@ -317,6 +378,7 @@ export function AppointmentsAdmin() {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="pending">En attente</SelectItem>
+                    <SelectItem value="read">Lu</SelectItem>
                     <SelectItem value="contacted">Contacté</SelectItem>
                     <SelectItem value="closed">Clôturé</SelectItem>
                   </SelectContent>

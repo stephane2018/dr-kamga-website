@@ -7,13 +7,30 @@ export async function PATCH(
 ) {
   try {
     const body = await request.json()
-    const { notes, status } = body
+    const { notes, status, readAt: bodyReadAt } = body
+
+    // Get current appointment to check readAt status
+    const currentAppointment = await prisma.contactAppointment.findUnique({
+      where: { id: params.id },
+    })
+
+    let readAt = currentAppointment?.updatedAt
+
+    // If client provides readAt (e.g. from optimistic update), use it if we don't have one
+    if (bodyReadAt && !readAt) {
+      readAt = new Date(bodyReadAt)
+    }
+    // Fallback logic: if status is read and still no readAt, set it to now
+    else if (status === "read" && !readAt) {
+      readAt = new Date()
+    }
 
     const updatedAppointment = await prisma.contactAppointment.update({
       where: { id: params.id },
       data: {
         notes,
         status,
+        readAt,
         updatedAt: new Date(),
       },
     })

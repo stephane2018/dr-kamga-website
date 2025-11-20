@@ -49,9 +49,8 @@ async function main() {
           'Completion certificate'
         ]
       }),
-      ctaFr: 'S\'inscrire maintenant',
-      ctaEn: 'Register now',
-      backgroundColor: 'from-blue-50 to-cyan-50',
+      ctaFr: 'Découvrir',
+      ctaEn: 'Discover',
       type: 'online',
       date: '15 Février 2025',
       time: '14h00 - 18h00',
@@ -77,9 +76,8 @@ async function main() {
           'Networking with other farmers'
         ]
       }),
-      ctaFr: 'Réserver ma place',
-      ctaEn: 'Book my spot',
-      backgroundColor: 'from-amber-50 to-orange-50',
+      ctaFr: 'Commencer',
+      ctaEn: 'Start',
       type: 'inPerson',
       date: '22-23 Février 2025',
       time: '09h00 - 17h00',

@@ -88,7 +88,6 @@ export async function PUT(
         features: features ? JSON.stringify(features) : undefined,
         ctaFr: body.ctaFr?.trim(),
         ctaEn: body.ctaEn?.trim(),
-        backgroundColor: body.backgroundColor?.trim(),
         type: body.type?.trim(),
         date: body.date?.trim(),
         time: body.time?.trim(),

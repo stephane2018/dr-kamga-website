@@ -19,7 +19,6 @@ interface Masterclass {
   features: { fr: string[]; en: string[] }
   ctaFr: string
   ctaEn: string
-  backgroundColor: string
   type: string
   date: string
   time: string
@@ -135,7 +134,7 @@ export function RegistrationSection() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-{onlineMasterclass && (
+          {onlineMasterclass && (
             <Card className="border-0 shadow-lg">
               <CardHeader>
                 <div className="flex items-center justify-between mb-4">
@@ -177,7 +176,7 @@ export function RegistrationSection() {
             </Card>
           )}
 
-{inPersonMasterclass && (
+          {inPersonMasterclass && (
             <Card className="border-0 shadow-lg">
               <CardHeader>
                 <div className="flex items-center justify-between mb-4">

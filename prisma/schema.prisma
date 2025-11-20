@@ -32,7 +32,6 @@ model Masterclass {
   features        String   // JSON array stored as string: {fr: [], en: []}
   ctaFr           String
   ctaEn           String
-  backgroundColor String
   type            String   // "online" or "inPerson"
   date            String
   time            String
@@ -142,7 +141,8 @@ model ContactAppointment {
   situation   String?
   message     String
   language    String   @default("fr")
-  status      String   @default("pending") // "pending", "contacted", "closed"
+  status      String   @default("pending") // "pending", "contacted", "closed", "read"
+  readAt      DateTime?
   notes       String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt

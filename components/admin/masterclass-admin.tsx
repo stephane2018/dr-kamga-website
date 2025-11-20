@@ -22,7 +22,6 @@ interface Masterclass {
   cta: string
   ctaFr?: string
   ctaEn?: string
-  backgroundColor: string
   type?: string
   date?: string
   time?: string
@@ -49,7 +48,6 @@ export function MasterclassAdmin() {
     featuresEn: "",
     ctaFr: "",
     ctaEn: "",
-    backgroundColor: "",
     type: "online",
     date: "",
     time: "",
@@ -102,7 +100,6 @@ export function MasterclassAdmin() {
           descriptionEn: formData.descriptionEn,
           ctaFr: formData.ctaFr,
           ctaEn: formData.ctaEn,
-          backgroundColor: formData.backgroundColor,
           type: formData.type,
           date: formData.date,
           time: formData.time,
@@ -157,7 +154,6 @@ export function MasterclassAdmin() {
       featuresEn: featuresEnString,
       ctaFr: masterclass.ctaFr || masterclass.cta,
       ctaEn: masterclass.ctaEn || masterclass.cta,
-      backgroundColor: masterclass.backgroundColor,
       type: masterclass.type || "online",
       date: masterclass.date || "",
       time: masterclass.time || "",
@@ -202,7 +198,6 @@ export function MasterclassAdmin() {
       featuresEn: "",
       ctaFr: "",
       ctaEn: "",
-      backgroundColor: "",
       type: "online",
       date: "",
       time: "",
@@ -266,23 +261,6 @@ export function MasterclassAdmin() {
                   required
                   disabled={submitting}
                 />
-              </div>
-
-              {/* Background Color */}
-              <div>
-                <label className="block text-sm font-medium mb-2">
-                  Couleur de fond (gradient)
-                </label>
-                <Input
-                  value={formData.backgroundColor}
-                  onChange={(e) => setFormData({ ...formData, backgroundColor: e.target.value })}
-                  placeholder="from-amber-50 to-orange-50"
-                  required
-                  disabled={submitting}
-                />
-                <p className="text-xs text-muted-foreground mt-1">
-                  Ex: from-blue-50 to-cyan-50
-                </p>
               </div>
             </div>
 
@@ -374,22 +352,20 @@ export function MasterclassAdmin() {
                 <button
                   type="button"
                   onClick={() => setActiveLanguage('fr')}
-                  className={`px-4 py-2 font-medium transition-colors ${
-                    activeLanguage === 'fr'
-                      ? 'text-primary border-b-2 border-primary'
-                      : 'text-gray-500 hover:text-gray-700'
-                  }`}
+                  className={`px-4 py-2 font-medium transition-colors ${activeLanguage === 'fr'
+                    ? 'text-primary border-b-2 border-primary'
+                    : 'text-gray-500 hover:text-gray-700'
+                    }`}
                 >
                   🇫🇷 Français
                 </button>
                 <button
                   type="button"
                   onClick={() => setActiveLanguage('en')}
-                  className={`px-4 py-2 font-medium transition-colors ${
-                    activeLanguage === 'en'
-                      ? 'text-primary border-b-2 border-primary'
-                      : 'text-gray-500 hover:text-gray-700'
-                  }`}
+                  className={`px-4 py-2 font-medium transition-colors ${activeLanguage === 'en'
+                    ? 'text-primary border-b-2 border-primary'
+                    : 'text-gray-500 hover:text-gray-700'
+                    }`}
                 >
                   🇬🇧 English
                 </button>
@@ -566,13 +542,10 @@ export function MasterclassAdmin() {
               >
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-center gap-3">
-                    <span className="text-4xl">{masterclass.icon}</span>
+
                     <div>
                       <h4 className="font-bold text-lg">{masterclass.title}</h4>
                       <div className="flex gap-2 mt-1">
-                        <Badge variant="secondary" className="text-xs">
-                          {masterclass.backgroundColor}
-                        </Badge>
                         {masterclass.isVisibleOnHome ? (
                           <Badge variant="default" className="text-xs bg-green-600">
                             <Eye className="h-3 w-3 mr-1" />

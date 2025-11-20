@@ -44,8 +44,8 @@ export async function POST(request: NextRequest) {
 
     // Validate required fields
     if (!body.icon || !body.titleFr || !body.titleEn || !body.descriptionFr || !body.descriptionEn ||
-        !body.ctaFr || !body.ctaEn || !body.backgroundColor || !body.type || !body.date ||
-        !body.time || !body.seats) {
+      !body.ctaFr || !body.ctaEn || !body.type || !body.date ||
+      !body.time || !body.seats) {
       return NextResponse.json(
         { success: false, error: "Missing required fields" },
         { status: 400 }
@@ -82,7 +82,6 @@ export async function POST(request: NextRequest) {
         features: JSON.stringify(features),
         ctaFr: body.ctaFr.trim(),
         ctaEn: body.ctaEn.trim(),
-        backgroundColor: body.backgroundColor.trim(),
         type: body.type.trim(),
         date: body.date.trim(),
         time: body.time.trim(),
