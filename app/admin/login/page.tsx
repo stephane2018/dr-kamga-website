@@ -1,9 +1,44 @@
+"use client"
+
+import { useState } from "react"
+import { signIn } from "next-auth/react"
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Lock, Mail } from "lucide-react"
-import Image from "next/image"
+import { Lock, Mail, AlertCircle } from "lucide-react"
 
 export default function AdminLoginPage() {
+  const router = useRouter()
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [error, setError] = useState("")
+  const [loading, setLoading] = useState(false)
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setError("")
+    setLoading(true)
+
+    try {
+      const result = await signIn("credentials", {
+        email,
+        password,
+        redirect: false,
+      })
+
+      if (result?.error) {
+        setError("Email ou mot de passe incorrect")
+      } else {
+        router.push("/admin/dashboard")
+        router.refresh()
+      }
+    } catch (error) {
+      setError("Une erreur s'est produite")
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/10 via-white to-secondary/10 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
@@ -20,7 +55,20 @@ export default function AdminLoginPage() {
         <div className="bg-white rounded-3xl shadow-2xl p-8 border border-gray-100">
           <h2 className="text-2xl font-bold mb-6 text-center">Connexion</h2>
 
-          <form className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Error Message */}
+            {error && (
+              <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-start gap-3">
+                <AlertCircle className="h-5 w-5 text-red-600 mt-0.5" />
+                <div>
+                  <h3 className="text-sm font-medium text-red-800">
+                    Erreur de connexion
+                  </h3>
+                  <p className="text-sm text-red-600 mt-1">{error}</p>
+                </div>
+              </div>
+            )}
+
             {/* Email Field */}
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
@@ -33,9 +81,12 @@ export default function AdminLoginPage() {
                 <Input
                   id="email"
                   type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   placeholder="admin@cabinetdab.com"
                   className="pl-10 h-12"
                   required
+                  disabled={loading}
                 />
               </div>
             </div>
@@ -52,32 +103,43 @@ export default function AdminLoginPage() {
                 <Input
                   id="password"
                   type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
                   className="pl-10 h-12"
                   required
+                  disabled={loading}
                 />
               </div>
             </div>
 
-            {/* Remember Me */}
-            <div className="flex items-center justify-between">
-              <label className="flex items-center">
-                <input
-                  type="checkbox"
-                  className="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary"
-                />
-                <span className="ml-2 text-sm text-muted-foreground">Se souvenir de moi</span>
-              </label>
-              <a href="#" className="text-sm text-primary hover:underline">
-                Mot de passe oublié ?
-              </a>
-            </div>
-
             {/* Submit Button */}
-            <Button type="submit" className="w-full h-12 bg-primary hover:bg-primary/90 text-lg font-semibold">
-              Se connecter
+            <Button
+              type="submit"
+              className="w-full h-12 bg-primary hover:bg-primary/90 text-lg font-semibold"
+              disabled={loading}
+            >
+              {loading ? (
+                <span className="flex items-center gap-2">
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  Connexion en cours...
+                </span>
+              ) : (
+                "Se connecter"
+              )}
             </Button>
           </form>
+
+          {/* Info */}
+          <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+            <p className="text-xs text-blue-800">
+              <strong>Identifiants par défaut:</strong>
+              <br />
+              Email: admin@cabinetdab.com
+              <br />
+              Mot de passe: admin123
+            </p>
+          </div>
 
           {/* Footer Note */}
           <p className="text-center text-xs text-muted-foreground mt-6">

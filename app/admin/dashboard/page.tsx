@@ -1,14 +1,56 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useSearchParams, useRouter } from "next/navigation"
+import { signOut, useSession } from "next-auth/react"
 import { Button } from "@/components/ui/button"
-import { LogOut, BookOpen, Users, Calendar } from "lucide-react"
-import Link from "next/link"
+import { Badge } from "@/components/ui/badge"
+import { LogOut, BookOpen, Users, Calendar, Mail, MessageSquare, Loader2, Shield, User, UserCog, Home, Layers } from "lucide-react"
 import { MasterclassAdmin } from "@/components/admin/masterclass-admin"
 import { SeminairesAdmin } from "@/components/admin/seminaires-admin"
+import { AppointmentsAdmin } from "@/components/admin/appointments-admin"
+import { NewsletterAdmin } from "@/components/admin/newsletter-admin"
+import { UsersAdmin } from "@/components/admin/users-admin"
+import { AxisCardsAdmin } from "@/components/admin/axis-cards-admin"
+
+type TabType = "masterclass" | "seminaires" | "appointments" | "newsletter" | "users" | "axis-cards"
 
 export default function AdminDashboardPage() {
-  const [activeTab, setActiveTab] = useState<"masterclass" | "seminaires">("masterclass")
+  const { data: session } = useSession()
+  const searchParams = useSearchParams()
+  const router = useRouter()
+  const [activeTab, setActiveTab] = useState<TabType>("masterclass")
+  const [isLoggingOut, setIsLoggingOut] = useState(false)
+
+  useEffect(() => {
+    const tabParam = searchParams.get("tab") as TabType | null
+    if (tabParam && ["masterclass", "seminaires", "appointments", "newsletter", "users", "axis-cards"].includes(tabParam)) {
+      if ((tabParam === "users" || tabParam === "axis-cards") && session?.user?.role !== "admin") {
+        return
+      }
+      setActiveTab(tabParam)
+    } else {
+      setActiveTab("masterclass");
+    }
+  }, [searchParams, session])
+
+  const handleTabChange = (tab: TabType) => {
+    setActiveTab(tab)
+    router.push(`/admin/dashboard?tab=${tab}`, { scroll: false })
+  }
+
+  const handleLogout = async () => {
+    setIsLoggingOut(true)
+    try {
+      await signOut({
+        callbackUrl: "/admin/login",
+        redirect: true,
+      })
+    } catch (error) {
+      console.error("Error logging out:", error)
+      setIsLoggingOut(false)
+    }
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -30,14 +72,60 @@ export default function AdminDashboardPage() {
             {/* User Menu */}
             <div className="flex items-center gap-4">
               <div className="text-right">
-                <p className="text-sm font-medium text-foreground">Admin</p>
-                <p className="text-xs text-muted-foreground">admin@cabinetdab.com</p>
+                <div className="flex items-center justify-end gap-2 mb-1">
+                  <p className="text-sm font-medium text-foreground">
+                    {session?.user?.name || "Admin"}
+                  </p>
+                  {session?.user?.role && (
+                    <Badge
+                      variant={session.user.role === "admin" ? "default" : "secondary"}
+                      className="text-xs flex items-center gap-1"
+                    >
+                      {session.user.role === "admin" ? (
+                        <>
+                          <Shield className="h-3 w-3" />
+                          Admin
+                        </>
+                      ) : (
+                        <>
+                          <User className="h-3 w-3" />
+                          Manager
+                        </>
+                      )}
+                    </Badge>
+                  )}
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  {session?.user?.email || "admin@cabinetdab.com"}
+                </p>
               </div>
-              <Button variant="ghost" size="sm" asChild>
-                <Link href="/admin/login" className="flex items-center gap-2">
-                  <LogOut className="h-4 w-4" />
-                  Déconnexion
-                </Link>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => window.location.href = "/"}
+                className="flex items-center gap-2"
+              >
+                <Home className="h-4 w-4" />
+                <span>Accueil</span>
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleLogout}
+                disabled={isLoggingOut}
+                className="flex items-center gap-2"
+              >
+                {isLoggingOut ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    <span>Déconnexion...</span>
+                  </>
+                ) : (
+                  <>
+                    <LogOut className="h-4 w-4" />
+                    <span>Déconnexion</span>
+                  </>
+                )}
               </Button>
             </div>
           </div>
@@ -47,29 +135,71 @@ export default function AdminDashboardPage() {
       {/* Tabs Navigation */}
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex gap-2">
+          <div className="flex gap-2 overflow-x-auto">
             <button
-              onClick={() => setActiveTab("masterclass")}
-              className={`flex items-center gap-2 px-6 py-4 font-medium transition-colors border-b-2 ${
-                activeTab === "masterclass"
-                  ? "border-primary text-primary"
-                  : "border-transparent text-muted-foreground hover:text-foreground hover:border-gray-300"
-              }`}
+              onClick={() => handleTabChange("masterclass")}
+              className={`flex items-center gap-2 px-6 py-4 font-medium transition-colors border-b-2 whitespace-nowrap ${activeTab === "masterclass"
+                ? "border-primary text-primary"
+                : "border-transparent text-muted-foreground hover:text-foreground hover:border-gray-300"
+                }`}
             >
               <Users className="h-5 w-5" />
               Masterclass
             </button>
             <button
-              onClick={() => setActiveTab("seminaires")}
-              className={`flex items-center gap-2 px-6 py-4 font-medium transition-colors border-b-2 ${
-                activeTab === "seminaires"
-                  ? "border-primary text-primary"
-                  : "border-transparent text-muted-foreground hover:text-foreground hover:border-gray-300"
-              }`}
+              onClick={() => handleTabChange("seminaires")}
+              className={`flex items-center gap-2 px-6 py-4 font-medium transition-colors border-b-2 whitespace-nowrap ${activeTab === "seminaires"
+                ? "border-primary text-primary"
+                : "border-transparent text-muted-foreground hover:text-foreground hover:border-gray-300"
+                }`}
             >
               <Calendar className="h-5 w-5" />
               Séminaires
             </button>
+            <button
+              onClick={() => handleTabChange("appointments")}
+              className={`flex items-center gap-2 px-6 py-4 font-medium transition-colors border-b-2 whitespace-nowrap ${activeTab === "appointments"
+                ? "border-primary text-primary"
+                : "border-transparent text-muted-foreground hover:text-foreground hover:border-gray-300"
+                }`}
+            >
+              <MessageSquare className="h-5 w-5" />
+              Rendez-vous
+            </button>
+            <button
+              onClick={() => handleTabChange("newsletter")}
+              className={`flex items-center gap-2 px-6 py-4 font-medium transition-colors border-b-2 whitespace-nowrap ${activeTab === "newsletter"
+                ? "border-primary text-primary"
+                : "border-transparent text-muted-foreground hover:text-foreground hover:border-gray-300"
+                }`}
+            >
+              <Mail className="h-5 w-5" />
+              Newsletter
+            </button>
+            {session?.user?.role === "admin" && (
+              <button
+                onClick={() => handleTabChange("axis-cards")}
+                className={`flex items-center gap-2 px-6 py-4 font-medium transition-colors border-b-2 whitespace-nowrap ${activeTab === "axis-cards"
+                  ? "border-primary text-primary"
+                  : "border-transparent text-muted-foreground hover:text-foreground hover:border-gray-300"
+                  }`}
+              >
+                <Layers className="h-5 w-5" />
+                Cartes Axes
+              </button>
+            )}
+            {session?.user?.role === "admin" && (
+              <button
+                onClick={() => handleTabChange("users")}
+                className={`flex items-center gap-2 px-6 py-4 font-medium transition-colors border-b-2 whitespace-nowrap ${activeTab === "users"
+                  ? "border-primary text-primary"
+                  : "border-transparent text-muted-foreground hover:text-foreground hover:border-gray-300"
+                  }`}
+              >
+                <UserCog className="h-5 w-5" />
+                Utilisateurs
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -78,6 +208,10 @@ export default function AdminDashboardPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {activeTab === "masterclass" && <MasterclassAdmin />}
         {activeTab === "seminaires" && <SeminairesAdmin />}
+        {activeTab === "appointments" && <AppointmentsAdmin />}
+        {activeTab === "newsletter" && <NewsletterAdmin />}
+        {activeTab === "axis-cards" && <AxisCardsAdmin />}
+        {activeTab === "users" && session?.user?.role === "admin" && <UsersAdmin />}
       </div>
     </div>
   )

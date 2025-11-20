@@ -1,0 +1,149 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      String   @default("admin") // "admin" or "manager"
+  isActive  Boolean  @default(true)
+  createdBy String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Masterclass {
+  id              String   @id @default(cuid())
+  icon            String
+  titleFr         String
+  titleEn         String
+  descriptionFr   String
+  descriptionEn   String
+  features        String   // JSON array stored as string: {fr: [], en: []}
+  ctaFr           String
+  ctaEn           String
+  backgroundColor String
+  type            String   // "online" or "inPerson"
+  date            String
+  time            String
+  seats           String
+  isActive        Boolean  @default(true)
+  isVisibleOnHome Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model Seminar {
+  id              String   @id @default(cuid())
+  slug            String   @unique
+  duration        String
+  participants    String
+  titleFr         String
+  titleEn         String
+  subtitleFr      String
+  subtitleEn      String
+  descriptionFr   String
+  descriptionEn   String
+  image           String?
+  videoUrl        String?
+  nextSession     String
+  location        String
+  program         String   // JSON array stored as string: {fr: [], en: []}
+  isActive        Boolean  @default(true)
+  isVisibleOnHome Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model HomeService {
+  id              String   @id @default(cuid())
+  slug            String   @unique
+  icon            String   // Icon name from lucide-react
+  categoryFr      String
+  categoryEn      String
+  titleFr         String
+  titleEn         String
+  subtitleFr      String
+  subtitleEn      String
+  descriptionFr   String
+  descriptionEn   String
+  features        String   // JSON: {fr: [], en: []}
+  ctaTextFr       String
+  ctaTextEn       String
+  ctaLink         String
+  gradientPosition String  // "top-left", "top-right", "bottom-left", "bottom-right"
+  order           Int      @default(0)
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model AboutContent {
+  id              String   @id @default(cuid())
+  badgeFr         String
+  badgeEn         String
+  titleFr         String
+  titleEn         String
+  descriptionFr   String
+  descriptionEn   String
+  credentials     String   // JSON: {fr: [], en: []}
+  imageUrl        String
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model AxisCard {
+  id              String   @id @default(cuid())
+  axisKey         String   @unique // "axis1", "axis2", etc.
+  icon            String   // Icon name from lucide-react (Sprout, Factory, Globe, etc.)
+  iconColor       String   // "primary", "secondary", "accent"
+  titleFr         String
+  titleEn         String
+  descriptionFr   String
+  descriptionEn   String
+  contentFr       String   // Detailed content
+  contentEn       String   // Detailed content
+  features        String   // JSON array: {fr: [], en: []}
+  duration        String   // "3h30", "4h", etc.
+  maxParticipants Int      // Number of max participants
+  order           Int      @default(0)
+  isActive        Boolean  @default(true)
+  isVisibleOnHome Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model Newsletter {
+  id          String   @id @default(cuid())
+  email       String   @unique
+  language    String   @default("fr") // "fr" or "en"
+  subscribedAt DateTime @default(now())
+  isActive    Boolean  @default(true)
+}
+
+model ContactAppointment {
+  id          String   @id @default(cuid())
+  firstName   String
+  lastName    String
+  email       String
+  phone       String
+  interest    String   // "masterclass", "seminaires", "coaching", "programme", "information"
+  situation   String?
+  message     String
+  language    String   @default("fr")
+  status      String   @default("pending") // "pending", "contacted", "closed"
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

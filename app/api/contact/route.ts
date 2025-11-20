@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { sendContactEmail, ContactFormData } from "@/lib/email/send-contact-email"
+import { prisma } from "@/lib/prisma"
 
 /**
  * API Route pour gérer l'envoi du formulaire de contact
@@ -43,7 +44,21 @@ export async function POST(request: NextRequest) {
       language: body.language || 'fr', // Langue de l'email (fr ou en)
     }
 
-    // Envoyer l'email
+    // Save appointment to database
+    await prisma.contactAppointment.create({
+      data: {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        phone: formData.phone,
+        interest: formData.interest,
+        situation: formData.situation,
+        message: formData.message,
+        language: formData.language,
+        status: "pending",
+      },
+    })
+
     const result = await sendContactEmail(formData)
 
     if (result.success) {

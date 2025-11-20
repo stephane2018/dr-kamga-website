@@ -2,12 +2,14 @@
 
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Menu, X, ChevronDown, Check, Globe } from "lucide-react"
+import { Menu, X, ChevronDown, Check, Globe, User, Shield, LogOut, Settings } from "lucide-react"
 import { useState, useRef, useEffect } from "react"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import Image from "next/image"
 import { useLanguage } from "@/locales/LanguageProvider"
+import { useSession, signOut } from "next-auth/react"
+import { Badge } from "@/components/ui/badge"
 
 const languages = {
   fr: { name: 'Français', flag: '🇫🇷', short: 'FR' },
@@ -17,8 +19,10 @@ const languages = {
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
   const [langDropdownOpen, setLangDropdownOpen] = useState(false)
+  const [userDropdownOpen, setUserDropdownOpen] = useState(false)
   const pathname = usePathname()
   const { language, t, setLanguage } = useLanguage()
+  const { data: session } = useSession()
 
   const isActive = (path: string) => {
     const pathWithLang = `/${language}${path}`
@@ -31,12 +35,15 @@ export function Navigation() {
   }
 
   const dropdownRef = useRef<HTMLDivElement>(null)
-
+  const userDropdownRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setLangDropdownOpen(false)
+      }
+      if (userDropdownRef.current && !userDropdownRef.current.contains(event.target as Node)) {
+        setUserDropdownOpen(false)
       }
     }
 
@@ -47,6 +54,13 @@ export function Navigation() {
   const handleLanguageChange = (lang: 'fr' | 'en') => {
     setLanguage(lang)
     setLangDropdownOpen(false)
+  }
+
+  const handleLogout = async () => {
+    await signOut({
+      callbackUrl: "/admin/login",
+      redirect: true,
+    })
   }
 
   return (
@@ -137,11 +151,11 @@ export function Navigation() {
                 <ChevronDown className={`h-3 w-3 transition-transform ${langDropdownOpen ? 'rotate-180' : ''}`} />
               </button>
 
-           
+
               {langDropdownOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden z-50 animate-in fade-in slide-in-from-top-2 duration-200">
                   <div className="py-1">
-                    
+
                     <button
                       onClick={() => handleLanguageChange('fr')}
                       className={`w-full flex items-center gap-3 px-4 py-2.5 text-sm transition-colors ${
@@ -170,6 +184,64 @@ export function Navigation() {
                 </div>
               )}
             </div>
+
+            {/* User Menu - Desktop */}
+            {session && (
+              <div className="relative ml-2" ref={userDropdownRef}>
+                <button
+                  onClick={() => setUserDropdownOpen(!userDropdownOpen)}
+                  className="flex items-center gap-2 px-3 py-2 rounded-lg text-white hover:bg-white/10 transition-all border border-white/20"
+                >
+                  <User className="h-4 w-4" />
+                  <span className="text-sm font-medium">{session.user?.name || 'Admin'}</span>
+                  <ChevronDown className={`h-3 w-3 transition-transform ${userDropdownOpen ? 'rotate-180' : ''}`} />
+                </button>
+
+                {userDropdownOpen && (
+                  <div className="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+                    <div className="p-4 border-b border-gray-200 bg-gray-50">
+                      <p className="font-semibold text-gray-900 text-sm">{session.user?.name}</p>
+                      <p className="text-xs text-gray-600 mt-0.5">{session.user?.email}</p>
+                      {session.user?.role && (
+                        <Badge
+                          variant={session.user.role === "admin" ? "default" : "secondary"}
+                          className="mt-2 text-xs"
+                        >
+                          {session.user.role === "admin" ? (
+                            <>
+                              <Shield className="h-3 w-3 mr-1" />
+                              Admin
+                            </>
+                          ) : (
+                            <>
+                              <User className="h-3 w-3 mr-1" />
+                              Manager
+                            </>
+                          )}
+                        </Badge>
+                      )}
+                    </div>
+                    <div className="py-1">
+                      <Link
+                        href="/admin/dashboard"
+                        onClick={() => setUserDropdownOpen(false)}
+                        className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                      >
+                        <Settings className="h-4 w-4" />
+                        <span>Administration</span>
+                      </Link>
+                      <button
+                        onClick={handleLogout}
+                        className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors"
+                      >
+                        <LogOut className="h-4 w-4" />
+                        <span>Déconnexion</span>
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
 
        
@@ -224,9 +296,61 @@ export function Navigation() {
                 </Button>
               </div>
 
+              {/* User Menu - Mobile */}
+              {session && (
+                <div className="px-3 py-4 border-t border-primary/10">
+                  <div className="bg-gray-50 rounded-lg p-4 mb-3">
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <p className="font-semibold text-gray-900 text-sm">{session.user?.name}</p>
+                        <p className="text-xs text-gray-600 mt-0.5">{session.user?.email}</p>
+                      </div>
+                      {session.user?.role && (
+                        <Badge
+                          variant={session.user.role === "admin" ? "default" : "secondary"}
+                          className="text-xs"
+                        >
+                          {session.user.role === "admin" ? (
+                            <>
+                              <Shield className="h-3 w-3 mr-1" />
+                              Admin
+                            </>
+                          ) : (
+                            <>
+                              <User className="h-3 w-3 mr-1" />
+                              Manager
+                            </>
+                          )}
+                        </Badge>
+                      )}
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Link
+                      href="/admin/dashboard"
+                      onClick={() => setIsOpen(false)}
+                      className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium bg-gray-50 text-gray-700 hover:bg-gray-100 transition-all"
+                    >
+                      <Settings className="h-4 w-4" />
+                      <span>Administration</span>
+                    </Link>
+                    <button
+                      onClick={() => {
+                        handleLogout()
+                        setIsOpen(false)
+                      }}
+                      className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium bg-red-50 text-red-600 hover:bg-red-100 transition-all"
+                    >
+                      <LogOut className="h-4 w-4" />
+                      <span>Déconnexion</span>
+                    </button>
+                  </div>
+                </div>
+              )}
+
               {/* Language Switcher - Mobile */}
               <div className="px-3 py-4 border-t border-primary/10">
-               
+
                 <div className="space-y-1">
                   <button
                     onClick={() => {

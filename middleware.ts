@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import { auth } from "@/lib/auth"
 
 const locales = ['fr', 'en']
 const defaultLocale = 'fr'
@@ -40,14 +41,29 @@ function getLocale(request: NextRequest): string {
   return defaultLocale
 }
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
+
+  // Handle authentication for admin routes
+  if (pathname.startsWith('/admin')) {
+    const session = await auth()
+    const isOnLoginPage = pathname === '/admin/login'
+
+    if (!session && !isOnLoginPage) {
+      return NextResponse.redirect(new URL('/admin/login', request.url))
+    }
+
+    if (session && isOnLoginPage) {
+      return NextResponse.redirect(new URL('/admin/dashboard', request.url))
+    }
+
+    return NextResponse.next()
+  }
 
   // Skip middleware for static files, API routes, and special Next.js routes
   if (
     pathname.startsWith('/_next') ||
     pathname.startsWith('/api') ||
-    pathname.startsWith('/admin') ||
     pathname.includes('.') ||
     pathname.startsWith('/favicon') ||
     pathname.startsWith('/sitemap') ||

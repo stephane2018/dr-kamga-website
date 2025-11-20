@@ -45,7 +45,10 @@ export function NewsletterModal() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email: email.trim().toLowerCase() }),
+        body: JSON.stringify({
+          email: email.trim().toLowerCase(),
+          language: language
+        }),
       })
 
       const data = await response.json()

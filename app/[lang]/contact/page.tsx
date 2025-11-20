@@ -1,6 +1,7 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useSearchParams } from "next/navigation"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
@@ -15,6 +16,7 @@ import { PhoneInput } from "@/components/phone-input"
 
 export default function ContactPage() {
   const { t, language } = useLanguage()
+  const searchParams = useSearchParams()
   const [isLoading, setIsLoading] = useState(false)
   const [selectedInterest, setSelectedInterest] = useState("")
   const [fullPhoneNumber, setFullPhoneNumber] = useState("")
@@ -22,6 +24,23 @@ export default function ContactPage() {
     type: "success" | "error" | null
     message: string
   }>({ type: null, message: "" })
+
+  // Handle URL tab parameter
+  useEffect(() => {
+    const tab = searchParams.get("tab")
+    if (tab) {
+      const normalizedTab = tab.toLowerCase()
+      if (normalizedTab === "masterclass") {
+        setSelectedInterest("masterclass")
+      } else if (normalizedTab === "seminaire" || normalizedTab === "seminaires") {
+        setSelectedInterest("seminaires")
+      } else if (normalizedTab === "coaching") {
+        setSelectedInterest("coaching")
+      } else if (normalizedTab === "programme") {
+        setSelectedInterest("programme")
+      }
+    }
+  }, [searchParams])
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -39,7 +58,7 @@ export default function ContactPage() {
       interest: selectedInterest,
       situation: formData.get("situation"),
       message: formData.get("message"),
-      language: language, // Envoyer la langue actuelle pour l'email
+      language: language, 
     }
 
     try {

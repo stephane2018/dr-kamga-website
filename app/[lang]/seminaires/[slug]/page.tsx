@@ -262,7 +262,7 @@ export default function SeminarDetailPage({ params }: { params: { slug: string }
           </div>
 
           <div className="space-y-6">
-            {seminar.program.map((day: any, index: number) => (
+            {seminar?.program?.map((day: any, index: number) => (
               <div key={index} className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
                 <div className="flex items-center gap-4 mb-6">
                   <div className="w-16 h-16 bg-primary rounded-2xl flex items-center justify-center">

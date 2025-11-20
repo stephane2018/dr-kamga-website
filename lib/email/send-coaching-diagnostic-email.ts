@@ -253,12 +253,9 @@ export async function sendCoachingDiagnosticEmails(
 
     const transporter = nodemailer.createTransport(transportOptions)
 
-    // Vérifier la connexion SMTP
     await transporter.verify()
 
     const lang = data.language || 'fr'
-
-    // Envoyer les deux emails en parallèle
     await Promise.all([
       sendUserConfirmationEmail(transporter, data, lang),
       sendTeamNotificationEmail(transporter, data, lang),

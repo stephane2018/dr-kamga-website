@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { sendNewsletterSubscriptionEmails, NewsletterSubscriptionData } from "@/lib/email/send-newsletter-subscription-email"
+import { prisma } from "@/lib/prisma"
 
 export async function POST(request: NextRequest) {
   try {
@@ -20,8 +21,39 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    const email = body.email.trim().toLowerCase()
+    const language = body.language || "fr"
+
+    // Check if email already exists
+    const existingSubscription = await prisma.newsletter.findUnique({
+      where: { email },
+    })
+
+    if (existingSubscription) {
+      if (existingSubscription.isActive) {
+        return NextResponse.json(
+          { success: false, error: "Cette adresse email est déjà inscrite à la newsletter" },
+          { status: 400 }
+        )
+      } else {
+        // Reactivate subscription
+        await prisma.newsletter.update({
+          where: { email },
+          data: { isActive: true, language },
+        })
+      }
+    } else {
+      // Create new subscription
+      await prisma.newsletter.create({
+        data: {
+          email,
+          language,
+        },
+      })
+    }
+
     const subscriptionData: NewsletterSubscriptionData = {
-      email: body.email.trim().toLowerCase(),
+      email,
     }
 
     const result = await sendNewsletterSubscriptionEmails(subscriptionData)

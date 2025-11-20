@@ -10,6 +10,8 @@ import { CookieConsent } from "@/components/cookie-consent"
 import { GA } from "@/components/google-analytics"
 import { LanguageProvider } from "@/locales/LanguageProvider"
 import { getMetadata } from "@/locales/metadata"
+import { SessionProvider } from "next-auth/react"
+import { Toaster } from "sonner"
 import "./globals.css"
 
 // This will be overridden by generateMetadata in [lang]/layout.tsx for specific language routes
@@ -29,13 +31,16 @@ export default function RootLayout({
         <StructuredData type="course" />
       </head>
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
-        <LanguageProvider>
-          <Suspense fallback={null}>{children}</Suspense>
-          <NewsletterModal />
-          <CookieConsent />
-          <Analytics />
-          <GA />
-        </LanguageProvider>
+        <SessionProvider>
+          <LanguageProvider>
+            <Suspense fallback={null}>{children}</Suspense>
+            <NewsletterModal />
+            <CookieConsent />
+            <Analytics />
+            <GA />
+            <Toaster />
+          </LanguageProvider>
+        </SessionProvider>
       </body>
     </html>
   )
