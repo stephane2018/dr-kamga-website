@@ -13,7 +13,7 @@ export function CoachingHeroSection() {
   const { t } = useLanguage()
   
   return (
-    <section className="relative bg-gradient-to-br from-amber-900 via-amber-800 to-yellow-800 py-32 overflow-hidden">
+    <section className="relative bg-gradient-to-br from-[#222C57] via-[#222C57] to-[#1a2242] py-32 overflow-hidden">
       {/* Animated background elements */}
       <div className="absolute inset-0 opacity-10">
         <svg className="absolute top-14 left-14 w-32 h-32 animate-pulse" viewBox="0 0 100 100" fill="none">
@@ -37,8 +37,8 @@ export function CoachingHeroSection() {
 
       {/* Gradient overlays */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-yellow-500/20 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-amber-600/20 rounded-full blur-3xl"></div>
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#FDC50A]/20 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#90C14E]/20 rounded-full blur-3xl"></div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto">
@@ -52,7 +52,7 @@ export function CoachingHeroSection() {
           {/* Main heading */}
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 text-center text-white leading-tight">
             {t.coaching.hero.title}
-            <span className="block text-3xl md:text-4xl lg:text-5xl mt-4 text-yellow-200/90 font-light">
+            <span className="block text-3xl md:text-4xl lg:text-5xl mt-4 text-[#FDC50A] font-light">
               {t.coaching.hero.subtitle}
             </span>
           </h1>
@@ -84,7 +84,7 @@ export function CoachingHeroSection() {
             <Link href="#contact" >
               <Button
               size="lg"
-              className="bg-white text-amber-900 hover:bg-yellow-50 text-lg px-8 py-6 rounded-xl shadow-2xl font-bold"
+              className="bg-[#FDC50A] text-[#222C57] hover:bg-[#FDC50A]/90 text-lg px-8 py-6 rounded-xl shadow-2xl font-bold"
               asChild
               
             >

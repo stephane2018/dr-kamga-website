@@ -38,7 +38,12 @@ export async function sendContactEmail(data: ContactFormData): Promise<{ success
     const transporter = nodemailer.createTransport(transportOptions)
 
     // Vérifier la connexion SMTP
-    await transporter.verify()
+    try {
+      await transporter.verify()
+      console.log("SMTP connection verified for contact email")
+    } catch (verifyError) {
+      console.warn("SMTP verification warning (continuing anyway):", verifyError)
+    }
 
     // Construire le contenu de l'email
     const htmlContent = `
@@ -47,21 +52,21 @@ export async function sendContactEmail(data: ContactFormData): Promise<{ success
         <head>
           <meta charset="utf-8">
           <style>
-            body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; background-color: #f3f4f6; }
+            body { font-family: 'Bricolage Grotesque', Arial, sans-serif; line-height: 1.6; color: #333; background-color: #f3f4f6; }
             .container { max-width: 650px; margin: 0 auto; padding: 20px; }
             .alert { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 15px 20px; margin-bottom: 20px; border-radius: 5px; }
             .alert-title { font-size: 18px; font-weight: bold; color: #92400e; margin: 0 0 5px 0; display: flex; align-items: center; }
             .alert-text { margin: 0; color: #78350f; font-size: 14px; }
-            .header { background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); color: white; padding: 30px; border-radius: 10px 10px 0 0; text-align: center; }
+            .header { background: linear-gradient(135deg, #222C57 0%, #1a2242 100%); color: white; padding: 30px; border-radius: 10px 10px 0 0; text-align: center; }
             .content { background: white; padding: 30px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb; }
             .field { margin-bottom: 20px; }
-            .label { font-weight: bold; color: #4f46e5; display: block; margin-bottom: 5px; font-size: 13px; text-transform: uppercase; }
-            .value { background: #f9fafb; padding: 12px 15px; border-radius: 5px; border-left: 3px solid #4f46e5; font-size: 15px; }
-            .footer { background: #1f2937; color: white; padding: 20px; text-align: center; border-radius: 0 0 10px 10px; }
-            .action-btn { display: inline-block; background: #4f46e5; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; margin: 10px 5px; font-weight: bold; }
-            .quick-info { background: #e0e7ff; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+            .label { font-weight: bold; color: #222C57; display: block; margin-bottom: 5px; font-size: 13px; text-transform: uppercase; }
+            .value { background: #f9fafb; padding: 12px 15px; border-radius: 5px; border-left: 3px solid #222C57; font-size: 15px; }
+            .footer { background: #222C57; color: white; padding: 20px; text-align: center; border-radius: 0 0 10px 10px; }
+            .action-btn { display: inline-block; background: #FDC50A; color: #222C57; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; margin: 10px 5px; font-weight: bold; }
+            .quick-info { background: #222C57/10; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
             .quick-info-row { display: flex; justify-content: space-between; margin-bottom: 8px; }
-            .quick-info-label { font-weight: bold; color: #4338ca; }
+            .quick-info-label { font-weight: bold; color: #222C57; }
           </style>
         </head>
         <body>
@@ -89,17 +94,17 @@ export async function sendContactEmail(data: ContactFormData): Promise<{ success
                 </div>
                 <div class="quick-info-row">
                   <span class="quick-info-label">${t.contact.email}</span>
-                  <span><a href="mailto:${data.email}" style="color: #4f46e5;">${data.email}</a></span>
+                  <span><a href="mailto:${data.email}" style="color: #222C57;">${data.email}</a></span>
                 </div>
                 <div class="quick-info-row">
                   <span class="quick-info-label">${t.contact.phone}</span>
-                  <span><a href="tel:${data.phone}" style="color: #4f46e5;">${data.phone}</a></span>
+                  <span><a href="tel:${data.phone}" style="color: #222C57;">${data.phone}</a></span>
                 </div>
               </div>
 
               <div style="text-align: center; margin: 20px 0;">
                 <a href="mailto:${data.email}" class="action-btn">${t.contact.replyByEmail}</a>
-                <a href="tel:${data.phone}" class="action-btn" style="background: #7c3aed;">${t.contact.call}</a>
+                <a href="tel:${data.phone}" class="action-btn" style="background: #90C14E; color: #222C57;">${t.contact.call}</a>
               </div>
 
               <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 30px 0;">
@@ -188,6 +193,7 @@ ${t.contact.actionRequiredFooter} ${t.contact.responseTime}
     `
 
     // Envoyer l'email
+    console.log(`Sending contact email to admin: ${emailConfig.to}`)
     const info = await transporter.sendMail({
       from: `"${emailConfig.from.name}" <${emailConfig.from.email}>`,
       to: emailConfig.to,
@@ -195,9 +201,16 @@ ${t.contact.actionRequiredFooter} ${t.contact.responseTime}
       subject: `${t.contact.subject} - ${data.firstName} ${data.lastName} - ${getInterestLabel(data.interest, lang)}`,
       text: textContent,
       html: htmlContent,
+      headers: {
+        'X-Priority': '2',
+        'X-Mailer': 'Nodemailer',
+        'X-MSMail-Priority': 'High',
+        'X-Entity-Ref-ID': `contact-${Date.now()}`,
+        'Importance': 'high',
+      },
     })
 
-    console.log("Email envoyé avec succès:", info.messageId)
+    console.log("Contact email sent successfully to admin. Message ID:", info.messageId)
     return { success: true }
 
   } catch (error) {

@@ -7,7 +7,7 @@ export function SeminairesHeroSection() {
   const { t } = useLanguage()
   
   return (
-    <section className="relative bg-gradient-to-br from-amber-900 via-amber-800 to-yellow-800 py-20 overflow-hidden">
+    <section className="relative bg-gradient-to-br from-[#222C57] via-[#222C57] to-[#1a2242] py-20 overflow-hidden">
       <div className="absolute inset-0 opacity-10">
         <svg className="absolute top-12 left-12 w-30 h-30" viewBox="0 0 100 100" fill="none">
           <rect x="20" y="20" width="60" height="60" stroke="currentColor" strokeWidth="2" fill="none" rx="12" />

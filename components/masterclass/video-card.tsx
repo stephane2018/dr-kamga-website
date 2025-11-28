@@ -34,7 +34,7 @@ export function VideoCard({
   return (
     <div className="group shadow-lg hover:shadow-lg transition-shadow border-0 relative bg-white rounded-lg overflow-hidden">
       {isComingSoon && comingSoon && (
-        <Badge className="absolute top-4 right-4 z-10 bg-yellow-500 hover:bg-yellow-600 text-white">
+        <Badge className="absolute top-4 right-4 z-10 bg-[#FDC50A] hover:bg-[#FDC50A]/90 text-[#222C57]">
           {comingSoon}
         </Badge>
       )}

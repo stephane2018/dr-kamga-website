@@ -125,7 +125,8 @@ export function Footer() {
         </div>
 
         <div className="border-t border-border mt-8 pt-8 text-center text-muted-foreground">
-          <p>&copy; 2025 Cabinet DAB. {t.footer.copyright}</p>
+          <p>&copy; 2025 Cabinet DAB. {t.footer.copyright}</p> 
+          <p>powered by <a href="https://tyit-group.com/" target="_blank" rel="noopener noreferrer" className="text-red-600 hover:underline">TyIT Group 🇨🇦 </a></p>
         </div>
       </div>
     </footer>

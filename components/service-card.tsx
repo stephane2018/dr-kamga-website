@@ -79,7 +79,7 @@ export function ServiceCard({
       </div>
 
       <Button
-        className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-4 rounded-xl text-base shadow-md hover:shadow-lg transition-all"
+        className="w-full bg-gradient-to-r from-primary to-secondary text-white font-bold py-4 rounded-xl text-base shadow-md hover:shadow-lg transition-all"
         asChild
       >
         <Link href={ctaLink}>{ctaText} →</Link>

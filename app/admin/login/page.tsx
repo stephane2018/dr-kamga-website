@@ -52,7 +52,7 @@ export default function AdminLoginPage() {
         </div>
 
         {/* Login Card */}
-        <div className="bg-white rounded-3xl shadow-2xl p-8 border border-gray-100">
+        <div className="bg-white rounded-3xl shadow-2xl p-8 border border-border">
           <h2 className="text-2xl font-bold mb-6 text-center">Connexion</h2>
 
           <form onSubmit={handleSubmit} className="space-y-6">

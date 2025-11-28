@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from "next/server"
 
+// Force dynamic rendering for this route since it uses searchParams
+export const dynamic = 'force-dynamic'
+
 /**
  * API Route pour obtenir les URLs des fichiers
  *

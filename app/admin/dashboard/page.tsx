@@ -53,9 +53,9 @@ export default function AdminDashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-muted/30">
       {/* Header */}
-      <header className="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-10">
+      <header className="bg-white border-b border-border shadow-sm sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
@@ -133,14 +133,14 @@ export default function AdminDashboardPage() {
       </header>
 
       {/* Tabs Navigation */}
-      <div className="bg-white border-b border-gray-200">
+      <div className="bg-white border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex gap-2 overflow-x-auto">
             <button
               onClick={() => handleTabChange("masterclass")}
               className={`flex items-center gap-2 px-6 py-4 font-medium transition-colors border-b-2 whitespace-nowrap ${activeTab === "masterclass"
                 ? "border-primary text-primary"
-                : "border-transparent text-muted-foreground hover:text-foreground hover:border-gray-300"
+                : "border-transparent text-muted-foreground hover:text-foreground hover:border-border"
                 }`}
             >
               <Users className="h-5 w-5" />
@@ -150,7 +150,7 @@ export default function AdminDashboardPage() {
               onClick={() => handleTabChange("seminaires")}
               className={`flex items-center gap-2 px-6 py-4 font-medium transition-colors border-b-2 whitespace-nowrap ${activeTab === "seminaires"
                 ? "border-primary text-primary"
-                : "border-transparent text-muted-foreground hover:text-foreground hover:border-gray-300"
+                : "border-transparent text-muted-foreground hover:text-foreground hover:border-border"
                 }`}
             >
               <Calendar className="h-5 w-5" />
@@ -160,7 +160,7 @@ export default function AdminDashboardPage() {
               onClick={() => handleTabChange("appointments")}
               className={`flex items-center gap-2 px-6 py-4 font-medium transition-colors border-b-2 whitespace-nowrap ${activeTab === "appointments"
                 ? "border-primary text-primary"
-                : "border-transparent text-muted-foreground hover:text-foreground hover:border-gray-300"
+                : "border-transparent text-muted-foreground hover:text-foreground hover:border-border"
                 }`}
             >
               <MessageSquare className="h-5 w-5" />
@@ -170,7 +170,7 @@ export default function AdminDashboardPage() {
               onClick={() => handleTabChange("newsletter")}
               className={`flex items-center gap-2 px-6 py-4 font-medium transition-colors border-b-2 whitespace-nowrap ${activeTab === "newsletter"
                 ? "border-primary text-primary"
-                : "border-transparent text-muted-foreground hover:text-foreground hover:border-gray-300"
+                : "border-transparent text-muted-foreground hover:text-foreground hover:border-border"
                 }`}
             >
               <Mail className="h-5 w-5" />
@@ -181,7 +181,7 @@ export default function AdminDashboardPage() {
                 onClick={() => handleTabChange("axis-cards")}
                 className={`flex items-center gap-2 px-6 py-4 font-medium transition-colors border-b-2 whitespace-nowrap ${activeTab === "axis-cards"
                   ? "border-primary text-primary"
-                  : "border-transparent text-muted-foreground hover:text-foreground hover:border-gray-300"
+                  : "border-transparent text-muted-foreground hover:text-foreground hover:border-border"
                   }`}
               >
                 <Layers className="h-5 w-5" />
@@ -193,7 +193,7 @@ export default function AdminDashboardPage() {
                 onClick={() => handleTabChange("users")}
                 className={`flex items-center gap-2 px-6 py-4 font-medium transition-colors border-b-2 whitespace-nowrap ${activeTab === "users"
                   ? "border-primary text-primary"
-                  : "border-transparent text-muted-foreground hover:text-foreground hover:border-gray-300"
+                  : "border-transparent text-muted-foreground hover:text-foreground hover:border-border"
                   }`}
               >
                 <UserCog className="h-5 w-5" />

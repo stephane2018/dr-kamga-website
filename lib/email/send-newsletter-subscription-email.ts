@@ -25,13 +25,13 @@ async function sendUserConfirmationEmail(
         <style>
           body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; background-color: #f3f4f6; margin: 0; padding: 0; }
           .container { max-width: 650px; margin: 0 auto; padding: 20px; }
-          .header { background: linear-gradient(135deg, #5d4037 0%, #6d4c41 100%); color: white; padding: 40px 30px; border-radius: 10px 10px 0 0; text-align: center; }
+          .header { background: linear-gradient(135deg, #222C57 0%, #1a2242 100%); color: white; padding: 40px 30px; border-radius: 10px 10px 0 0; text-align: center; }
           .content { background: white; padding: 30px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb; }
-          .footer { background: #3e2723; color: white; padding: 20px; text-align: center; border-radius: 0 0 10px 10px; font-size: 12px; }
-          .button { display: inline-block; background: #5d4037; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; margin: 20px 0; font-weight: bold; }
-          .benefits { background: #fbe9e7; padding: 20px; border-radius: 8px; margin: 20px 0; }
+          .footer { background: #222C57; color: white; padding: 20px; text-align: center; border-radius: 0 0 10px 10px; font-size: 12px; }
+          .button { display: inline-block; background: #222C57; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; margin: 20px 0; font-weight: bold; }
+          .benefits { background: #FDC50A20; padding: 20px; border-radius: 8px; margin: 20px 0; }
           .benefit-item { display: flex; align-items: start; gap: 12px; margin-bottom: 12px; }
-          .benefit-dot { width: 8px; height: 8px; background: #5d4037; border-radius: 50%; margin-top: 6px; flex-shrink: 0; }
+          .benefit-dot { width: 8px; height: 8px; background: #222C57; border-radius: 50%; margin-top: 6px; flex-shrink: 0; }
           .unsubscribe { margin-top: 15px; font-size: 11px; color: #9ca3af; }
           .unsubscribe a { color: #9ca3af; text-decoration: underline; }
         </style>
@@ -51,7 +51,7 @@ async function sendUserConfirmationEmail(
             </p>
 
             <div class="benefits">
-              <h3 style="margin: 0 0 15px 0; color: #5d4037; font-size: 18px;">${t.newsletter.user.whatYouReceive}</h3>
+              <h3 style="margin: 0 0 15px 0; color: #222C57; font-size: 18px;">${t.newsletter.user.whatYouReceive}</h3>
 
               <div class="benefit-item">
                 <div class="benefit-dot"></div>
@@ -144,9 +144,17 @@ Pour vous désabonner : ${process.env.NEXT_PUBLIC_SITE_URL || 'https://cabinetda
   await transporter.sendMail({
     from: `"${emailConfig.from.name}" <${emailConfig.from.email}>`,
     to: email,
+    replyTo: `"${emailConfig.from.name}" <${emailConfig.from.email}>`,
     subject: t.newsletter.user.subject,
     text: textContent,
     html: htmlContent,
+    headers: {
+      'X-Priority': '3',
+      'X-Mailer': 'Nodemailer',
+      'X-Entity-Ref-ID': `newsletter-user-${Date.now()}`,
+      'List-Unsubscribe': `<${process.env.NEXT_PUBLIC_SITE_URL || 'https://cabinetdab.com'}/unsubscribe?email=${encodeURIComponent(email)}>`,
+      'Precedence': 'bulk',
+    },
   })
 }
 
@@ -167,20 +175,20 @@ async function sendTeamNotificationEmail(
         <style>
           body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; background-color: #f3f4f6; }
           .container { max-width: 650px; margin: 0 auto; padding: 20px; }
-          .alert { background: #fbe9e7; border-left: 4px solid #5d4037; padding: 15px 20px; margin-bottom: 20px; border-radius: 5px; }
-          .alert-title { font-size: 18px; font-weight: bold; color: #3e2723; margin: 0 0 5px 0; }
-          .header { background: linear-gradient(135deg, #5d4037 0%, #6d4c41 100%); color: white; padding: 30px; border-radius: 10px 10px 0 0; text-align: center; }
+          .alert { background: #FDC50A20; border-left: 4px solid #222C57; padding: 15px 20px; margin-bottom: 20px; border-radius: 5px; }
+          .alert-title { font-size: 18px; font-weight: bold; color: #222C57; margin: 0 0 5px 0; }
+          .header { background: linear-gradient(135deg, #222C57 0%, #1a2242 100%); color: white; padding: 30px; border-radius: 10px 10px 0 0; text-align: center; }
           .content { background: white; padding: 30px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb; }
-          .info-box { background: #fbe9e7; padding: 20px; border-radius: 8px; margin: 20px 0; border: 1px solid #bcaaa4; }
-          .email-value { font-size: 18px; color: #5d4037; font-weight: bold; word-break: break-all; }
-          .footer { background: #3e2723; color: white; padding: 20px; text-align: center; border-radius: 0 0 10px 10px; }
+          .info-box { background: #FDC50A20; padding: 20px; border-radius: 8px; margin: 20px 0; border: 1px solid #bcaaa4; }
+          .email-value { font-size: 18px; color: #222C57; font-weight: bold; word-break: break-all; }
+          .footer { background: #222C57; color: white; padding: 20px; text-align: center; border-radius: 0 0 10px 10px; }
         </style>
       </head>
       <body>
         <div class="container">
           <div class="alert">
             <div class="alert-title">${t.newsletter.team.newSubscription}</div>
-            <p style="margin: 5px 0 0 0; color: #3e2723; font-size: 14px;">Un nouvel abonné s'est inscrit à la newsletter.</p>
+            <p style="margin: 5px 0 0 0; color: #222C57; font-size: 14px;">Un nouvel abonné s'est inscrit à la newsletter.</p>
           </div>
 
           <div class="header">
@@ -194,7 +202,7 @@ async function sendTeamNotificationEmail(
                 ${t.newsletter.team.emailSubscriber}
               </p>
               <div class="email-value">
-                <a href="mailto:${email}" style="color: #5d4037; text-decoration: none;">${email}</a>
+                <a href="mailto:${email}" style="color: #222C57; text-decoration: none;">${email}</a>
               </div>
             </div>
 
@@ -259,9 +267,15 @@ Cabinet DAB - Notification automatique
   await transporter.sendMail({
     from: `"${emailConfig.from.name}" <${emailConfig.from.email}>`,
     to: emailConfig.to,
+    replyTo: email,
     subject: `${t.newsletter.team.subject} - ${email}`,
     text: textContent,
     html: htmlContent,
+    headers: {
+      'X-Priority': '3',
+      'X-Mailer': 'Nodemailer',
+      'X-Entity-Ref-ID': `newsletter-team-${Date.now()}`,
+    },
   })
 }
 

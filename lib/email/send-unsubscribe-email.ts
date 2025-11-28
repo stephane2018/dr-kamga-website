@@ -39,15 +39,15 @@ export async function sendUnsubscribeNotification(
         <head>
           <meta charset="utf-8">
           <style>
-            body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; background-color: #f3f4f6; }
+            body { font-family: 'Bricolage Grotesque', Arial, sans-serif; line-height: 1.6; color: #333; background-color: #f3f4f6; }
             .container { max-width: 650px; margin: 0 auto; padding: 20px; }
             .alert { background: #fee; border-left: 4px solid #dc2626; padding: 15px 20px; margin-bottom: 20px; border-radius: 5px; }
             .alert-title { font-size: 18px; font-weight: bold; color: #991b1b; margin: 0 0 5px 0; }
-            .header { background: linear-gradient(135deg, #5d4037 0%, #6d4c41 100%); color: white; padding: 30px; border-radius: 10px 10px 0 0; text-align: center; }
+            .header { background: linear-gradient(135deg, #222C57 0%, #1a2242 100%); color: white; padding: 30px; border-radius: 10px 10px 0 0; text-align: center; }
             .content { background: white; padding: 30px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb; }
             .info-box { background: #fef2f2; padding: 20px; border-radius: 8px; margin: 20px 0; border: 1px solid #fecaca; }
             .email-value { font-size: 18px; color: #dc2626; font-weight: bold; word-break: break-all; }
-            .footer { background: #3e2723; color: white; padding: 20px; text-align: center; border-radius: 0 0 10px 10px; }
+            .footer { background: #222C57; color: white; padding: 20px; text-align: center; border-radius: 0 0 10px 10px; }
           </style>
         </head>
         <body>
@@ -134,9 +134,16 @@ Cabinet DAB - Notification automatique
     await transporter.sendMail({
       from: `"${emailConfig.from.name}" <${emailConfig.from.email}>`,
       to: emailConfig.to,
+      replyTo: data.email,
       subject: `${t.unsubscribe.subject} - ${data.email}`,
       text: textContent,
       html: htmlContent,
+      headers: {
+        'X-Priority': '2',
+        'X-Mailer': 'Nodemailer',
+        'X-Entity-Ref-ID': `unsubscribe-${Date.now()}`,
+        'Importance': 'high',
+      },
     })
 
     console.log("Email de désinscription envoyé avec succès pour:", data.email)

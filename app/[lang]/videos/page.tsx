@@ -11,7 +11,7 @@ export default function VideosPage() {
     <div className="min-h-screen">
       <Navigation />
 
-      <section className="relative bg-gradient-to-br from-amber-900 via-amber-800 to-yellow-800 py-20 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-[#222C57] via-[#222C57] to-[#1a2242] py-20 overflow-hidden">
         {/* Light SVG motifs */}
         <div className="absolute inset-0 opacity-10">
           <svg className="absolute top-10 left-10 w-24 h-24" viewBox="0 0 100 100" fill="none">

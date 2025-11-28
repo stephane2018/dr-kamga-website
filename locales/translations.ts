@@ -1153,7 +1153,7 @@ export const translations: Record<Language, Translations> = {
             'Plan d\'action initial',
           ],
           slotsTitle: 'Créneaux disponibles cette semaine:',
-          cta: 'demande de rendez vous téléphonique',
+          cta: 'Demandez un rendez-vous téléphonique',
         },
         premium: {
           badge: 'PREMIUM',
@@ -1168,7 +1168,7 @@ export const translations: Record<Language, Translations> = {
             'Accès aux ressources exclusives',
           ],
           programDuration: 'Programme de 3 mois',
-          cta: 'Demander un devis personnalisé',
+          cta: 'Demandez un devis personnalisé',
         },
         howItWorks: {
           title: 'Comment ça marche ?',

@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-import { auth } from "@/lib/auth"
 
 const locales = ['fr', 'en']
 const defaultLocale = 'fr'
@@ -44,16 +43,18 @@ function getLocale(request: NextRequest): string {
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
 
-  // Handle authentication for admin routes
+  // Handle authentication for admin routes using session cookie check
   if (pathname.startsWith('/admin')) {
-    const session = await auth()
     const isOnLoginPage = pathname === '/admin/login'
+    // Check for NextAuth session token (works with both JWT and database sessions)
+    const sessionToken = request.cookies.get('authjs.session-token')?.value ||
+                        request.cookies.get('__Secure-authjs.session-token')?.value
 
-    if (!session && !isOnLoginPage) {
+    if (!sessionToken && !isOnLoginPage) {
       return NextResponse.redirect(new URL('/admin/login', request.url))
     }
 
-    if (session && isOnLoginPage) {
+    if (sessionToken && isOnLoginPage) {
       return NextResponse.redirect(new URL('/admin/dashboard', request.url))
     }
 

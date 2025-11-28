@@ -25,7 +25,14 @@ export async function sendWelcomeEmail(data: WelcomeEmailData) {
     const mailOptions = {
       from: `"Cabinet DAB" <${process.env.SMTP_FROM}>`,
       to: data.email,
+      replyTo: `"Cabinet DAB" <${process.env.SMTP_FROM}>`,
       subject: "Bienvenue - Vos identifiants d'accès",
+      headers: {
+        'X-Priority': '1',
+        'X-Mailer': 'Nodemailer',
+        'X-Entity-Ref-ID': `welcome-${Date.now()}`,
+        'Importance': 'high',
+      },
       html: `
         <!DOCTYPE html>
         <html>
@@ -33,14 +40,14 @@ export async function sendWelcomeEmail(data: WelcomeEmailData) {
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
         </head>
-        <body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f5f5f5;">
+        <body style="margin: 0; padding: 0; font-family: 'Bricolage Grotesque', Arial, sans-serif; background-color: #f5f5f5;">
           <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
             <tr>
               <td style="padding: 40px 20px;">
                 <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
                   <!-- Header -->
                   <tr>
-                    <td style="padding: 40px 40px 20px; text-align: center; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 8px 8px 0 0;">
+                    <td style="padding: 40px 40px 20px; text-align: center; background: linear-gradient(135deg, #222C57 0%, #1a2242 100%); border-radius: 8px 8px 0 0;">
                       <h1 style="margin: 0; color: #ffffff; font-size: 28px; font-weight: bold;">Bienvenue !</h1>
                     </td>
                   </tr>
@@ -57,7 +64,7 @@ export async function sendWelcomeEmail(data: WelcomeEmailData) {
                       </p>
 
                       <!-- Credentials Box -->
-                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: 30px 0; background-color: #f8f9fa; border-radius: 6px; border-left: 4px solid #667eea;">
+                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: 30px 0; background-color: #f8f9fa; border-radius: 6px; border-left: 4px solid #222C57;">
                         <tr>
                           <td style="padding: 20px;">
                             <p style="margin: 0 0 15px; color: #333333; font-size: 14px; font-weight: bold;">
@@ -80,7 +87,7 @@ export async function sendWelcomeEmail(data: WelcomeEmailData) {
                       <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: 30px 0;">
                         <tr>
                           <td align="center">
-                            <a href="${loginUrl}" style="display: inline-block; padding: 14px 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #ffffff; text-decoration: none; border-radius: 6px; font-size: 16px; font-weight: bold;">
+                            <a href="${loginUrl}" style="display: inline-block; padding: 14px 40px; background: #FDC50A; color: #222C57; text-decoration: none; border-radius: 6px; font-size: 16px; font-weight: bold;">
                               Se connecter maintenant
                             </a>
                           </td>

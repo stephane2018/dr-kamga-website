@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { sendContactEmail, ContactFormData } from "@/lib/email/send-contact-email"
+import { sendContactConfirmationEmail } from "@/lib/email/send-contact-confirmation-email"
 import { prisma } from "@/lib/prisma"
 
 /**
@@ -11,6 +12,26 @@ export async function POST(request: NextRequest) {
   try {
     // Récupérer les données du formulaire
     const body = await request.json()
+
+    // Déterminer la langue : utiliser celle du formulaire, sinon déterminer depuis Accept-Language header
+    let detectedLanguage = body.language || 'fr'
+    
+    // Si pas de langue fournie, essayer de la détecter depuis Accept-Language header
+    if (!body.language) {
+      const acceptLanguage = request.headers.get('accept-language') || ''
+      if (acceptLanguage.includes('en')) {
+        detectedLanguage = 'en'
+      } else if (acceptLanguage.includes('fr')) {
+        detectedLanguage = 'fr'
+      }
+    }
+    
+    // Valider que la langue est supportée
+    if (!['fr', 'en'].includes(detectedLanguage)) {
+      detectedLanguage = 'fr'
+    }
+    
+    console.log(`Contact form language detected: ${detectedLanguage} (from: ${body.language ? 'form' : 'Accept-Language header'})`)
 
     // Validation basique des champs requis
     const requiredFields = ["firstName", "lastName", "email", "phone", "interest", "message"]
@@ -41,7 +62,7 @@ export async function POST(request: NextRequest) {
       interest: body.interest,
       situation: body.situation?.trim() || "",
       message: body.message.trim(),
-      language: body.language || 'fr', // Langue de l'email (fr ou en)
+      language: detectedLanguage as 'fr' | 'en', // Langue détectée
     }
 
     // Save appointment to database
@@ -62,6 +83,20 @@ export async function POST(request: NextRequest) {
     const result = await sendContactEmail(formData)
 
     if (result.success) {
+      try {
+        const confirmationResult = await sendContactConfirmationEmail({
+          firstName: formData.firstName,
+          email: formData.email,
+          language: formData.language,
+        })
+        
+        if (!confirmationResult.success) {
+          console.error("Erreur lors de l'envoi de l'email de confirmation:", confirmationResult.error)
+        }
+      } catch (confirmationError) {
+        console.error("Exception lors de l'envoi de l'email de confirmation:", confirmationError)
+      }
+
       return NextResponse.json(
         { success: true, message: "Votre message a été envoyé avec succès. Nous vous répondrons sous 24h." },
         { status: 200 }

@@ -27,13 +27,13 @@ async function sendUserConfirmationEmail(
       <head>
         <meta charset="utf-8">
         <style>
-          body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; background-color: #f3f4f6; margin: 0; padding: 0; }
+          body { font-family: 'Bricolage Grotesque', Arial, sans-serif; line-height: 1.6; color: #333; background-color: #f3f4f6; margin: 0; padding: 0; }
           .container { max-width: 650px; margin: 0 auto; padding: 20px; }
-          .header { background: linear-gradient(135deg, #5d4037 0%, #6d4c41 100%); color: white; padding: 40px 30px; border-radius: 10px 10px 0 0; text-align: center; }
+          .header { background: linear-gradient(135deg, #222C57 0%, #1a2242 100%); color: white; padding: 40px 30px; border-radius: 10px 10px 0 0; text-align: center; }
           .content { background: white; padding: 30px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb; }
-          .footer { background: #3e2723; color: white; padding: 20px; text-align: center; border-radius: 0 0 10px 10px; font-size: 12px; }
-          .info-box { background: #fbe9e7; padding: 20px; border-radius: 8px; margin: 20px 0; }
-          .highlight { color: #5d4037; font-weight: bold; }
+          .footer { background: #222C57; color: white; padding: 20px; text-align: center; border-radius: 0 0 10px 10px; font-size: 12px; }
+          .info-box { background: #FDC50A20; padding: 20px; border-radius: 8px; margin: 20px 0; }
+          .highlight { color: #222C57; font-weight: bold; }
         </style>
       </head>
       <body>
@@ -51,7 +51,7 @@ async function sendUserConfirmationEmail(
             </p>
 
             <div class="info-box">
-              <h3 style="margin: 0 0 15px 0; color: #5d4037; font-size: 18px;">${txt.nextSteps}</h3>
+              <h3 style="margin: 0 0 15px 0; color: #222C57; font-size: 18px;">${txt.nextSteps}</h3>
               <p style="margin: 10px 0; font-size: 15px;">
                 <span class="highlight">1.</span> ${txt.step1}
               </p>
@@ -105,9 +105,17 @@ ${txt.signature}
   await transporter.sendMail({
     from: `"${emailConfig.from.name}" <${emailConfig.from.email}>`,
     to: data.email,
+    replyTo: `"${emailConfig.from.name}" <${emailConfig.from.email}>`,
     subject: txt.subject,
     text: textContent,
     html: htmlContent,
+    headers: {
+      'X-Priority': '3',
+      'X-Mailer': 'Nodemailer',
+      'X-Entity-Ref-ID': `coaching-diagnostic-user-${Date.now()}`,
+      'List-Unsubscribe': `<${process.env.NEXT_PUBLIC_SITE_URL || 'https://cabinetdab.com'}/unsubscribe?email=${encodeURIComponent(data.email)}>`,
+      'Precedence': 'bulk',
+    },
   })
 }
 
@@ -130,14 +138,14 @@ async function sendTeamNotificationEmail(
         <style>
           body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; background-color: #f3f4f6; }
           .container { max-width: 650px; margin: 0 auto; padding: 20px; }
-          .alert { background: #fbe9e7; border-left: 4px solid #5d4037; padding: 15px 20px; margin-bottom: 20px; border-radius: 5px; }
+          .alert { background: #FDC50A20; border-left: 4px solid #222C57; padding: 15px 20px; margin-bottom: 20px; border-radius: 5px; }
           .alert-title { font-size: 18px; font-weight: bold; color: #3e2723; margin: 0 0 5px 0; }
-          .header { background: linear-gradient(135deg, #5d4037 0%, #6d4c41 100%); color: white; padding: 30px; border-radius: 10px 10px 0 0; text-align: center; }
+          .header { background: linear-gradient(135deg, #222C57 0%, #1a2242 100%); color: white; padding: 30px; border-radius: 10px 10px 0 0; text-align: center; }
           .content { background: white; padding: 30px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb; }
           .info-box { background: #fbe9e7; padding: 20px; border-radius: 8px; margin: 15px 0; border: 1px solid #bcaaa4; }
           .label { font-size: 12px; color: #6b7280; font-weight: bold; text-transform: uppercase; margin: 0 0 5px 0; }
-          .value { font-size: 16px; color: #5d4037; font-weight: bold; word-break: break-word; }
-          .footer { background: #3e2723; color: white; padding: 20px; text-align: center; border-radius: 0 0 10px 10px; }
+          .value { font-size: 16px; color: #222C57; font-weight: bold; word-break: break-word; }
+          .footer { background: #222C57; color: white; padding: 20px; text-align: center; border-radius: 0 0 10px 10px; }
         </style>
       </head>
       <body>
@@ -161,14 +169,14 @@ async function sendTeamNotificationEmail(
             <div class="info-box">
               <p class="label">${txt.emailLabel}</p>
               <div class="value">
-                <a href="mailto:${data.email}" style="color: #5d4037; text-decoration: none;">${data.email}</a>
+                <a href="mailto:${data.email}" style="color: #222C57; text-decoration: none;">${data.email}</a>
               </div>
             </div>
 
             <div class="info-box">
               <p class="label">${txt.phoneLabel}</p>
               <div class="value">
-                <a href="tel:${data.phone}" style="color: #5d4037; text-decoration: none;">${data.phone}</a>
+                <a href="tel:${data.phone}" style="color: #222C57; text-decoration: none;">${data.phone}</a>
               </div>
             </div>
 
@@ -227,9 +235,16 @@ ${txt.autoNotification}
   await transporter.sendMail({
     from: `"${emailConfig.from.name}" <${emailConfig.from.email}>`,
     to: emailConfig.to,
+    replyTo: data.email,
     subject: txt.subject,
     text: textContent,
     html: htmlContent,
+    headers: {
+      'X-Priority': '2',
+      'X-Mailer': 'Nodemailer',
+      'X-Entity-Ref-ID': `coaching-diagnostic-team-${Date.now()}`,
+      'Importance': 'high',
+    },
   })
 }
 

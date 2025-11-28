@@ -1,8 +1,8 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { GeistSans } from "geist/font/sans"
-import { GeistMono } from "geist/font/mono"
+import { Bricolage_Grotesque } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
+
 import { Suspense } from "react"
 import { StructuredData } from "@/components/structured-data"
 import { NewsletterModal } from "@/components/newsletter-modal"
@@ -13,6 +13,13 @@ import { getMetadata } from "@/locales/metadata"
 import { SessionProvider } from "next-auth/react"
 import { Toaster } from "sonner"
 import "./globals.css"
+
+const bricolageGrotesque = Bricolage_Grotesque({
+  subsets: ["latin"],
+  weight: ["300", "400", "600", "700"],
+  variable: "--font-bricolage",
+  display: "swap",
+})
 
 // This will be overridden by generateMetadata in [lang]/layout.tsx for specific language routes
 export const metadata: Metadata = getMetadata('fr')
@@ -30,7 +37,7 @@ export default function RootLayout({
         <StructuredData type="person" />
         <StructuredData type="course" />
       </head>
-      <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
+      <body className={`${bricolageGrotesque.className}`}>
         <SessionProvider>
           <LanguageProvider>
             <Suspense fallback={null}>{children}</Suspense>

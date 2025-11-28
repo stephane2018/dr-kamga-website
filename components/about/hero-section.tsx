@@ -49,7 +49,7 @@ export function AboutHeroSection() {
 
   if (loading) {
     return (
-      <section className="relative bg-gradient-to-br from-amber-900 via-amber-800 to-yellow-800 py-20 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-[#222C57] via-[#222C57] to-[#1a2242] py-20 overflow-hidden">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
@@ -74,7 +74,7 @@ export function AboutHeroSection() {
 
   if (error || !aboutContent) {
     return (
-      <section className="relative bg-gradient-to-br from-amber-900 via-amber-800 to-yellow-800 py-20 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-[#222C57] via-[#222C57] to-[#1a2242] py-20 overflow-hidden">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <p className="text-white">{error || 'Content not available'}</p>
@@ -87,7 +87,7 @@ export function AboutHeroSection() {
   const credentials = getLocalizedArray<string>(aboutContent, 'credentials', language)
 
   return (
-    <section className="relative bg-gradient-to-br from-amber-900 via-amber-800 to-yellow-800 py-20 overflow-hidden">
+    <section className="relative bg-gradient-to-br from-[#222C57] via-[#222C57] to-[#1a2242] py-20 overflow-hidden">
       <div className="absolute inset-0 opacity-10">
         <svg className="absolute top-10 left-10 w-24 h-24" viewBox="0 0 100 100" fill="none">
           <circle cx="50" cy="50" r="40" stroke="currentColor" strokeWidth="2" />

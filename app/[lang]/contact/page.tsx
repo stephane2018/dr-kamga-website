@@ -362,24 +362,24 @@ export default function ContactPage() {
                       </div>
                     </div>
 
-                    <div className="flex items-center space-x-4 p-3 sm:p-4 bg-gradient-to-r from-secondary/5 to-secondary/10 rounded-lg hover:shadow-md transition-all duration-300">
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-secondary/20 rounded-full flex items-center justify-center flex-shrink-0">
-                        <Phone className="h-5 w-5 sm:h-6 sm:w-6 text-secondary" />
+                    <div className="flex items-center space-x-4 p-3 sm:p-4 bg-gradient-to-r from-primary/5 to-primary/10 rounded-lg hover:shadow-md transition-all duration-300">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
+                        <Phone className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
                       </div>
                       <div className="flex-1">
                         <h4 className="font-bold text-gray-900 text-sm sm:text-base">{t.contactPage.contact.phone.title}</h4>
-                        <p className="text-xs sm:text-sm text-secondary font-medium">{t.contactPage.contact.phone.value}</p>
+                        <p className="text-xs sm:text-sm text-primary font-medium">{t.contactPage.contact.phone.value}</p>
                         <p className="text-xs text-gray-500">{t.contactPage.contact.phone.subtitle}</p>
                       </div>
                     </div>
 
-                    <div className="flex items-center space-x-4 p-3 sm:p-4 bg-gradient-to-r from-accent/5 to-accent/10 rounded-lg hover:shadow-md transition-all duration-300">
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-accent/20 rounded-full flex items-center justify-center flex-shrink-0">
-                        <MapPin className="h-5 w-5 sm:h-6 sm:w-6 text-accent" />
+                    <div className="flex items-center space-x-4 p-3 sm:p-4 bg-gradient-to-r from-primary/5 to-primary/10 rounded-lg hover:shadow-md transition-all duration-300">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
+                        <MapPin className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
                       </div>
                       <div className="flex-1">
                         <h4 className="font-bold text-gray-900 text-sm sm:text-base">{t.contactPage.contact.office.title}</h4>
-                        <p className="text-xs sm:text-sm text-accent font-medium">{t.contactPage.contact.office.value}</p>
+                        <p className="text-xs sm:text-sm text-primary font-medium">{t.contactPage.contact.office.value}</p>
                         <p className="text-xs text-gray-500">{t.contactPage.contact.office.subtitle}</p>
                       </div>
                     </div>
