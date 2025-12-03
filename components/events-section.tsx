@@ -2,7 +2,7 @@
 
 import React from "react"
 import Image from "next/image"
-import { Calendar, MapPin } from "lucide-react"
+import { Calendar, LogsIcon, MapPin, User } from "lucide-react"
 import { useLanguage } from "@/locales/LanguageProvider"
 import { EventImage, EventActions, EventNavigation, EventDetailsModal } from "./events"
 
@@ -19,6 +19,7 @@ type Event = {
   imageUrl: string
   socialMediaLink?: string
   socialMediaPlatform?: string
+  inscriptionLink?: string
   order: number
 }
 
@@ -151,6 +152,7 @@ export function EventsSection() {
   const prevEvent = () => {
     setCurrentIndex((prev) => (prev - 1 + events.length) % events.length)
   }
+  console.log("Current event:", events);
 
   return (
     <section className="relative overflow-hidden py-10 sm:py-12 md:py-16 lg:py-20">
@@ -322,7 +324,7 @@ export function EventsSection() {
             Communauté & événements
           </p>
           <h2 className="mt-2 text-xl sm:text-2xl md:text-3xl font-semibold tracking-tight text-slate-900 px-2">
-            Les rendez-vous avec la communauté Dr Kamga
+            Les rendez-vous avec la communauté Dr Kanga
           </h2>
           <p className="mx-auto mt-3 max-w-xl sm:max-w-2xl text-xs sm:text-sm md:text-base text-slate-600 leading-relaxed px-2">
             Lives, rencontres, ateliers prévention… Retrouvez ici les moments forts pour rester
@@ -361,6 +363,18 @@ export function EventsSection() {
                         {language === 'fr' ? currentEvent.locationFr : currentEvent.locationEn}
                       </span>
                     </div>
+                    <div className="flex items-start gap-2 sm:gap-2.5 md:gap-3 text-sky-50">
+                      <User className="mt-0.5 sm:mt-1 h-4 w-4 sm:h-5 sm:w-5 shrink-0 text-yellow-300" />
+                      <span className="text-xs sm:text-sm md:text-base font-medium leading-snug">
+                        {currentEvent.inscriptionLink ? (
+                          <a href={currentEvent.inscriptionLink} target="_blank" rel="noopener noreferrer" className="underline hover:no-underline">
+                            {language === 'fr' ? "Cliquez ici pour vous inscrire à l'événement" : "Click to register for the event"}
+                          </a>
+                        ) : (
+                          language === 'fr' ? currentEvent.locationFr : currentEvent.locationEn
+                        )}
+                      </span>
+                    </div>
                   </div>
 
                   {/* Description - Limited to 3 lines */}
@@ -379,6 +393,7 @@ export function EventsSection() {
                     }}
                     socialMediaLink={currentEvent.socialMediaLink}
                     socialMediaPlatform={currentEvent.socialMediaPlatform}
+                    // inscriptionLink={currentEvent.inscriptionLink}
                   />
 
                   {/* Navigation Dots */}

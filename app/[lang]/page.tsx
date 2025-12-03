@@ -19,7 +19,7 @@ export default function HomePage({ params }: { params: { lang: string } }) {
       <Navigation />
       <HeroSection />
       <ProgramSection />
-        <EventsSection />
+      <EventsSection />
       <ProgressPathSection />
       <WhyChooseSection />
       <CTASection />

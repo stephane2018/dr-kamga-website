@@ -71,6 +71,7 @@ export async function POST(request: NextRequest) {
         imageUrl: body.imageUrl.trim(),
         socialMediaLink: body.socialMediaLink?.trim() || null,
         socialMediaPlatform: body.socialMediaPlatform?.trim() || null,
+        inscriptionLink: body.inscriptionLink?.trim() || null,
         isActive: body.isActive !== undefined ? body.isActive : true,
         order: body.order !== undefined ? body.order : 0
       }

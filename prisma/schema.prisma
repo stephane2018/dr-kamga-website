@@ -162,6 +162,7 @@ model Event {
   imageUrl            String
   socialMediaLink     String?
   socialMediaPlatform String?  // "Facebook", "Instagram", "Facebook Event", etc.
+  inscriptionLink     String?  // Link to inscription/registration page
   status              String   @default("active") // "active", "archived", "outdated"
   isActive            Boolean  @default(true)
   order               Int      @default(0)

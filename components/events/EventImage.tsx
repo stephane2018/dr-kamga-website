@@ -20,7 +20,7 @@ export function EventImage({ imageUrl, title, type }: EventImageProps) {
         sizes="(max-width: 768px) 100vw, 50vw"
         priority
       />
-      <div className="absolute inset-0 bg-linear-to-t from-sky-900/80 via-sky-900/40 to-transparent md:bg-linear-to-r" />
+      <div className="absolute inset-0 bg-linear-to-t from-sky-900/10 via-sky-900/20 to-transparent md:bg-linear-to-r" />
 
       {/* Event Type Badge */}
       <div className="absolute left-3 sm:left-4 md:left-6 top-3 sm:top-4 md:top-6">

@@ -23,6 +23,7 @@ interface Event {
   imageUrl: string
   socialMediaLink?: string
   socialMediaPlatform?: string
+  inscriptionLink?: string
   status: string
   isActive: boolean
   order: number
@@ -52,6 +53,7 @@ export function EventsAdmin() {
     imageUrl: "",
     socialMediaLink: "",
     socialMediaPlatform: "",
+    inscriptionLink: "",
     order: 0
   })
 
@@ -128,6 +130,7 @@ export function EventsAdmin() {
       imageUrl: event.imageUrl,
       socialMediaLink: event.socialMediaLink || "",
       socialMediaPlatform: event.socialMediaPlatform || "",
+      inscriptionLink: event.inscriptionLink || "",
       order: event.order
     })
     setShowForm(true)
@@ -201,6 +204,7 @@ export function EventsAdmin() {
       imageUrl: "",
       socialMediaLink: "",
       socialMediaPlatform: "",
+      inscriptionLink: "",
       order: 0
     })
     setEditingId(null)
@@ -419,6 +423,16 @@ export function EventsAdmin() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
+                    <label className="block text-sm font-medium mb-2">Lien d'inscription</label>
+                    <Input
+                      value={formData.inscriptionLink}
+                      onChange={(e) => setFormData({ ...formData, inscriptionLink: e.target.value })}
+                      placeholder="https://example.com/inscription"
+                      disabled={submitting}
+                    />
+                  </div>
+
+                  <div>
                     <label className="block text-sm font-medium mb-2">Lien réseau social</label>
                     <Input
                       value={formData.socialMediaLink}
@@ -427,7 +441,9 @@ export function EventsAdmin() {
                       disabled={submitting}
                     />
                   </div>
+                </div>
 
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-medium mb-2">Plateforme</label>
                     <select

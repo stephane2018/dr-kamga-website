@@ -17,6 +17,7 @@ type Event = {
   imageUrl: string
   socialMediaLink?: string
   socialMediaPlatform?: string
+  inscriptionLink?: string
   order: number
 }
 
@@ -103,6 +104,17 @@ export function EventDetailsModal({
 
           {/* Actions */}
           <div className="flex flex-col p-4 sm:flex-row gap-3 rounded-b-2xl bg-white  border-slate-200 absolute bottom-0 left-0 right-0 w-full px-6 sm:px-8 md:px-10">
+            {event.inscriptionLink && (
+              <a
+                href={event.inscriptionLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 inline-flex items-center justify-center gap-2 rounded-full bg-green-500 px-6 py-3 text-sm sm:text-base font-semibold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:bg-green-600 hover:shadow-xl active:scale-95"
+              >
+                <span>S'inscrire</span>
+                <ExternalLink className="h-4 w-4 sm:h-5 sm:w-5 shrink-0" />
+              </a>
+            )}
             {event.socialMediaLink && (
               <a
                 href={event.socialMediaLink}

@@ -56,6 +56,7 @@ export async function PUT(
         imageUrl: body.imageUrl.trim(),
         socialMediaLink: body.socialMediaLink?.trim() || null,
         socialMediaPlatform: body.socialMediaPlatform?.trim() || null,
+        inscriptionLink: body.inscriptionLink?.trim() ?? existingEvent.inscriptionLink,
         isActive: body.isActive !== undefined ? body.isActive : existingEvent.isActive,
         order: body.order !== undefined ? body.order : existingEvent.order
       }
