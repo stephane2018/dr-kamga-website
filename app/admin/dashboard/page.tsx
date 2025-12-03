@@ -5,15 +5,16 @@ import { useSearchParams, useRouter } from "next/navigation"
 import { signOut, useSession } from "next-auth/react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { LogOut, BookOpen, Users, Calendar, Mail, MessageSquare, Loader2, Shield, User, UserCog, Home, Layers } from "lucide-react"
+import { LogOut, BookOpen, Users, Calendar, Mail, MessageSquare, Loader2, Shield, User, UserCog, Home, Layers, PartyPopper } from "lucide-react"
 import { MasterclassAdmin } from "@/components/admin/masterclass-admin"
 import { SeminairesAdmin } from "@/components/admin/seminaires-admin"
 import { AppointmentsAdmin } from "@/components/admin/appointments-admin"
 import { NewsletterAdmin } from "@/components/admin/newsletter-admin"
 import { UsersAdmin } from "@/components/admin/users-admin"
 import { AxisCardsAdmin } from "@/components/admin/axis-cards-admin"
+import { EventsAdmin } from "@/components/admin/events-admin"
 
-type TabType = "masterclass" | "seminaires" | "appointments" | "newsletter" | "users" | "axis-cards"
+type TabType = "masterclass" | "seminaires" | "appointments" | "newsletter" | "users" | "axis-cards" | "events"
 
 export default function AdminDashboardPage() {
   const { data: session } = useSession()
@@ -24,7 +25,7 @@ export default function AdminDashboardPage() {
 
   useEffect(() => {
     const tabParam = searchParams.get("tab") as TabType | null
-    if (tabParam && ["masterclass", "seminaires", "appointments", "newsletter", "users", "axis-cards"].includes(tabParam)) {
+    if (tabParam && ["masterclass", "seminaires", "appointments", "newsletter", "users", "axis-cards", "events"].includes(tabParam)) {
       if ((tabParam === "users" || tabParam === "axis-cards") && session?.user?.role !== "admin") {
         return
       }
@@ -176,6 +177,16 @@ export default function AdminDashboardPage() {
               <Mail className="h-5 w-5" />
               Newsletter
             </button>
+            <button
+              onClick={() => handleTabChange("events")}
+              className={`flex items-center gap-2 px-6 py-4 font-medium transition-colors border-b-2 whitespace-nowrap ${activeTab === "events"
+                ? "border-primary text-primary"
+                : "border-transparent text-muted-foreground hover:text-foreground hover:border-border"
+                }`}
+            >
+              <PartyPopper className="h-5 w-5" />
+              Événements
+            </button>
             {session?.user?.role === "admin" && (
               <button
                 onClick={() => handleTabChange("axis-cards")}
@@ -210,6 +221,7 @@ export default function AdminDashboardPage() {
         {activeTab === "seminaires" && <SeminairesAdmin />}
         {activeTab === "appointments" && <AppointmentsAdmin />}
         {activeTab === "newsletter" && <NewsletterAdmin />}
+        {activeTab === "events" && <EventsAdmin />}
         {activeTab === "axis-cards" && <AxisCardsAdmin />}
         {activeTab === "users" && session?.user?.role === "admin" && <UsersAdmin />}
       </div>

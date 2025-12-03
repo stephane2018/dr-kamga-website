@@ -147,3 +147,24 @@ model ContactAppointment {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
+
+model Event {
+  id                  String   @id @default(cuid())
+  titleFr             String
+  titleEn             String
+  date                String
+  eventDate           DateTime? // Date réelle de l'événement pour filtrage automatique
+  type                String   // "Atelier communautaire", "Évènement en ligne", "Rencontre sociale"
+  locationFr          String
+  locationEn          String
+  descriptionFr       String
+  descriptionEn       String
+  imageUrl            String
+  socialMediaLink     String?
+  socialMediaPlatform String?  // "Facebook", "Instagram", "Facebook Event", etc.
+  status              String   @default("active") // "active", "archived", "outdated"
+  isActive            Boolean  @default(true)
+  order               Int      @default(0)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
