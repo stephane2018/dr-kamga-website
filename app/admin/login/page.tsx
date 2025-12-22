@@ -26,15 +26,16 @@ export default function AdminLoginPage() {
         redirect: false,
       })
 
+      //console.log("SignIn result:", result)
+
       if (result?.error) {
         if (result.error === "AccessDenied") {
           setError("Votre compte a été bloqué. Veuillez contacter un administrateur pour le réactiver.")
         } else {
           setError("Email ou mot de passe incorrect")
         }
-      } else {
-        router.push("/admin/dashboard")
-        router.refresh()
+      } else if (result?.ok) {
+        window.location.href = "/admin/dashboard"
       }
     } catch (error) {
       setError("Une erreur s'est produite")

@@ -59,10 +59,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return token
     },
     async signIn({ user }) {
-      // Block login if account is not active
+      // console.log("signIn callback - user:", user)
       if ((user as any).isActive === false) {
+        // console.log("User is not active, blocking login")
         return false
       }
+      // console.log("User is active, allowing login")
       return true
     },
     async session({ session, token }) {
