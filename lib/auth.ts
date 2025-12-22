@@ -1,11 +1,7 @@
-import NextAuth, { CredentialsSignin } from "next-auth"
+import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import bcrypt from "bcryptjs"
 import { prisma } from "@/lib/prisma"
-
-class AccountBlockedError extends CredentialsSignin {
-  code = "ACCOUNT_BLOCKED"
-}
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   trustHost: true,
@@ -40,16 +36,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           return null
         }
 
-        // Check if user is active
-        if (!admin.isActive) {
-          throw new AccountBlockedError("Votre compte a été bloqué. Veuillez contacter un administrateur pour le réactiver.")
-        }
-
+        // Return user data with isActive flag
         return {
           id: admin.id,
           email: admin.email,
           name: admin.name,
           role: admin.role,
+          isActive: admin.isActive,
         }
       },
     }),
@@ -60,9 +53,17 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.role = user.role
+        token.role = (user as any).role
+        token.isActive = (user as any).isActive
       }
       return token
+    },
+    async signIn({ user }) {
+      // Block login if account is not active
+      if ((user as any).isActive === false) {
+        return false
+      }
+      return true
     },
     async session({ session, token }) {
       if (session.user) {

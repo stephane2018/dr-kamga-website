@@ -27,9 +27,7 @@ export default function AdminLoginPage() {
       })
 
       if (result?.error) {
-        if (result.error === "CredentialsSignin") {
-          setError("Email ou mot de passe incorrect")
-        } else if (result.error.includes("bloqué") || result.error.includes("ACCOUNT_BLOCKED")) {
+        if (result.error === "AccessDenied") {
           setError("Votre compte a été bloqué. Veuillez contacter un administrateur pour le réactiver.")
         } else {
           setError("Email ou mot de passe incorrect")
