@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import { getToken } from "next-auth/jwt"
 
 const locales = ['fr', 'en']
 const defaultLocale = 'fr'
@@ -46,15 +47,13 @@ export async function middleware(request: NextRequest) {
   // Handle authentication for admin routes using session cookie check
   if (pathname.startsWith('/admin')) {
     const isOnLoginPage = pathname === '/admin/login'
-    // Check for NextAuth session token (works with both JWT and database sessions)
-    const sessionToken = request.cookies.get('authjs.session-token')?.value ||
-                        request.cookies.get('__Secure-authjs.session-token')?.value
+    const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET })
 
-    if (!sessionToken && !isOnLoginPage) {
+    if (!token && !isOnLoginPage) {
       return NextResponse.redirect(new URL('/admin/login', request.url))
     }
 
-    if (sessionToken && isOnLoginPage) {
+    if (token && isOnLoginPage) {
       return NextResponse.redirect(new URL('/admin/dashboard', request.url))
     }
 

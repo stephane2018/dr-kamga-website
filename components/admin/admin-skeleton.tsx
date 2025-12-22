@@ -74,7 +74,7 @@ export function SeminarCardSkeleton() {
   )
 }
 
-export function AdminListSkeleton({ count = 2, type = "masterclass" }: { count?: number, type?: "masterclass" | "seminar" | "axis-cards" }) {
+export function AdminListSkeleton({ count = 2, type = "masterclass" }: { count?: number, type?: "masterclass" | "seminar" | "axis-cards" | "users" }) {
   const SkeletonCard = type === "masterclass" ? MasterclassCardSkeleton : SeminarCardSkeleton
 
   return (

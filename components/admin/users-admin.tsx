@@ -5,9 +5,11 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { Switch } from "@/components/ui/switch"
-import { Plus, Edit, Trash2, Save, X, Shield, User, Lock, Unlock, Mail } from "lucide-react"
+import { Plus, Edit, Trash2, Save, X, Shield, User, Lock, Unlock, Mail, KeyRound } from "lucide-react"
 import { AdminListSkeleton } from "./admin-skeleton"
+import { ResetPasswordDialog } from "./reset-password-dialog"
 import { toast } from "sonner"
+import { signOut, useSession } from "next-auth/react"
 
 interface AdminUser {
   id: string
@@ -21,11 +23,19 @@ interface AdminUser {
 }
 
 export function UsersAdmin() {
+  const { data: session } = useSession()
   const [showForm, setShowForm] = useState(false)
   const [editingId, setEditingId] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
   const [submitting, setSubmitting] = useState(false)
   const [users, setUsers] = useState<AdminUser[]>([])
+  const [resetPasswordDialog, setResetPasswordDialog] = useState<{
+    open: boolean
+    userId: string
+    userEmail: string
+    userName: string
+    isCurrentAdmin: boolean
+  }>({ open: false, userId: "", userEmail: "", userName: "", isCurrentAdmin: false })
 
   const [formData, setFormData] = useState({
     email: "",
@@ -66,6 +76,13 @@ export function UsersAdmin() {
     setSubmitting(true)
 
     try {
+      const willForceReauth =
+        !!editingId &&
+        formData.role === "admin" &&
+        !!formData.password &&
+        !!session?.user?.email &&
+        formData.email === session.user.email
+
       const url = editingId ? `/api/admin/users/${editingId}` : '/api/admin/users'
       const method = editingId ? 'PUT' : 'POST'
 
@@ -92,6 +109,15 @@ export function UsersAdmin() {
       const data = await response.json()
 
       if (data.success) {
+        if (willForceReauth) {
+          toast.success("Mot de passe modifié. Veuillez vous reconnecter.")
+          await signOut({
+            callbackUrl: "/admin/login",
+            redirect: true,
+          })
+          return
+        }
+
         toast.success(editingId ? "Utilisateur mis à jour" : "Utilisateur créé")
         setShowForm(false)
         resetForm()
@@ -120,6 +146,20 @@ export function UsersAdmin() {
   }
 
   const handleToggleActive = async (userId: string, currentStatus: boolean) => {
+    const user = users.find(u => u.id === userId)
+    
+    if (user?.role === "admin" && currentStatus) {
+      const activeAdmins = users.filter(u => u.role === "admin" && u.isActive)
+      
+      if (activeAdmins.length <= 1) {
+        toast.error(
+          "Impossible de bloquer le dernier administrateur actif. Créez d'abord un nouvel administrateur.",
+          { duration: 5000 }
+        )
+        return
+      }
+    }
+
     try {
       const response = await fetch(`/api/admin/users/${userId}`, {
         method: 'PUT',
@@ -144,6 +184,16 @@ export function UsersAdmin() {
   }
 
   const handleDelete = async (id: string) => {
+    const user = users.find(u => u.id === id)
+    
+    if (user?.role === "admin") {
+      toast.error(
+        "Les comptes administrateurs ne peuvent pas être supprimés pour des raisons de sécurité. Vous pouvez uniquement les bloquer.",
+        { duration: 5000 }
+      )
+      return
+    }
+
     if (!confirm("Êtes-vous sûr de vouloir supprimer cet utilisateur ? Cette action est irréversible.")) {
       return
     }
@@ -176,6 +226,33 @@ export function UsersAdmin() {
       isActive: true
     })
     setEditingId(null)
+  }
+
+  const handleResetPassword = (user: AdminUser) => {
+    const isCurrentAdmin = session?.user?.email === user.email
+    setResetPasswordDialog({
+      open: true,
+      userId: user.id,
+      userEmail: user.email,
+      userName: user.name,
+      isCurrentAdmin,
+    })
+  }
+
+  const handleResetPasswordSuccess = async () => {
+    const isCurrentAdmin = resetPasswordDialog.isCurrentAdmin
+    
+    if (isCurrentAdmin) {
+      toast.success("Mot de passe modifié. Vous allez être déconnecté...")
+      setTimeout(async () => {
+        await signOut({
+          callbackUrl: "/admin/login",
+          redirect: true,
+        })
+      }, 1500)
+    } else {
+      fetchUsers()
+    }
   }
 
   if (loading) {
@@ -442,21 +519,32 @@ export function UsersAdmin() {
                     <Button
                       size="sm"
                       variant="ghost"
+                      className="text-blue-600 hover:text-blue-700 hover:bg-blue-50"
+                      onClick={() => handleResetPassword(user)}
+                      title="Réinitialiser le mot de passe"
+                    >
+                      <KeyRound className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="ghost"
                       className={user.isActive ? "text-orange-600 hover:text-orange-700 hover:bg-orange-50" : "text-green-600 hover:text-green-700 hover:bg-green-50"}
                       onClick={() => handleToggleActive(user.id, user.isActive)}
                       title={user.isActive ? "Bloquer" : "Débloquer"}
                     >
                       {user.isActive ? <Lock className="h-4 w-4" /> : <Unlock className="h-4 w-4" />}
                     </Button>
-                    <Button
-                      size="sm"
-                      variant="ghost"
-                      className="text-red-600 hover:text-red-700 hover:bg-red-50"
-                      onClick={() => handleDelete(user.id)}
-                      title="Supprimer"
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
+                    {user.role !== "admin" && (
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                        onClick={() => handleDelete(user.id)}
+                        title="Supprimer"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    )}
                   </div>
                 </div>
               </div>
@@ -464,6 +552,17 @@ export function UsersAdmin() {
           </div>
         )}
       </div>
+
+      {/* Reset Password Dialog */}
+      <ResetPasswordDialog
+        open={resetPasswordDialog.open}
+        onOpenChange={(open) => setResetPasswordDialog({ ...resetPasswordDialog, open })}
+        userId={resetPasswordDialog.userId}
+        userEmail={resetPasswordDialog.userEmail}
+        userName={resetPasswordDialog.userName}
+        isCurrentAdmin={resetPasswordDialog.isCurrentAdmin}
+        onSuccess={handleResetPasswordSuccess}
+      />
     </div>
   )
 }

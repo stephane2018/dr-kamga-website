@@ -1,10 +1,15 @@
-import NextAuth from "next-auth"
+import NextAuth, { CredentialsSignin } from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import bcrypt from "bcryptjs"
 import { prisma } from "@/lib/prisma"
 
+class AccountBlockedError extends CredentialsSignin {
+  code = "ACCOUNT_BLOCKED"
+}
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
   trustHost: true,
+  secret: process.env.NEXTAUTH_SECRET,
   providers: [
     Credentials({
       credentials: {
@@ -13,7 +18,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
-          return null
+          throw new Error("Email et mot de passe requis")
         }
 
         const admin = await prisma.admin.findUnique({
@@ -23,7 +28,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         })
 
         if (!admin) {
-          return null
+          throw new Error("Email ou mot de passe incorrect")
         }
 
         const isPasswordValid = await bcrypt.compare(
@@ -32,12 +37,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         )
 
         if (!isPasswordValid) {
-          return null
+          throw new Error("Email ou mot de passe incorrect")
         }
 
         // Check if user is active
         if (!admin.isActive) {
-          return null
+          throw new AccountBlockedError("Votre compte a été bloqué. Veuillez contacter un administrateur pour le réactiver.")
         }
 
         return {
@@ -84,5 +89,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
   session: {
     strategy: "jwt",
+    maxAge: 60 * 60 * 24 * 180,
+    updateAge: 60 * 5,
+  },
+  jwt: {
+    maxAge: 60 * 60 * 24 * 180,
   },
 })
