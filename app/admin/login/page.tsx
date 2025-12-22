@@ -20,43 +20,33 @@ export default function AdminLoginPage() {
     setLoading(true)
 
     try {
-      console.log("[Login] Attempting sign in...")
+      console.log("[Login] 🔐 Tentative de connexion pour:", email)
+
       const result = await signIn("credentials", {
         email,
         password,
         redirect: false,
-        callbackUrl: "/admin/dashboard",
       })
 
-      console.log("[Login] SignIn result:", result)
-
       if (result?.error) {
-        console.log("[Login] Error:", result.error)
+        console.log("[Login] ❌ Erreur:", result.error)
         if (result.error === "AccessDenied") {
-          setError("Votre compte a été bloqué. Veuillez contacter un administrateur pour le réactiver.")
-        } else {
+          setError("Votre compte a été bloqué. Veuillez contacter un administrateur.")
+        } else if (result.error === "CredentialsSignin") {
           setError("Email ou mot de passe incorrect")
+        } else {
+          setError("Identifiants incorrects ou accès refusé")
         }
         setLoading(false)
-      } else if (result?.ok) {
-        console.log("[Login] Success, redirecting to dashboard...")
-        const sessionRes = await fetch("/api/auth/session")
-        const sessionData = await sessionRes.json()
-        console.log("[Login] Session after login:", sessionData)
-
-        if (!sessionData?.user) {
-          setError(
-            "Connexion OK mais session absente. Vérifiez NEXTAUTH_URL (localhost en dev / cabinetdab.com en prod) et NEXTAUTH_SECRET."
-          )
-          setLoading(false)
-          return
-        }
-
-        window.location.replace("/admin/dashboard")
+      } else {
+        console.log("[Login] ✅ Connexion réussie, redirection forcée...")
+        // Utiliser window.location.href pour forcer un rechargement complet
+        // et s'assurer que le middleware voit bien le nouveau cookie de session
+        window.location.href = "/admin/dashboard"
       }
     } catch (error) {
-      console.error("[Login] Exception:", error)
-      setError("Une erreur s'est produite")
+      console.error("[Login] ❌ Exception:", error)
+      setError("Une erreur s'est produite lors de la connexion")
       setLoading(false)
     }
   }
@@ -81,7 +71,7 @@ export default function AdminLoginPage() {
             {/* Error Message */}
             {error && (
               <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-start gap-3">
-                <AlertCircle className="h-5 w-5 text-red-600 mt-0.5" />
+                <AlertCircle className="h-5 w-5 text-red-600 mt-0.5 shrink-0" />
                 <div>
                   <h3 className="text-sm font-medium text-red-800">
                     Erreur de connexion
@@ -109,6 +99,7 @@ export default function AdminLoginPage() {
                   className="pl-10 h-12"
                   required
                   disabled={loading}
+                  autoComplete="email"
                 />
               </div>
             </div>
@@ -131,6 +122,7 @@ export default function AdminLoginPage() {
                   className="pl-10 h-12"
                   required
                   disabled={loading}
+                  autoComplete="current-password"
                 />
               </div>
             </div>
@@ -157,13 +149,12 @@ export default function AdminLoginPage() {
               variant="secondary"
               className="w-full h-12"
               onClick={() => router.push("/")}
+              disabled={loading}
             >
               <Home className="mr-2 h-4 w-4" />
               Retour à l'accueil
             </Button>
           </form>
-
-
 
           {/* Footer Note */}
           <p className="text-center text-xs text-muted-foreground mt-6">
@@ -174,7 +165,7 @@ export default function AdminLoginPage() {
         {/* Security Note */}
         <div className="text-center mt-6">
           <p className="text-sm text-muted-foreground">
-            🔒 Connexion sécurisée
+            Connexion sécurisée
           </p>
         </div>
       </div>

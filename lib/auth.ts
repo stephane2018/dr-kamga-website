@@ -2,97 +2,117 @@ import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import bcrypt from "bcryptjs"
 import { prisma } from "@/lib/prisma"
+import { env, isProduction } from "@/lib/env"
 
+/**
+ * NextAuth v5 Configuration
+ * Gestion unifiée des sessions pour local et production
+ */
 export const { handlers, signIn, signOut, auth } = NextAuth({
+  // Configuration de base pour la fiabilité des domaines
   trustHost: true,
-  secret: process.env.NEXTAUTH_SECRET,
-  debug: process.env.NODE_ENV === "development",
+  secret: env.nextAuthSecret,
+
+  // Configuration des sessions
+  session: {
+    strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60, // 30 jours
+  },
+
+  // Debug mode en développement
+  debug: env.isDevelopment,
+
+  // Provider d'authentification par credentials
   providers: [
     Credentials({
+      name: "Credentials",
       credentials: {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
       },
+
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
+        try {
+          if (!credentials?.email || !credentials?.password) {
+            return null
+          }
+
+          const admin = await prisma.admin.findUnique({
+            where: { email: credentials.email as string },
+          })
+
+          if (!admin) {
+            console.log("[Auth] ❌ Admin introuvable:", credentials.email)
+            return null
+          }
+
+          const isPasswordValid = await bcrypt.compare(
+            credentials.password as string,
+            admin.password
+          )
+
+          if (!isPasswordValid) {
+            console.log("[Auth] ❌ Mot de passe invalide")
+            return null
+          }
+
+          if (!admin.isActive) {
+            throw new Error("AccessDenied")
+          }
+
+          console.log("[Auth] ✅ Authentification réussie:", admin.email)
+
+          return {
+            id: admin.id,
+            email: admin.email,
+            name: admin.name,
+            role: admin.role,
+            isActive: admin.isActive,
+          }
+        } catch (error) {
+          console.error("[Auth] ❌ Erreur d'autorisation:", error)
           return null
-        }
-
-        const admin = await prisma.admin.findUnique({
-          where: {
-            email: credentials.email as string,
-          },
-        })
-
-        if (!admin) {
-          return null
-        }
-
-        const isPasswordValid = await bcrypt.compare(
-          credentials.password as string,
-          admin.password
-        )
-
-        if (!isPasswordValid) {
-          return null
-        }
-
-        // Return user data with isActive flag
-        return {
-          id: admin.id,
-          email: admin.email,
-          name: admin.name,
-          role: admin.role,
-          isActive: admin.isActive,
         }
       },
     }),
   ],
+
+  // Pages personnalisées
   pages: {
     signIn: "/admin/login",
+    error: "/admin/login",
   },
+
+  // Callbacks
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.role = (user as any).role
-        token.isActive = (user as any).isActive
+        token.id = user.id
+        token.email = user.email
+        token.role = user.role
+        token.isActive = user.isActive
       }
       return token
     },
-    async signIn({ user }) {
-      // console.log("signIn callback - user:", user)
-      if ((user as any).isActive === false) {
-        // console.log("User is not active, blocking login")
-        return false
-      }
-      // console.log("User is active, allowing login")
-      return true
-    },
+
     async session({ session, token }) {
-      if (session.user) {
+      if (token && session.user) {
+        session.user.id = token.id as string
+        session.user.email = token.email as string
         session.user.role = token.role as string
       }
       return session
     },
-  },
-  session: {
-    strategy: "jwt",
-    maxAge: 60 * 60 * 24 * 180, // 180 days
-    updateAge: 60 * 60, // 1 hour
-  },
-  jwt: {
-    maxAge: 60 * 60 * 24 * 180,
-  },
-  cookies: {
-    sessionToken: {
-      name: process.env.NODE_ENV === "production" ? `__Secure-next-auth.session-token` : `next-auth.session-token`,
-      options: {
-        httpOnly: true,
-        sameSite: "lax",
-        path: "/",
-        secure: process.env.NODE_ENV === "production",
-      },
+
+    async signIn({ user }) {
+      return !!user.isActive
     },
   },
-  useSecureCookies: process.env.NODE_ENV === "production",
+
+  // Events pour le monitoring
+  events: {
+    signIn: async ({ user }) => {
+      console.log("[Auth] 🎉 Session démarrée pour:", user.email)
+    },
+  },
 })
