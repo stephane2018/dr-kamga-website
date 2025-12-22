@@ -18,7 +18,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
-          throw new Error("Email et mot de passe requis")
+          return null
         }
 
         const admin = await prisma.admin.findUnique({
@@ -28,7 +28,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         })
 
         if (!admin) {
-          throw new Error("Email ou mot de passe incorrect")
+          return null
         }
 
         const isPasswordValid = await bcrypt.compare(
@@ -37,7 +37,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         )
 
         if (!isPasswordValid) {
-          throw new Error("Email ou mot de passe incorrect")
+          return null
         }
 
         // Check if user is active

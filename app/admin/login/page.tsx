@@ -25,14 +25,14 @@ export default function AdminLoginPage() {
         password,
         redirect: false,
       })
-      console.log(result)
+
       if (result?.error) {
-        if (result.code === "ACCOUNT_BLOCKED" && result.error === "CredentialsSignin") {
-          setError("Votre compte a été bloqué. Veuillez contacter un administrateur pour le réactiver.")
-        } else if (result.error === "CredentialsSignin") {
+        if (result.error === "CredentialsSignin") {
           setError("Email ou mot de passe incorrect")
+        } else if (result.error.includes("bloqué") || result.error.includes("ACCOUNT_BLOCKED")) {
+          setError("Votre compte a été bloqué. Veuillez contacter un administrateur pour le réactiver.")
         } else {
-          setError(result.error)
+          setError("Email ou mot de passe incorrect")
         }
       } else {
         router.push("/admin/dashboard")
