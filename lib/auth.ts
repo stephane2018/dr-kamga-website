@@ -6,6 +6,7 @@ import { prisma } from "@/lib/prisma"
 export const { handlers, signIn, signOut, auth } = NextAuth({
   trustHost: true,
   secret: process.env.NEXTAUTH_SECRET,
+  debug: process.env.NODE_ENV === "development",
   providers: [
     Credentials({
       credentials: {
@@ -73,27 +74,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
       return session
     },
-    authorized({ auth, request: { nextUrl } }) {
-      const isLoggedIn = !!auth?.user
-      const isOnAdminPanel = nextUrl.pathname.startsWith('/admin')
-      const isOnLoginPage = nextUrl.pathname === '/admin/login'
-
-      if (isOnAdminPanel && !isOnLoginPage) {
-        if (!isLoggedIn) return false
-        return true
-      }
-
-      if (isLoggedIn && isOnLoginPage) {
-        return Response.redirect(new URL('/admin/dashboard', nextUrl))
-      }
-
-      return true
-    },
   },
   session: {
     strategy: "jwt",
-    maxAge: 60 * 60 * 24 * 180,
-    updateAge: 60 * 5,
+    maxAge: 60 * 60 * 24 * 180, // 180 days
+    updateAge: 60 * 60, // 1 hour
   },
   jwt: {
     maxAge: 60 * 60 * 24 * 180,

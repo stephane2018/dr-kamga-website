@@ -20,26 +20,32 @@ export default function AdminLoginPage() {
     setLoading(true)
 
     try {
+      console.log("[Login] Attempting sign in...")
       const result = await signIn("credentials", {
         email,
         password,
         redirect: false,
+        callbackUrl: "/admin/dashboard",
       })
 
-      //console.log("SignIn result:", result)
+      console.log("[Login] SignIn result:", result)
 
       if (result?.error) {
+        console.log("[Login] Error:", result.error)
         if (result.error === "AccessDenied") {
           setError("Votre compte a été bloqué. Veuillez contacter un administrateur pour le réactiver.")
         } else {
           setError("Email ou mot de passe incorrect")
         }
+        setLoading(false)
       } else if (result?.ok) {
-        window.location.href = "/admin/dashboard"
+        console.log("[Login] Success, redirecting to dashboard...")
+        // Use router.push instead of window.location.href for better Next.js integration
+        router.push("/admin/dashboard")
       }
     } catch (error) {
+      console.error("[Login] Exception:", error)
       setError("Une erreur s'est produite")
-    } finally {
       setLoading(false)
     }
   }

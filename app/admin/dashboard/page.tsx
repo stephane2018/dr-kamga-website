@@ -17,11 +17,17 @@ import { EventsAdmin } from "@/components/admin/events-admin"
 type TabType = "masterclass" | "seminaires" | "appointments" | "newsletter" | "users" | "axis-cards" | "events"
 
 export default function AdminDashboardPage() {
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
   const searchParams = useSearchParams()
   const router = useRouter()
   const [activeTab, setActiveTab] = useState<TabType>("masterclass")
   const [isLoggingOut, setIsLoggingOut] = useState(false)
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/admin/login")
+    }
+  }, [status, router])
 
   useEffect(() => {
     const tabParam = searchParams.get("tab") as TabType | null
@@ -51,6 +57,21 @@ export default function AdminDashboardPage() {
       console.error("Error logging out:", error)
       setIsLoggingOut(false)
     }
+  }
+
+  if (status === "loading") {
+    return (
+      <div className="min-h-screen bg-muted/30 flex items-center justify-center">
+        <div className="text-center">
+          <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-primary" />
+          <p className="text-muted-foreground">Chargement...</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (status === "unauthenticated") {
+    return null
   }
 
   return (

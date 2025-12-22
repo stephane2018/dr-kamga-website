@@ -5,9 +5,7 @@ import { getToken } from "next-auth/jwt"
 const locales = ['fr', 'en']
 const defaultLocale = 'fr'
 
-// Get the preferred locale, similar to the above or using a library
 function getLocale(request: NextRequest): string {
-  // Check if locale is in pathname
   const pathname = request.nextUrl.pathname
   const pathnameLocale = locales.find(
     (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
@@ -47,20 +45,31 @@ export async function middleware(request: NextRequest) {
   // Handle authentication for admin routes using session cookie check
   if (pathname.startsWith('/admin')) {
     const isOnLoginPage = pathname === '/admin/login'
-    const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET })
 
-    if (!token && !isOnLoginPage) {
-      return NextResponse.redirect(new URL('/admin/login', request.url))
+    try {
+      const token = await getToken({
+        req: request,
+        secret: process.env.NEXTAUTH_SECRET,
+      })
+
+      if (!token && !isOnLoginPage) {
+        return NextResponse.redirect(new URL('/admin/login', request.url))
+      }
+
+      if (token && isOnLoginPage) {
+        return NextResponse.redirect(new URL('/admin/dashboard', request.url))
+      }
+
+      return NextResponse.next()
+    } catch (error) {
+      console.error('[Middleware] Error getting token:', error)
+      if (!isOnLoginPage) {
+        return NextResponse.redirect(new URL('/admin/login', request.url))
+      }
+      return NextResponse.next()
     }
-
-    if (token && isOnLoginPage) {
-      return NextResponse.redirect(new URL('/admin/dashboard', request.url))
-    }
-
-    return NextResponse.next()
   }
 
-  // Skip middleware for static files, API routes, and special Next.js routes
   if (
     pathname.startsWith('/_next') ||
     pathname.startsWith('/api') ||
@@ -72,7 +81,6 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next()
   }
 
-  // Check if pathname already has a locale
   const pathnameHasLocale = locales.some(
     (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
   )
@@ -85,7 +93,6 @@ export async function middleware(request: NextRequest) {
 
     const response = NextResponse.redirect(newUrl)
 
-    // Set locale cookie
     response.cookies.set('NEXT_LOCALE', locale, {
       maxAge: 60 * 60 * 24 * 365, // 1 year
       path: '/',
