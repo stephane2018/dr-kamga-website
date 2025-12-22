@@ -40,7 +40,19 @@ export default function AdminLoginPage() {
         setLoading(false)
       } else if (result?.ok) {
         console.log("[Login] Success, redirecting to dashboard...")
-        router.push("/admin/dashboard")
+        const sessionRes = await fetch("/api/auth/session")
+        const sessionData = await sessionRes.json()
+        console.log("[Login] Session after login:", sessionData)
+
+        if (!sessionData?.user) {
+          setError(
+            "Connexion OK mais session absente. Vérifiez NEXTAUTH_URL (localhost en dev / cabinetdab.com en prod) et NEXTAUTH_SECRET."
+          )
+          setLoading(false)
+          return
+        }
+
+        window.location.replace("/admin/dashboard")
       }
     } catch (error) {
       console.error("[Login] Exception:", error)
