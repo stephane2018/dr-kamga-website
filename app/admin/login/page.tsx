@@ -40,7 +40,6 @@ export default function AdminLoginPage() {
         setLoading(false)
       } else if (result?.ok) {
         console.log("[Login] Success, redirecting to dashboard...")
-        // Use router.push instead of window.location.href for better Next.js integration
         router.push("/admin/dashboard")
       }
     } catch (error) {
