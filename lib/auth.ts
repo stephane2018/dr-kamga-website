@@ -8,19 +8,25 @@ import { env, isProduction } from "@/lib/env"
  * NextAuth v5 Configuration
  * Gestion unifiée des sessions pour local et production
  */
+console.log("⚡️ [Auth] Config:", {
+  isProduction: env.isProduction,
+  siteUrl: env.siteUrl,
+  hasSecret: !!env.nextAuthSecret,
+})
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
   // Configuration de base pour la fiabilité des domaines
   trustHost: true,
   secret: env.nextAuthSecret,
+
+  // Debug de la configuration pour le déploiement
+  debug: env.isDevelopment,
 
   // Configuration des sessions
   session: {
     strategy: "jwt",
     maxAge: 30 * 24 * 60 * 60, // 30 jours
   },
-
-  // Debug mode en développement
-  debug: env.isDevelopment,
 
   // Provider d'authentification par credentials
   providers: [

@@ -10,23 +10,23 @@ export const isDevelopment = !isProduction
 // Environment configuration
 export const env = {
   // Auth
-  nextAuthSecret: process.env.NEXTAUTH_SECRET!,
-  nextAuthUrl: process.env.NEXTAUTH_URL || (isProduction ? 'https://cabinetdab.com' : 'http://localhost:3000'),
+  nextAuthSecret: process.env.NEXTAUTH_SECRET || process.env.AUTH_SECRET!,
+  nextAuthUrl: process.env.AUTH_URL || process.env.NEXTAUTH_URL || (isProduction ? 'https://cabinetdab.com' : 'http://localhost:3000'),
 
   // Environment flags
   isProduction,
   isDevelopment,
 
   // Site
-  siteUrl: process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXTAUTH_URL || (isProduction ? 'https://cabinetdab.com' : 'http://localhost:3000'),
+  siteUrl: process.env.NEXT_PUBLIC_SITE_URL || process.env.AUTH_URL || process.env.NEXTAUTH_URL || (isProduction ? 'https://cabinetdab.com' : 'http://localhost:3000'),
 
   // Database
   databaseUrl: process.env.DATABASE_URL!,
 } as const
 
 // Validate required environment variables on startup
-if (!process.env.NEXTAUTH_SECRET) {
-  throw new Error('NEXTAUTH_SECRET is required')
+if (!process.env.NEXTAUTH_SECRET && !process.env.AUTH_SECRET) {
+  throw new Error('NEXTAUTH_SECRET or AUTH_SECRET is required')
 }
 
 if (!process.env.DATABASE_URL) {
