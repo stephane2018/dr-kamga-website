@@ -115,6 +115,21 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
   },
 
+  // Gestion des cookies pour la production (HTTPS) et le développement (HTTP)
+  useSecureCookies: isProduction,
+  cookies: {
+    sessionToken: {
+      name: `${isProduction ? '__Secure-' : ''}next-auth.session-token`,
+      options: {
+        httpOnly: true,
+        sameSite: 'lax',
+        path: '/',
+        domain: isProduction ? '.cabinetdab.com' : 'localhost',
+        secure: isProduction,
+      },
+    },
+  },
+
   // Events pour le monitoring
   events: {
     signIn: async ({ user }) => {
