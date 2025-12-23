@@ -17,12 +17,7 @@ import { EventsAdmin } from "@/components/admin/events-admin"
 type TabType = "masterclass" | "seminaires" | "appointments" | "newsletter" | "users" | "axis-cards" | "events"
 
 export default function AdminDashboardPage() {
-  const { data: session, status } = useSession({
-    required: true,
-    onUnauthenticated() {
-      window.location.href = "/admin/login"
-    },
-  })
+  const { data: session, status } = useSession()
   const searchParams = useSearchParams()
   const router = useRouter()
   const [activeTab, setActiveTab] = useState<TabType>("masterclass")
@@ -48,17 +43,14 @@ export default function AdminDashboardPage() {
   const handleLogout = async () => {
     setIsLoggingOut(true)
     try {
-      await signOut({
-        callbackUrl: "/",
-        redirect: true,
-      })
+      await signOut()
     } catch (error) {
       console.error("Error logging out:", error)
       setIsLoggingOut(false)
     }
   }
 
-  if (status === "loading") {
+  if (status === "loading" || status === "unauthenticated") {
     return (
       <div className="min-h-screen bg-muted/30 flex items-center justify-center">
         <div className="text-center">

@@ -124,8 +124,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         httpOnly: true,
         sameSite: 'lax',
         path: '/',
-        domain: isProduction ? '.cabinetdab.com' : 'localhost',
-        secure: isProduction,
+                secure: isProduction
       },
     },
   },
