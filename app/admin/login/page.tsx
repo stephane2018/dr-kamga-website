@@ -28,21 +28,22 @@ export default function AdminLoginPage() {
         redirect: false,
       })
 
+      console.log("👉 Login Result:", result);
+
       if (result?.error) {
-        console.log("[Login] ❌ Erreur:", result.error)
+        console.error("❌ Login Error:", result.error);
         if (result.error === "AccessDenied") {
-          setError("Votre compte a été bloqué. Veuillez contacter un administrateur.")
+          setError("Votre compte n'est pas actif. Veuillez contacter l'administrateur.");
         } else if (result.error === "CredentialsSignin") {
-          setError("Email ou mot de passe incorrect")
+          setError("Email ou mot de passe incorrect.");
         } else {
-          setError("Identifiants incorrects ou accès refusé")
+          setError("Une erreur est survenue lors de la connexion.");
         }
         setLoading(false)
       } else {
-        console.log("[Login] ✅ Connexion réussie, redirection forcée...")
-        // Utiliser window.location.href pour forcer un rechargement complet
-        // et s'assurer que le middleware voit bien le nouveau cookie de session
-        window.location.href = "/admin/dashboard"
+        console.log("✅ Login Success! Redirecting to /admin/dashboard...");
+        // Force redirection manually to ensure it works
+        window.location.href = "/admin/dashboard";
       }
     } catch (error) {
       console.error("[Login] ❌ Exception:", error)
