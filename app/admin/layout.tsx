@@ -1,6 +1,6 @@
 "use client"
 
-import { SessionProvider } from "next-auth/react"
+import { JWTProvider } from "@/contexts/jwt-context"
 
 export default function AdminLayout({
   children,
@@ -8,11 +8,8 @@ export default function AdminLayout({
   children: React.ReactNode
 }) {
   return (
-    <SessionProvider
-      refetchInterval={0}
-      refetchOnWindowFocus={false}
-    >
+    <JWTProvider>
       {children}
-    </SessionProvider>
+    </JWTProvider>
   )
 }

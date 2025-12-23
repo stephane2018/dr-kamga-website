@@ -2,10 +2,10 @@
 
 import { useState, useEffect } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
-import { signOut, useSession } from "next-auth/react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { LogOut, BookOpen, Users, Calendar, Mail, MessageSquare, Loader2, Shield, User, UserCog, Home, Layers, PartyPopper } from "lucide-react"
+import { useJWT } from "@/contexts/jwt-context"
 import { MasterclassAdmin } from "@/components/admin/masterclass-admin"
 import { SeminairesAdmin } from "@/components/admin/seminaires-admin"
 import { AppointmentsAdmin } from "@/components/admin/appointments-admin"
@@ -17,7 +17,7 @@ import { EventsAdmin } from "@/components/admin/events-admin"
 type TabType = "masterclass" | "seminaires" | "appointments" | "newsletter" | "users" | "axis-cards" | "events"
 
 export default function AdminDashboardPage() {
-  const { data: session, status } = useSession()
+  const { user, loading, logout } = useJWT()
   const searchParams = useSearchParams()
   const router = useRouter()
   const [activeTab, setActiveTab] = useState<TabType>("masterclass")
@@ -26,14 +26,14 @@ export default function AdminDashboardPage() {
   useEffect(() => {
     const tabParam = searchParams.get("tab") as TabType | null
     if (tabParam && ["masterclass", "seminaires", "appointments", "newsletter", "users", "axis-cards", "events"].includes(tabParam)) {
-      if ((tabParam === "users" || tabParam === "axis-cards") && session?.user?.role !== "admin") {
+      if ((tabParam === "users" || tabParam === "axis-cards") && user?.role !== "admin") {
         return
       }
       setActiveTab(tabParam)
     } else {
       setActiveTab("masterclass");
     }
-  }, [searchParams, session])
+  }, [searchParams, user])
 
   const handleTabChange = (tab: TabType) => {
     setActiveTab(tab)
@@ -42,15 +42,10 @@ export default function AdminDashboardPage() {
 
   const handleLogout = async () => {
     setIsLoggingOut(true)
-    try {
-      await signOut()
-    } catch (error) {
-      console.error("Error logging out:", error)
-      setIsLoggingOut(false)
-    }
+    await logout()
   }
 
-  if (status === "loading" || status === "unauthenticated") {
+  if (loading || !user) {
     return (
       <div className="min-h-screen bg-muted/30 flex items-center justify-center">
         <div className="text-center">
@@ -83,14 +78,14 @@ export default function AdminDashboardPage() {
               <div className="text-right">
                 <div className="flex items-center justify-end gap-2 mb-1">
                   <p className="text-sm font-medium text-foreground">
-                    {session?.user?.name || "Admin"}
+                    {user?.name || "Admin"}
                   </p>
-                  {session?.user?.role && (
+                  {user?.role && (
                     <Badge
-                      variant={session.user.role === "admin" ? "default" : "secondary"}
+                      variant={user.role === "admin" ? "default" : "secondary"}
                       className="text-xs flex items-center gap-1"
                     >
-                      {session.user.role === "admin" ? (
+                      {user.role === "admin" ? (
                         <>
                           <Shield className="h-3 w-3" />
                           Admin
@@ -105,7 +100,7 @@ export default function AdminDashboardPage() {
                   )}
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  {session?.user?.email || "admin@cabinetdab.com"}
+                  {user?.email || "admin@cabinetdab.com"}
                 </p>
               </div>
               <Button
@@ -195,7 +190,7 @@ export default function AdminDashboardPage() {
               <PartyPopper className="h-5 w-5" />
               Événements
             </button>
-            {session?.user?.role === "admin" && (
+            {user?.role === "admin" && (
               <button
                 onClick={() => handleTabChange("axis-cards")}
                 className={`flex items-center gap-2 px-6 py-4 font-medium transition-colors border-b-2 whitespace-nowrap ${activeTab === "axis-cards"
@@ -207,7 +202,7 @@ export default function AdminDashboardPage() {
                 Cartes Axes
               </button>
             )}
-            {session?.user?.role === "admin" && (
+            {user?.role === "admin" && (
               <button
                 onClick={() => handleTabChange("users")}
                 className={`flex items-center gap-2 px-6 py-4 font-medium transition-colors border-b-2 whitespace-nowrap ${activeTab === "users"
@@ -231,7 +226,7 @@ export default function AdminDashboardPage() {
         {activeTab === "newsletter" && <NewsletterAdmin />}
         {activeTab === "events" && <EventsAdmin />}
         {activeTab === "axis-cards" && <AxisCardsAdmin />}
-        {activeTab === "users" && session?.user?.role === "admin" && <UsersAdmin />}
+        {activeTab === "users" && user?.role === "admin" && <UsersAdmin />}
       </div>
     </div>
   )

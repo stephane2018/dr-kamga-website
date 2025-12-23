@@ -1,17 +1,17 @@
 import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
-import { auth } from "@/lib/auth"
+import { requireAuth, isAdmin } from "@/lib/jwt"
 import bcrypt from "bcryptjs"
 import { sendWelcomeEmail } from "@/lib/email/send-welcome-email"
 
 export async function GET(request: NextRequest) {
   try {
     // Check authentication and admin role
-    const session = await auth()
-    if (!session || session.user?.role !== "admin") {
+    const { user, error } = await requireAuth(request)
+    if (error || !isAdmin(user)) {
       return NextResponse.json(
-        { success: false, error: "Unauthorized" },
-        { status: 401 }
+        { success: false, error: error || "Unauthorized" },
+        { status: error === "No token provided" ? 401 : 403 }
       )
     }
 
@@ -48,11 +48,11 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     // Check authentication and admin role
-    const session = await auth()
-    if (!session || session.user?.role !== "admin") {
+    const { user: authUser, error } = await requireAuth(request)
+    if (error || !isAdmin(authUser)) {
       return NextResponse.json(
-        { success: false, error: "Unauthorized" },
-        { status: 401 }
+        { success: false, error: error || "Unauthorized" },
+        { status: error === "No token provided" ? 401 : 403 }
       )
     }
 

@@ -20,7 +20,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   secret: env.nextAuthSecret,
 
   // Debug de la configuration pour le déploiement
-  debug: env.isDevelopment,
+  debug: env.isDevelopment && process.env.NODE_ENV !== 'test',
 
   // Configuration des sessions
   session: {
@@ -48,7 +48,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           })
 
           if (!admin) {
-            console.log("[Auth] ❌ Admin introuvable:", credentials.email)
             return null
           }
 
@@ -58,7 +57,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           )
 
           if (!isPasswordValid) {
-            console.log("[Auth] ❌ Mot de passe invalide")
             return null
           }
 
@@ -66,7 +64,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             throw new Error("AccessDenied")
           }
 
-          console.log("[Auth] ✅ Authentification réussie:", admin.email)
+          if (env.isDevelopment) {
+            console.log("[Auth] ✅ Authentification réussie:", admin.email)
+          }
 
           return {
             id: admin.id,
@@ -76,7 +76,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             isActive: admin.isActive,
           }
         } catch (error) {
-          console.error("[Auth] ❌ Erreur d'autorisation:", error)
+          if (env.isDevelopment) {
+            console.error("[Auth] ❌ Erreur d'autorisation:", error)
+          }
           return null
         }
       },
@@ -129,10 +131,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
   },
 
-  // Events pour le monitoring
+  // Events pour le monitoring (uniquement en développement)
   events: {
     signIn: async ({ user }) => {
-      console.log("[Auth] 🎉 Session démarrée pour:", user.email)
+      if (env.isDevelopment) {
+        console.log("[Auth] 🎉 Session démarrée pour:", user.email)
+      }
     },
   },
 })

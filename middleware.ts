@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-import { getToken } from "next-auth/jwt"
+import { verifyToken, extractToken } from '@/lib/jwt'
 
 /**
  * Middleware NextAuth - Protection des routes et gestion multilingue
@@ -72,36 +72,45 @@ export async function middleware(request: NextRequest) {
     const isOnLoginPage = pathname === '/admin/login'
 
     try {
-      // Récupération du token JWT
-      const token = await getToken({
-        req: request,
-        secret: process.env.NEXTAUTH_SECRET,
-      })
+      // Récupération et vérification du token JWT
+      const token = extractToken(request)
+      const user = token ? verifyToken(token) : null
 
-      console.log(`[Middleware Admin] 🕵️ Path: ${pathname}`, {
-        hasToken: !!token,
-        isOnLoginPage
-      })
+      if (process.env.NODE_ENV === 'development') {
+        console.log(`[Middleware Admin] 🕵️ Path: ${pathname}`, {
+          hasToken: !!token,
+          user: user?.email,
+          isOnLoginPage
+        })
+      }
 
       // Pas de token et pas sur la page de login → rediriger vers login
-      if (!token && !isOnLoginPage) {
-        console.log(`[Middleware Admin] 🔐 Pas de session, redirection vers login (depuis ${pathname})`)
+      if (!user && !isOnLoginPage) {
+        if (process.env.NODE_ENV === 'development') {
+          console.log(`[Middleware Admin] 🔐 Pas de token valide, redirection vers login (depuis ${pathname})`)
+        }
         const loginUrl = new URL('/admin/login', request.url)
         return NextResponse.redirect(loginUrl)
       }
 
       // Token présent et sur la page de login → rediriger vers dashboard
-      if (token && isOnLoginPage) {
-        console.log(`[Middleware Admin] 📋 Session trouvée sur login, redirection vers dashboard`)
+      if (user && isOnLoginPage) {
+        if (process.env.NODE_ENV === 'development') {
+          console.log(`[Middleware Admin] 📋 Token valide trouvé sur login, redirection vers dashboard`)
+        }
         return NextResponse.redirect(new URL('/admin/dashboard', request.url))
       }
 
       // Tout est bon, ou on est sur login sans token
-      console.log(`[Middleware Admin] ✅ OK: ${pathname}`)
+      if (process.env.NODE_ENV === 'development') {
+        console.log(`[Middleware Admin] ✅ OK: ${pathname} (User: ${user?.email || 'anonymous'})`)
+      }
       return NextResponse.next()
 
     } catch (error) {
-      console.error('[Middleware Admin] ❌ Erreur critique:', error)
+      if (process.env.NODE_ENV === 'development') {
+        console.error('[Middleware Admin] ❌ Erreur critique:', error)
+      }
       if (!isOnLoginPage) {
         return NextResponse.redirect(new URL('/admin/login', request.url))
       }

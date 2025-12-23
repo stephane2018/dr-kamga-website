@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { signIn } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -22,27 +21,31 @@ export default function AdminLoginPage() {
     try {
       console.log("[Login] 🔐 Tentative de connexion pour:", email)
 
-      const result = await signIn("credentials", {
-        email,
-        password,
-        redirect: false,
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
       })
 
-      console.log("👉 Login Result:", result);
+      const data = await response.json()
 
-      if (result?.error) {
-        console.error("❌ Login Error:", result.error);
-        if (result.error === "AccessDenied") {
+      if (!data.success) {
+        console.error("❌ Login Error:", data.error);
+        if (data.error === "Account is not active") {
           setError("Votre compte n'est pas actif. Veuillez contacter l'administrateur.");
-        } else if (result.error === "CredentialsSignin") {
+        } else if (data.error === "Invalid credentials") {
           setError("Email ou mot de passe incorrect.");
+        } else if (data.error === "Too many attempts. Try again later.") {
+          setError("Trop de tentatives. Veuillez réessayer plus tard.");
         } else {
           setError("Une erreur est survenue lors de la connexion.");
         }
         setLoading(false)
       } else {
         console.log("✅ Login Success! Redirecting to /admin/dashboard...");
-        // Force redirection manually to ensure it works
+        // Force redirection manuelle pour s'assurer que ça fonctionne
         window.location.href = "/admin/dashboard";
       }
     } catch (error) {
